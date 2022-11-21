@@ -1,0 +1,57 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Avalonia.Tiels.MainWindow"
+        Width="1000" Height="550"
+        Title="Avalonia.Tiels">
+        <Grid>
+                <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <!-- Side Navbar -->
+                <Grid>
+                        <Grid.Background><SolidColorBrush Color="#11ffffff"></SolidColorBrush></Grid.Background>
+                </Grid>
+                <!-- New Tile Field -->
+                <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Margin="30, 160">
+                                <Grid>
+                                        <Grid.RowDefinitions>
+                                                <RowDefinition Height="1*"></RowDefinition>
+                                                <RowDefinition Height="1*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock>Quick Create Tile</TextBlock>
+                                        <TextBlock Grid.Row="1" FontFamily="codicon" FontSize="40" TextAlignment="Center"></TextBlock>
+                                </Grid>
+                        </Button>
+                        <Button Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Margin="30, 160">
+                                <Grid>
+                                        <Grid.RowDefinitions>
+                                                <RowDefinition Height="1*"></RowDefinition>
+                                                <RowDefinition Height="1*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock>Create Directory Portal</TextBlock>
+                                        <TextBlock Grid.Row="1" FontFamily="codicon" FontSize="40" TextAlignment="Center"></TextBlock>
+                                </Grid>
+                        </Button>
+                </Grid>
+
+        </Grid>
+</Window>

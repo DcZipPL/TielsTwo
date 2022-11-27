@@ -1,0 +1,22 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Avalonia.Tiels.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Avalonia.Tiels.Controls.SidebarButton">
+    <Button VerticalAlignment="Top" HorizontalAlignment="Stretch" DataContext="{Binding RelativeSource={RelativeSource Self}}">
+        <Button.Background><SolidColorBrush Color="#00000000"></SolidColorBrush></Button.Background>
+        <Button.Styles>
+            <Style Selector=":disabled /template/ ContentPresenter">
+                <Setter Property="Background" Value="#00000000"/>
+            </Style>
+        </Button.Styles>
+        <Grid>
+            <TextBlock FontFamily="{Binding Font, RelativeSource={RelativeSource AncestorType={x:Type controls:SidebarButton}}}"
+                       VerticalAlignment="Bottom"
+                       Text="{Binding Icon, RelativeSource={RelativeSource AncestorType={x:Type controls:SidebarButton}}}"/>
+            <TextBlock Margin="20,0" Text="{Binding Text, RelativeSource={RelativeSource AncestorType={x:Type controls:SidebarButton}}}"/>
+        </Grid>
+    </Button>
+</UserControl>

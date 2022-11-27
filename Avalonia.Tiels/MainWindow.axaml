@@ -2,10 +2,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:Avalonia.Tiels.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.Tiels.MainWindow"
         Width="1000" Height="550"
-        Title="Avalonia.Tiels">
+        Title="Tiels">
         <Grid>
                 <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -14,37 +15,16 @@
                 <!-- Side Navbar -->
                 <Border BorderThickness="0,0,0.6,0" BorderBrush="{StaticResource BaseBorderColor}">
                         <StackPanel>
-                                <!-- "Create" Tag -->
-                                <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource BaseBorderColor}">
-                                        <TextBlock Margin="0,5,0,0" Foreground="#666666" TextAlignment="Center">Create</TextBlock>
-                                </Border>
-                                <Button VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                                        <Button.Background><SolidColorBrush Color="#00000000"></SolidColorBrush></Button.Background>
-                                        <Grid>
-                                                <TextBlock FontFamily="codicon" VerticalAlignment="Bottom"></TextBlock>
-                                                <TextBlock Margin="20,0">Create New Tile</TextBlock>
-                                        </Grid>
-                                </Button>
-                                <Button VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                                        <Button.Background><SolidColorBrush Color="#00000000"></SolidColorBrush></Button.Background>
-                                        <Grid>
-                                                <TextBlock FontFamily="codicon" VerticalAlignment="Bottom"></TextBlock>
-                                                <TextBlock Margin="20,0">Create Directory Portal</TextBlock>
-                                        </Grid>
-                                </Button>
-                                <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource BaseBorderColor}">
-                                        <TextBlock Margin="0,5,0,0" Foreground="#666666" TextAlignment="Center">Settings</TextBlock>
-                                </Border>
-                                <Button VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                                        <Button.Background><SolidColorBrush Color="#00000000"></SolidColorBrush></Button.Background>
-                                        <Grid>
-                                                <TextBlock FontFamily="codicon" VerticalAlignment="Bottom"></TextBlock>
-                                                <TextBlock Margin="20,0">General</TextBlock>
-                                        </Grid>
-                                </Button>
-                                <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource BaseBorderColor}">
-                                        <TextBlock Margin="0,5,0,0" Foreground="#666666" TextAlignment="Center">Managment</TextBlock>
-                                </Border>
+                                <controls:SidebarCategory Title="Create"/>
+                                <controls:SidebarButton Text="Create New Tile" Font="codicon" Icon=""/>
+                                <controls:SidebarButton Text="Create Directory Portal" Font="codicon" Icon=""/>
+                                <controls:SidebarButton Text="Floating Images" Font="codicon" Icon="" IsEnabled="False"/>
+                                <controls:SidebarButton Text="Notes" Font="codicon" Icon="" IsEnabled="False"/>
+                                <controls:SidebarCategory Title="Settings"/>
+                                <controls:SidebarButton Text="General" Font="codicon" Icon=""/>
+                                <controls:SidebarButton Text="Appearance" Font="codicon" Icon=""/>
+                                <controls:SidebarButton Text="Updates" Font="codicon" Icon=""/>
+                                <controls:SidebarCategory Title="Management"/>
                         </StackPanel>
                 </Border>
                 <!-- New Tile Field -->

@@ -10,7 +10,7 @@
         <Grid>
                 <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="2.8*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <!-- Side Navbar -->
                 <Border BorderThickness="0,0,0.6,0" BorderBrush="{StaticResource BaseBorderColor}">
@@ -18,19 +18,67 @@
                                 <controls:SidebarCategory Title="Create"/>
                                 <controls:SidebarButton Text="Create New Tile" Font="codicon" Icon=""/>
                                 <controls:SidebarButton Text="Create Directory Portal" Font="codicon" Icon=""/>
-                                <controls:SidebarButton Text="Floating Images" Font="codicon" Icon="" IsEnabled="False"/>
-                                <controls:SidebarButton Text="Notes" Font="codicon" Icon="" IsEnabled="False"/>
+                                <controls:SidebarButton Text="Create Floating Image" Font="codicon" Icon="" IsEnabled="False"/>
+                                <controls:SidebarButton Text="Create Sticky Note" Font="codicon" Icon="" IsEnabled="False"/>
+                                
                                 <controls:SidebarCategory Title="Settings"/>
                                 <controls:SidebarButton Text="General" Font="codicon" Icon=""/>
                                 <controls:SidebarButton Text="Appearance" Font="codicon" Icon=""/>
                                 <controls:SidebarButton Text="Updates" Font="codicon" Icon=""/>
+                                
                                 <controls:SidebarCategory Title="Management"/>
+                                <controls:SidebarButton Text="Tiles" Font="codicon" Icon=""/>
+                                <controls:SidebarButton Text="Floating Images" Font="codicon" Icon="" IsEnabled="False"/>
+                                <controls:SidebarButton Text="Notes" Font="codicon" Icon="" IsEnabled="False"/>
                         </StackPanel>
                 </Border>
-                <!-- New Tile Field -->
-                <Grid Grid.Column="1">
-                        <Grid.Background><SolidColorBrush Color="#11000000"></SolidColorBrush></Grid.Background>
-                </Grid>
-
+                <!-- Settings: General -->
+                <Border Grid.Column="1"
+                        BorderThickness="0,0.6,0.6,0.6" BorderBrush="{StaticResource BaseBorderColor}"
+                        IsVisible="True">
+                        <Border.Background><SolidColorBrush Color="#0A000000"></SolidColorBrush></Border.Background>
+                        <Grid>
+                                <StackPanel Margin="10">
+                                        <TextBlock FontSize="16" Margin="0,0,0,5" Foreground="{StaticResource BaseTitleColor}">Settings: General</TextBlock>
+                                        <CheckBox>Autostart enabled</CheckBox>
+                                        <CheckBox>Hide this window after application startup</CheckBox>
+                                        <CheckBox><WrapPanel>
+                                                <TextBlock Padding="0,3,6,0">Special effects</TextBlock>
+                                                <Border CornerRadius="5" Background="#0A0A0A">
+                                                        <TextBlock Foreground="#ffffff" Padding="3">Disabling will will increase performance</TextBlock>
+                                                </Border>
+                                        </WrapPanel></CheckBox>
+                                        <CheckBox>Experimental features</CheckBox>
+                                </StackPanel>
+                                <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">
+                                        <Button>Default</Button>
+                                        <Button Margin="5,0,0,0">Apply</Button>
+                                </WrapPanel>
+                        </Grid>
+                </Border>
+                <!-- Settings: General -->
+                <Border Grid.Column="1"
+                        BorderThickness="0,0.6,0.6,0.6" BorderBrush="{StaticResource BaseBorderColor}"
+                        IsVisible="False">
+                        <Border.Background><SolidColorBrush Color="#0A000000"></SolidColorBrush></Border.Background>
+                        <Grid>
+                                <StackPanel Margin="10">
+                                        <TextBlock>Settings: General</TextBlock>
+                                        <CheckBox>Autostart enabled</CheckBox>
+                                        <CheckBox>Hide this window after application startup</CheckBox>
+                                        <CheckBox><WrapPanel>
+                                                <TextBlock Padding="0,3,6,0">Special effects</TextBlock>
+                                                <Border CornerRadius="5" Background="#0A0A0A">
+                                                        <TextBlock Foreground="#ffffff" Padding="3">Disabling will will increase performance</TextBlock>
+                                                </Border>
+                                        </WrapPanel></CheckBox>
+                                        <CheckBox>Experimental features</CheckBox>
+                                </StackPanel>
+                                <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">
+                                        <Button>Default</Button>
+                                        <Button Margin="5,0,0,0">Apply</Button>
+                                </WrapPanel>
+                        </Grid>
+                </Border>
         </Grid>
 </Window>

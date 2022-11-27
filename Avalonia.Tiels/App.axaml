@@ -6,5 +6,6 @@
     </Application.Styles>
     <Application.Resources>
         <Color x:Key="BaseBorderColor">#CFCFCF</Color>
+        <Color x:Key="BaseTitleColor">#666666</Color>
     </Application.Resources>
 </Application>

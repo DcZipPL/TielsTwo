@@ -12,45 +12,44 @@
                         <ColumnDefinition Width="3*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <!-- Side Navbar -->
-                <Grid>
-                        <Grid.Background><SolidColorBrush Color="#11ffffff"></SolidColorBrush></Grid.Background>
-                </Grid>
+                <Border BorderThickness="0,0,0.6,0" BorderBrush="{StaticResource BaseBorderColor}">
+                        <StackPanel>
+                                <!-- "Create" Tag -->
+                                <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource BaseBorderColor}">
+                                        <TextBlock Margin="0,5,0,0" Foreground="#666666" TextAlignment="Center">Create</TextBlock>
+                                </Border>
+                                <Button VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                                        <Button.Background><SolidColorBrush Color="#00000000"></SolidColorBrush></Button.Background>
+                                        <Grid>
+                                                <TextBlock FontFamily="codicon" VerticalAlignment="Bottom"></TextBlock>
+                                                <TextBlock Margin="20,0">Create New Tile</TextBlock>
+                                        </Grid>
+                                </Button>
+                                <Button VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                                        <Button.Background><SolidColorBrush Color="#00000000"></SolidColorBrush></Button.Background>
+                                        <Grid>
+                                                <TextBlock FontFamily="codicon" VerticalAlignment="Bottom"></TextBlock>
+                                                <TextBlock Margin="20,0">Create Directory Portal</TextBlock>
+                                        </Grid>
+                                </Button>
+                                <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource BaseBorderColor}">
+                                        <TextBlock Margin="0,5,0,0" Foreground="#666666" TextAlignment="Center">Settings</TextBlock>
+                                </Border>
+                                <Button VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                                        <Button.Background><SolidColorBrush Color="#00000000"></SolidColorBrush></Button.Background>
+                                        <Grid>
+                                                <TextBlock FontFamily="codicon" VerticalAlignment="Bottom"></TextBlock>
+                                                <TextBlock Margin="20,0">General</TextBlock>
+                                        </Grid>
+                                </Button>
+                                <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource BaseBorderColor}">
+                                        <TextBlock Margin="0,5,0,0" Foreground="#666666" TextAlignment="Center">Managment</TextBlock>
+                                </Border>
+                        </StackPanel>
+                </Border>
                 <!-- New Tile Field -->
                 <Grid Grid.Column="1">
-                        <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                HorizontalContentAlignment="Center"
-                                VerticalContentAlignment="Center"
-                                Margin="30, 160">
-                                <Grid>
-                                        <Grid.RowDefinitions>
-                                                <RowDefinition Height="1*"></RowDefinition>
-                                                <RowDefinition Height="1*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock>Quick Create Tile</TextBlock>
-                                        <TextBlock Grid.Row="1" FontFamily="codicon" FontSize="40" TextAlignment="Center"></TextBlock>
-                                </Grid>
-                        </Button>
-                        <Button Grid.Column="1"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                HorizontalContentAlignment="Center"
-                                VerticalContentAlignment="Center"
-                                Margin="30, 160">
-                                <Grid>
-                                        <Grid.RowDefinitions>
-                                                <RowDefinition Height="1*"></RowDefinition>
-                                                <RowDefinition Height="1*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock>Create Directory Portal</TextBlock>
-                                        <TextBlock Grid.Row="1" FontFamily="codicon" FontSize="40" TextAlignment="Center"></TextBlock>
-                                </Grid>
-                        </Button>
+                        <Grid.Background><SolidColorBrush Color="#11000000"></SolidColorBrush></Grid.Background>
                 </Grid>
 
         </Grid>

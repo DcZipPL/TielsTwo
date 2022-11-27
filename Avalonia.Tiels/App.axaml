@@ -4,4 +4,7 @@
     <Application.Styles>
         <FluentTheme Mode="Light"/>
     </Application.Styles>
+    <Application.Resources>
+        <Color x:Key="BaseBorderColor">#CFCFCF</Color>
+    </Application.Resources>
 </Application>

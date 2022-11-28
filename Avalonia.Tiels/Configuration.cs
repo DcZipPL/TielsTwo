@@ -4,6 +4,7 @@ using System.IO;
 using System.Numerics;
 using System.Security;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Layout;
 using Avalonia.Platform;
 using Avalonia.Themes.Fluent;
@@ -14,52 +15,58 @@ namespace Avalonia.Tiels;
 
 public class Configuration
 {
-    public Configuration()
+    public Configuration(IControlledApplicationLifetime closer)
     {
         try
         {
+            // Create config directory
             Directory.CreateDirectory(GetConfigDirectory());
+
+            // Create config file
+            string defaultConf = Path.Combine(Environment.CurrentDirectory, "global.default.toml");
+            if (!File.Exists(defaultConf))
+            {
+                throw new FileNotFoundException("Couldn't find default configuration file.", defaultConf);
+            }
+
+            string defaultModel = File.ReadAllText(defaultConf);
+            GlobalModel model = Toml.ToModel<GlobalModel>(defaultModel);
+            model.Settings.TilesPath = GetDefaultTilesDirectory();
+            string toml = Toml.FromModel(model);
             
+            File.WriteAllText(toml, Path.Combine(GetConfigDirectory(), "global.toml"));
         }
         catch (UnauthorizedAccessException uae)
         {
-            MessageWindow.Open("Error: "+uae.Message, "~0x0001 " + uae);
+            MessageWindow.Open("Error: "+uae.Message, "~0x0001 " + uae).Closed += (sender, args) =>
+            {
+                closer.Shutdown();
+            };
             // Open as administrator / sudo
         }
         catch (Exception e)
         {
-            MessageWindow.Open("Error: "+e.Message, "~0x0002 " + e);
+            MessageWindow.Open("Error: "+e.Message, "~0x0002 " + e).Closed += (sender, args) =>
+            {
+                closer.Shutdown();
+            };
         }
     }
 
     public static Configuration Load()
     {
-        var gm = new GlobalModel
-        {
-            Settings =
-            {
-                TilesLocation = Path.Combine(GetTilesDirectory(), "Tiels"), AutoStart = true, HideSettings = true,
-                Experimental = false, SpecialEffects = true
-            },
-            Appearance =
-            {
-                Color = Color.Black, TransparencyLevel = WindowTransparencyLevel.Transparent,
-                Theme = FluentThemeMode.Dark
-            }, PropertiesMetadata = new TomlPropertiesMetadata()
-        };
-        string toml = Toml.FromModel(gm);
         return null;
     }
 
-    public static string GetTilesDirectory()
+    private static string GetDefaultTilesDirectory()
     {
-        return Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Tiels");
     }
     
     public static string GetConfigDirectory()
     {
         if (OperatingSystem.IsLinux() || OperatingSystem.IsMacCatalyst() || OperatingSystem.IsMacOS() || OperatingSystem.IsFreeBSD())
-            return "~/.config/tiels";
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config/tiels");
         if (OperatingSystem.IsWindows())
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Tiels");
         
@@ -67,31 +74,36 @@ public class Configuration
     }
     public static bool IsFirstStartup()
     {
-        return Directory.Exists(GetConfigDirectory());
+        return !Directory.Exists(GetConfigDirectory());
     }
     
     // Models
-    public class AppearanceModel
+    public class AppearanceModel : ITomlMetadataProvider
     {
-        public FluentThemeMode Theme;
-        public Color Color;
-        public WindowTransparencyLevel TransparencyLevel;
+        public string? Theme; // FluentThemeMode (lowercase)
+        public string? Color;
+        public int TransparencyLevel; // WindowTransparencyLevel
+        
+        public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
     }
     
-    public class SettingsModel
+    public class SettingsModel : ITomlMetadataProvider
     {
-        public string TilesLocation;
+        public string? TilesPath;
         public bool AutoStart;
         public bool HideSettings;
         public bool SpecialEffects;
         public bool Experimental;
+        
+        public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
     }
     
     public class GlobalModel : ITomlMetadataProvider
     {
-        public SettingsModel Settings;
-        public AppearanceModel Appearance;
-
+        public string? amount;
+        public SettingsModel? Settings;
+        public AppearanceModel? Appearance;
+        
         public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
     }
     
@@ -108,7 +120,7 @@ public class Configuration
         public bool Hidden;
         public Vector2 Size;
         public Vector2 Location;
-        public BarAlignment EditBarAlignment;
+        public int EditBarAlignment; // BarAlignment
         public AppearanceModel? Appearance;
         
         public TomlPropertiesMetadata? PropertiesMetadata { get; set; }

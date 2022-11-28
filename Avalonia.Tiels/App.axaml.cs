@@ -24,10 +24,9 @@ namespace Avalonia.Tiels
 
 		private void ExecuteApplication(IControlledApplicationLifetime desktop)
 		{
-			if (Configuration.IsFirstStartup())
+			if (/*Configuration.IsFirstStartup()*/true)
 			{
-				config = new Configuration();
-				SettingsWindow window = new SettingsWindow(); window.Show();
+				config = new Configuration(desktop);
 			}
 			else
 			{

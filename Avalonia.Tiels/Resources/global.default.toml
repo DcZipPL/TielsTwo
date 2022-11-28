@@ -1,0 +1,13 @@
+Amount = ""
+
+[Settings]
+tiles_path = "{not_initialized}"
+autostart = true
+hide_settings = true
+special_effects = true
+experimental = false
+
+[Appearance]
+theme = "dark"
+color = "#55000000"
+transparency = 1

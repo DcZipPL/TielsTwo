@@ -26,6 +26,9 @@
         <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Resources" />
+      <None Remove="Resources\global.default.toml" />
+      <Resource Include="Resources\global.default.toml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 </Project>

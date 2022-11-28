@@ -6,6 +6,7 @@ namespace Avalonia.Tiels
 {
 	public partial class App : Application
 	{
+		public Configuration config;
 		public override void Initialize()
 		{
 			AvaloniaXamlLoader.Load(this);
@@ -23,8 +24,16 @@ namespace Avalonia.Tiels
 
 		private void ExecuteApplication(IControlledApplicationLifetime desktop)
 		{
-			SettingsWindow window = new SettingsWindow();
-			window.Show();
+			if (Configuration.IsFirstStartup())
+			{
+				config = new Configuration();
+				SettingsWindow window = new SettingsWindow(); window.Show();
+			}
+			else
+			{
+				// Load tiles
+				config = Configuration.Load();
+			}
 		}
 	}
 }

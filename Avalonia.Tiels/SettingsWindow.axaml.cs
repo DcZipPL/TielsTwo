@@ -3,9 +3,9 @@ using Avalonia.Logging;
 
 namespace Avalonia.Tiels
 {
-	public partial class MainWindow : Window
+	public partial class SettingsWindow : Window
 	{
-		public MainWindow()
+		public SettingsWindow()
 		{
 			InitializeComponent();
 		}

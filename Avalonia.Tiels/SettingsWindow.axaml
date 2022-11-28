@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Avalonia.Tiels.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Avalonia.Tiels.MainWindow"
+        x:Class="Avalonia.Tiels.SettingsWindow"
         Width="1000" Height="550"
         Title="Tiels">
         <Grid>

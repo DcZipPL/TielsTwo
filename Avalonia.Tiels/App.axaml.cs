@@ -13,12 +13,18 @@ namespace Avalonia.Tiels
 
 		public override void OnFrameworkInitializationCompleted()
 		{
-			if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+			if (ApplicationLifetime is IControlledApplicationLifetime desktop)
 			{
-				desktop.MainWindow = new MainWindow();
+				ExecuteApplication(desktop);
 			}
 
 			base.OnFrameworkInitializationCompleted();
+		}
+
+		private void ExecuteApplication(IControlledApplicationLifetime desktop)
+		{
+			SettingsWindow window = new SettingsWindow();
+			window.Show();
 		}
 	}
 }

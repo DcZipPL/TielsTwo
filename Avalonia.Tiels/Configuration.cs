@@ -72,6 +72,8 @@ public class Configuration
     }
     #endregion
 
+    #region Helpers
+
     private static string GetDefaultTilesDirectory()
     {
         return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Tiels");
@@ -90,8 +92,66 @@ public class Configuration
     {
         return !Directory.Exists(GetConfigDirectory());
     }
+
+    #endregion
+
+    #region Request Appearance
+    public FluentThemeMode ReqGlobalTheme()
+    {
+        Enum.TryParse(ReqModel().Appearance!.Theme, true, out FluentThemeMode theme);
+        return theme;
+    }
     
-    // Models
+    public WindowTransparencyLevel ReqGlobalTransparencyLevel()
+    {
+        return (WindowTransparencyLevel) ReqModel().Appearance!.Transparency;
+    }
+    
+    public Color ReqGlobalColor()
+    {
+        return Util.ColorFromHex(ReqModel().Appearance!.Color);
+    }
+    #endregion
+
+    #region Request Settings
+
+    public string ReqTilesPath()
+    {
+        return ReqModel().Settings!.TilesPath ?? "";
+    }
+    
+    public bool ReqAutostart()
+    {
+        return ReqModel().Settings!.AutoStart;
+    }
+
+    public bool ReqAutostartHideSettings()
+    {
+        return ReqModel().Settings!.HideSettings;
+    }
+    
+    public bool ReqSpecialEffects()
+    {
+        return ReqModel().Settings!.SpecialEffects;
+    }
+    
+    public bool ReqExperimental()
+    {
+        return ReqModel().Settings!.Experimental;
+    }
+
+    #endregion
+    
+    private Models.GlobalModel ReqModel()
+    {
+        var defaultModel = File.ReadAllText(Path.Combine(GetConfigDirectory(), "global.toml"));
+        var model = Toml.ToModel<Models.GlobalModel>(defaultModel);
+        if (model.Appearance == null || model.Settings == null)
+            throw new NoNullAllowedException("The [settings] or [appearance] table is missing. Configuration is possibly corrupted.");
+        return model;
+    }
+    
+    #region Models
     public enum BarAlignment
     {
         Top,
@@ -141,4 +201,5 @@ public class Configuration
             public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
         }
     }
+    #endregion
 }

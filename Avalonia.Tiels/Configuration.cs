@@ -77,7 +77,7 @@ public class Configuration
 
     #region Helpers
 
-    private static string GetDefaultTilesDirectory()
+    public static string GetDefaultTilesDirectory()
     {
         return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Tiels");
     }

@@ -6,7 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.Tiels.SettingsWindow"
         Width="1000" Height="550"
-        Title="Tiels">
+        Title="Tiels" Opened="SettingsOpened">
         <Grid>
                 <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -65,7 +65,7 @@
                                 <StackPanel Margin="10">
                                         <TextBlock FontSize="16" Margin="0,0,0,10" Foreground="{StaticResource BaseTitleColor}">Settings: General</TextBlock>
                                         <Label>Default tiles directory</Label>
-                                        <TextBox x:Name="TilesDirectoryBox" Margin="0,0,0,10"></TextBox>
+                                        <TextBox x:Name="TilesDirectoryBox" Margin="0,0,0,10" KeyUp="TilePathTextBoxChanged"></TextBox>
                                         <CheckBox x:Name="AutostartCheckBox">Autostart enabled</CheckBox>
                                         <CheckBox x:Name="HideWindowCheckBox">Hide this window after application startup</CheckBox>
                                         <CheckBox x:Name="EffectsCheckBox"><WrapPanel>

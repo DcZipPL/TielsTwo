@@ -18,6 +18,8 @@ namespace Avalonia.Tiels;
 
 public class Configuration
 {
+    private readonly object _readWriteLock = new object();
+    
     #region Loaders
     private Configuration(IControlledApplicationLifetime closer)
     {
@@ -192,18 +194,25 @@ public class Configuration
     
     private Models.GlobalModel ReqModel()
     {
-        var defaultModel = File.ReadAllText(Path.Combine(GetConfigDirectory(), "global.toml"));
-        var model = Toml.ToModel<Models.GlobalModel>(defaultModel);
-        if (model.Appearance == null || model.Settings == null)
-            throw new NoNullAllowedException("The [settings] or [appearance] table is missing. Configuration is possibly corrupted.");
-        return model;
+        lock (_readWriteLock)
+        {
+            var defaultModel = File.ReadAllText(Path.Combine(GetConfigDirectory(), "global.toml"));
+            var model = Toml.ToModel<Models.GlobalModel>(defaultModel);
+            if (model.Appearance == null || model.Settings == null)
+                throw new NoNullAllowedException(
+                    "The [settings] or [appearance] table is missing. Configuration is possibly corrupted.");
+            return model;
+        }
     }
 
     private void SeedModel(Models.GlobalModel model)
     {
-        var toml = Toml.FromModel(model);
+        lock (_readWriteLock)
+        {
+            var toml = Toml.FromModel(model);
 
-        File.WriteAllText(Path.Combine(GetConfigDirectory(), "global.toml"), toml);
+            File.WriteAllText(Path.Combine(GetConfigDirectory(), "global.toml"), toml);
+        }
     }
     
     #region Models

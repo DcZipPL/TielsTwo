@@ -1,13 +1,18 @@
-Amount = ""
-
-[Settings]
-tiles_path = "{not_initialized}"
-autostart = true
-hide_settings = true
+[settings]
+tiles_path = "not_initialized"
+auto_start = true
+hide_settings = true # Hide settings when application autostarts
 special_effects = true
 experimental = false
 
-[Appearance]
-theme = "dark"
-color = "#55000000"
+[appearance]
+theme = "dark" # 'light' and 'dark' options supported
+color = "#55000000" # ARGB Color
+
+# 0: None, The window background is Solid Color.
+# 1: Transparent, The window background is Transparent.
+# 2: Blur, The window background is a blur-behind.
+# 3: AcrylicBlur, The window background is a blur-behind with a high blur radius. This level may fallback to Blur.
+# 4: ForceAcrylicBlur, Force acrylic on some incompatible versions of Windows 10.
+# 5. Mica, The window background is based on desktop wallpaper tint with a blur. This will only work on Windows 11.
 transparency = 1

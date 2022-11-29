@@ -1,7 +1,9 @@
 using System;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Numerics;
+using System.Runtime.Serialization;
 using System.Security;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -15,7 +17,12 @@ namespace Avalonia.Tiels;
 
 public class Configuration
 {
-    public Configuration(IControlledApplicationLifetime closer)
+    #region Loaders
+    private Configuration(IControlledApplicationLifetime closer)
+    {
+    }
+
+    public static Configuration Init(IControlledApplicationLifetime closer)
     {
         try
         {
@@ -23,40 +30,47 @@ public class Configuration
             Directory.CreateDirectory(GetConfigDirectory());
 
             // Create config file
-            string defaultConf = Path.Combine(Environment.CurrentDirectory, "global.default.toml");
+            var defaultConf = Path.Combine(Environment.CurrentDirectory, "global.default.toml");
             if (!File.Exists(defaultConf))
             {
                 throw new FileNotFoundException("Couldn't find default configuration file.", defaultConf);
             }
 
-            string defaultModel = File.ReadAllText(defaultConf);
-            GlobalModel model = Toml.ToModel<GlobalModel>(defaultModel);
-            model.Settings.TilesPath = GetDefaultTilesDirectory();
-            string toml = Toml.FromModel(model);
-            
-            File.WriteAllText(toml, Path.Combine(GetConfigDirectory(), "global.toml"));
+            var defaultModel = File.ReadAllText(defaultConf);
+            var model = Toml.ToModel<Models.GlobalModel>(defaultModel);
+            if (model.Settings != null)
+            {
+                model.Settings.TilesPath = GetDefaultTilesDirectory();
+                var toml = Toml.FromModel(model);
+
+                File.WriteAllText(Path.Combine(GetConfigDirectory(), "global.toml"), toml);
+            }
+            else throw new NoNullAllowedException("The [settings] table is missing. Default configuration is possibly corrupted. Redownload file to continue.");
         }
         catch (UnauthorizedAccessException uae)
         {
-            MessageWindow.Open("Error: "+uae.Message, "~0x0001 " + uae).Closed += (sender, args) =>
+            MessageWindow.Open("Error: " + uae.Message, "~0x0001 " + uae).Closed += (sender, args) =>
             {
                 closer.Shutdown();
             };
-            // Open as administrator / sudo
+            // TODO: Open as administrator / sudo
         }
         catch (Exception e)
         {
-            MessageWindow.Open("Error: "+e.Message, "~0x0002 " + e).Closed += (sender, args) =>
+            MessageWindow.Open("Error: " + e.Message, "~0x0002 " + e).Closed += (sender, args) =>
             {
                 closer.Shutdown();
             };
         }
+
+        return new Configuration(closer);
     }
 
-    public static Configuration Load()
+    public static Configuration Load(IControlledApplicationLifetime closer)
     {
-        return null;
+        return new Configuration(closer);
     }
+    #endregion
 
     private static string GetDefaultTilesDirectory()
     {
@@ -78,51 +92,53 @@ public class Configuration
     }
     
     // Models
-    public class AppearanceModel : ITomlMetadataProvider
-    {
-        public string? Theme; // FluentThemeMode (lowercase)
-        public string? Color;
-        public int TransparencyLevel; // WindowTransparencyLevel
-        
-        public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
-    }
-    
-    public class SettingsModel : ITomlMetadataProvider
-    {
-        public string? TilesPath;
-        public bool AutoStart;
-        public bool HideSettings;
-        public bool SpecialEffects;
-        public bool Experimental;
-        
-        public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
-    }
-    
-    public class GlobalModel : ITomlMetadataProvider
-    {
-        public string? amount;
-        public SettingsModel? Settings;
-        public AppearanceModel? Appearance;
-        
-        public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
-    }
-    
     public enum BarAlignment
     {
         Top,
         Bottom
     }
     
-    public class TileModel : ITomlMetadataProvider
+    public class Models
     {
-        public string ID;
-        public string Name;
-        public bool Hidden;
-        public Vector2 Size;
-        public Vector2 Location;
-        public int EditBarAlignment; // BarAlignment
-        public AppearanceModel? Appearance;
+        public class Appearance : ITomlMetadataProvider
+        {
+            public string? Theme { get; set; } // FluentThemeMode (lowercase)
+            public string? Color { get; set; }
+            public int Transparency { get; set; } // WindowTransparencyLevel
+            
+            TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
+        }
+    
+        public class Settings : ITomlMetadataProvider
+        {
+            public string? TilesPath { get; set; }
+            public bool AutoStart { get; set; }
+            public bool HideSettings { get; set; }
+            public bool SpecialEffects { get; set; }
+            public bool Experimental { get; set; }
+            
+            TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
+        }
+    
+        public class GlobalModel : ITomlMetadataProvider
+        {
+            public Settings? Settings { get; set; }
+            public Appearance? Appearance { get; set; }
         
-        public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
+            TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
+        }
+
+        public class TileModel : ITomlMetadataProvider
+        {
+            public string ID;
+            public string Name;
+            public bool Hidden;
+            public Vector2 Size;
+            public Vector2 Location;
+            public int EditBarAlignment; // BarAlignment
+            public Appearance? Appearance;
+        
+            public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
+        }
     }
 }

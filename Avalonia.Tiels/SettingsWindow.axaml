@@ -35,7 +35,7 @@
                 <!-- Settings: General -->
                 <Border Grid.Column="1"
                         BorderThickness="0,0.6,0.6,0.6" BorderBrush="{StaticResource BaseBorderColor}"
-                        IsVisible="True">
+                        IsVisible="False">
                         <Border.Background><SolidColorBrush Color="#0A000000"></SolidColorBrush></Border.Background>
                         <Grid>
                                 <StackPanel Margin="10">
@@ -59,24 +59,26 @@
                 <!-- Settings: General -->
                 <Border Grid.Column="1"
                         BorderThickness="0,0.6,0.6,0.6" BorderBrush="{StaticResource BaseBorderColor}"
-                        IsVisible="False">
+                        IsVisible="True">
                         <Border.Background><SolidColorBrush Color="#0A000000"></SolidColorBrush></Border.Background>
                         <Grid>
                                 <StackPanel Margin="10">
-                                        <TextBlock>Settings: General</TextBlock>
-                                        <CheckBox>Autostart enabled</CheckBox>
-                                        <CheckBox>Hide this window after application startup</CheckBox>
-                                        <CheckBox><WrapPanel>
-                                                <TextBlock Padding="0,3,6,0">Special effects</TextBlock>
+                                        <TextBlock FontSize="16" Margin="0,0,0,10" Foreground="{StaticResource BaseTitleColor}">Settings: General</TextBlock>
+                                        <Label>Default tiles directory</Label>
+                                        <TextBox x:Name="TilesDirectoryBox" Margin="0,0,0,10"></TextBox>
+                                        <CheckBox x:Name="AutostartCheckBox">Autostart enabled</CheckBox>
+                                        <CheckBox x:Name="HideWindowCheckBox">Hide this window after application startup</CheckBox>
+                                        <CheckBox x:Name="EffectsCheckBox"><WrapPanel>
+                                                <TextBlock Padding="0,3,6,0">UI Effects</TextBlock>
                                                 <Border CornerRadius="5" Background="#0A0A0A">
                                                         <TextBlock Foreground="#ffffff" Padding="3">Disabling will will increase performance</TextBlock>
                                                 </Border>
                                         </WrapPanel></CheckBox>
-                                        <CheckBox>Experimental features</CheckBox>
+                                        <CheckBox x:Name="ExperimentalCheckBox">Experimental features</CheckBox>
                                 </StackPanel>
                                 <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">
                                         <Button>Default</Button>
-                                        <Button Margin="5,0,0,0">Apply</Button>
+                                        <Button x:Name="ApplyButton" Margin="5,0,0,0" Click="ApplyButtonClicked">Apply</Button>
                                 </WrapPanel>
                         </Grid>
                 </Border>

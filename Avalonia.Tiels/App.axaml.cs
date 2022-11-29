@@ -8,6 +8,8 @@ namespace Avalonia.Tiels
 	{
 		public Configuration Config { get; set; }
 		
+		public SettingsWindow? ActiveSettingsWindow;
+		
 		public override void Initialize()
 		{
 			AvaloniaXamlLoader.Load(this);
@@ -33,6 +35,12 @@ namespace Avalonia.Tiels
 			{
 				// Load tiles
 				Config = Configuration.Load(desktop);
+			}
+			
+			if (!Config.AutostartHideSettings || Configuration.IsFirstStartup())
+			{
+				ActiveSettingsWindow = new SettingsWindow();
+				ActiveSettingsWindow.Show();
 			}
 		}
 	}

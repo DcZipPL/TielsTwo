@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Numerics;
@@ -96,48 +97,95 @@ public class Configuration
     #endregion
 
     #region Request Appearance
-    public FluentThemeMode ReqGlobalTheme()
+    public FluentThemeMode GlobalTheme
     {
-        Enum.TryParse(ReqModel().Appearance!.Theme, true, out FluentThemeMode theme);
-        return theme;
+        get { Enum.TryParse(ReqModel().Appearance!.Theme, true, out FluentThemeMode theme); return theme; }
+        set
+        {
+            var model = ReqModel();
+            model.Appearance!.Theme = value.ToString().ToLower();
+            SeedModel(model);
+        }
     }
-    
-    public WindowTransparencyLevel ReqGlobalTransparencyLevel()
+
+    public WindowTransparencyLevel GlobalTransparencyLevel
     {
-        return (WindowTransparencyLevel) ReqModel().Appearance!.Transparency;
+        get { return (WindowTransparencyLevel) ReqModel().Appearance!.Transparency; }
+        set
+        {
+            var model = ReqModel();
+            model.Appearance!.Transparency = (int)value;
+            SeedModel(model);
+        }
     }
-    
-    public Color ReqGlobalColor()
+
+    public Color GlobalColor
     {
-        return Util.ColorFromHex(ReqModel().Appearance!.Color);
+        get { return Util.ColorFromHex(ReqModel().Appearance!.Color); }
+        set
+        {
+            var model = ReqModel();
+            model.Appearance!.Color = Util.ColorToHex(value);
+            SeedModel(model);
+        }
     }
     #endregion
 
     #region Request Settings
 
-    public string ReqTilesPath()
+    public string TilesPath
     {
-        return ReqModel().Settings!.TilesPath ?? "";
+        get { return ReqModel().Settings!.TilesPath ?? ""; }
+        set
+        {
+            var model = ReqModel();
+            model.Settings!.TilesPath = value;
+            SeedModel(model);
+        }
     }
     
-    public bool ReqAutostart()
+    public bool Autostart
     {
-        return ReqModel().Settings!.AutoStart;
+        get{ return ReqModel().Settings!.AutoStart; }
+        set
+        {
+            var model = ReqModel();
+            model.Settings!.AutoStart = value;
+            SeedModel(model);
+        }
     }
 
-    public bool ReqAutostartHideSettings()
+    public bool AutostartHideSettings
     {
-        return ReqModel().Settings!.HideSettings;
+        get{ return ReqModel().Settings!.HideSettings; }
+        set
+        {
+            var model = ReqModel();
+            model.Settings!.HideSettings = value;
+            SeedModel(model);
+        }
     }
     
-    public bool ReqSpecialEffects()
+    public bool SpecialEffects
     {
-        return ReqModel().Settings!.SpecialEffects;
+        get { return ReqModel().Settings!.SpecialEffects; }
+        set
+        {
+            var model = ReqModel();
+            model.Settings!.SpecialEffects = value;
+            SeedModel(model);
+        }
     }
     
-    public bool ReqExperimental()
+    public bool Experimental
     {
-        return ReqModel().Settings!.Experimental;
+        get { return ReqModel().Settings!.Experimental; }
+        set
+        {
+            var model = ReqModel();
+            model.Settings!.Experimental = value;
+            SeedModel(model);
+        }
     }
 
     #endregion
@@ -150,14 +198,24 @@ public class Configuration
             throw new NoNullAllowedException("The [settings] or [appearance] table is missing. Configuration is possibly corrupted.");
         return model;
     }
+
+    private void SeedModel(Models.GlobalModel model)
+    {
+        var toml = Toml.FromModel(model);
+
+        File.WriteAllText(Path.Combine(GetConfigDirectory(), "global.toml"), toml);
+    }
     
     #region Models
+    #pragma warning disable CS8618
     public enum BarAlignment
     {
         Top,
         Bottom
     }
     
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class Models
     {
         public class Appearance : ITomlMetadataProvider
@@ -190,7 +248,7 @@ public class Configuration
 
         public class TileModel : ITomlMetadataProvider
         {
-            public string ID;
+            public string Id;
             public string Name;
             public bool Hidden;
             public Vector2 Size;
@@ -201,5 +259,6 @@ public class Configuration
             public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
         }
     }
+    #pragma warning restore CS8618
     #endregion
 }

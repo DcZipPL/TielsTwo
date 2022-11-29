@@ -12,7 +12,7 @@ public class Util
 		colorcode = colorcode.TrimStart('#');
 		
 		if (colorcode.Length == 6)
-			return Color.FromArgb(255, // hardcoded opaque
+			return Color.FromArgb(85, // hardcoded opaque
 				int.Parse(colorcode.Substring(0,2), NumberStyles.HexNumber),
 				int.Parse(colorcode.Substring(2,2), NumberStyles.HexNumber),
 				int.Parse(colorcode.Substring(4,2), NumberStyles.HexNumber));
@@ -22,5 +22,10 @@ public class Util
 				int.Parse(colorcode.Substring(2, 2), NumberStyles.HexNumber),
 				int.Parse(colorcode.Substring(4, 2), NumberStyles.HexNumber),
 				int.Parse(colorcode.Substring(6, 2), NumberStyles.HexNumber));
+	}
+	
+	public static string ColorToHex(Color c)
+	{
+		return "#" + c.A.ToString("X2") + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
 	}
 }

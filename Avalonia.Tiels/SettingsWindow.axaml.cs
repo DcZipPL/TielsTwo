@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Logging;
 
 namespace Avalonia.Tiels
@@ -9,5 +10,12 @@ namespace Avalonia.Tiels
 		{
 			InitializeComponent();
 		}
+		
+		private void ApplySettings()
+		{
+			
+		}
+
+		private void ApplyButtonClicked(object? sender, RoutedEventArgs e) => ApplySettings();
 	}
 }

@@ -26,15 +26,17 @@ namespace Avalonia.Tiels
 			if (current.Config.TilesPath != TilesDirectoryBox.Text)
 				if (Directory.Exists(TilesDirectoryBox.Text))
 						current.Config.TilesPath = TilesDirectoryBox.Text;
-
+		}
+		
+		private void RollbackSettings()
+		{
+			
 		}
 		
 		private void SettingsOpened(object? sender, EventArgs e)
 		{
 			TilesDirectoryBox.Watermark = Configuration.GetDefaultTilesDirectory();
 		}
-		
-		private void ApplyButtonClicked(object? sender, RoutedEventArgs e) => ApplySettings();
 
 		private void TilePathTextBoxChanged(object? sender, KeyEventArgs e)
 		{
@@ -45,9 +47,13 @@ namespace Avalonia.Tiels
 			}
 			else
 			{
+				// TODO: Use resources and not hardcoded values
 				TilesDirectoryBox.BorderBrush = new SolidColorBrush(0xFF2A2A2A);
 				TilesDirectoryBox.Foreground = new SolidColorBrush(0xFF000000);
 			}
 		}
+
+		private void ApplyButtonClicked(object? sender, RoutedEventArgs e) => ApplySettings();
+		private void DefaultButtonClicked(object? sender, RoutedEventArgs e) => RollbackSettings();
 	}
 }

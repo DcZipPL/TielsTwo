@@ -1,4 +1,4 @@
-# TielsTwo
+# Tiels II
 Complete Rewrite of Tiels: An alternative for Fences.
 
 This rewrite focuses in Stablity and making this program cross-platform.

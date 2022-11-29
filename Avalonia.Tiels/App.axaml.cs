@@ -1,3 +1,5 @@
+using System;
+using System.Text;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -17,9 +19,24 @@ namespace Avalonia.Tiels
 
 		public override void OnFrameworkInitializationCompleted()
 		{
-			if (ApplicationLifetime is IControlledApplicationLifetime desktop)
+			var args = Environment.GetCommandLineArgs();
+
+			if (args.Length <= 1 || args[1] != ErrorHandler.ERROR_MODE)
 			{
-				ExecuteApplication(desktop);
+				if (ApplicationLifetime is IControlledApplicationLifetime desktop)
+				{
+					ExecuteApplication(desktop);
+				}
+			}
+			else
+			{
+				if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime eDesktop)
+				{
+					var msgWindow = new MessageWindow();
+					msgWindow.WindowTitle = Encoding.UTF8.GetString(Convert.FromBase64String(args[2]));
+					msgWindow.Message = Encoding.UTF8.GetString(Convert.FromBase64String(args[3]));
+					eDesktop.MainWindow = msgWindow;
+				}
 			}
 
 			base.OnFrameworkInitializationCompleted();

@@ -6,7 +6,7 @@ using Avalonia.Markup.Xaml;
 
 namespace Avalonia.Tiels;
 
-public partial class TileWindow : Window, Tile
+public partial class TileWindow : Window
 {
 	public TileWindow()
 	{
@@ -25,7 +25,4 @@ public partial class TileWindow : Window, Tile
 	{
 		
 	}
-
-	public string TypeName => "FileTile";
-	public Vector2 Size { get; set; }
 }

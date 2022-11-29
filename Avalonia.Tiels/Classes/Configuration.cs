@@ -1,4 +1,5 @@
 using System;
+using System.Buffers.Text;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
@@ -6,6 +7,8 @@ using System.IO;
 using System.Numerics;
 using System.Runtime.Serialization;
 using System.Security;
+using System.Text;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Layout;
@@ -52,18 +55,14 @@ public class Configuration
         }
         catch (UnauthorizedAccessException uae)
         {
-            MessageWindow.Open("Error: " + uae.Message, "~0x0001 " + uae).Closed += (sender, args) =>
-            {
-                closer.Shutdown();
-            };
+            ErrorHandler.ShowErrorWindow(uae, "~(0x0001)");
+            throw;
             // TODO: Open as administrator / sudo
         }
         catch (Exception e)
         {
-            MessageWindow.Open("Error: " + e.Message, "~0x0002 " + e).Closed += (sender, args) =>
-            {
-                closer.Shutdown();
-            };
+            ErrorHandler.ShowErrorWindow(e, "~(0x0002)");
+            throw;
         }
 
         return new Configuration(closer);
@@ -93,7 +92,7 @@ public class Configuration
     }
     public static bool IsFirstStartup()
     {
-        return !Directory.Exists(GetConfigDirectory());
+        return !Directory.Exists(GetConfigDirectory()) || !File.Exists(Path.Combine(GetConfigDirectory(), "global.toml"));
     }
 
     #endregion

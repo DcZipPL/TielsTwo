@@ -77,7 +77,7 @@
                                         <CheckBox x:Name="ExperimentalCheckBox">Experimental features</CheckBox>
                                 </StackPanel>
                                 <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">
-                                        <Button>Default</Button>
+                                        <Button Click="DefaultButtonClicked">Default</Button>
                                         <Button x:Name="ApplyButton" Margin="5,0,0,0" Click="ApplyButtonClicked">Apply</Button>
                                 </WrapPanel>
                         </Grid>

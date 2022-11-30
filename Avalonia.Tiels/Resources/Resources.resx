@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="DefaultConfigMissingError" xml:space="preserve">
+        <value>Couldn't find default configuration file.</value>
+    </data>
+    <data name="PathDontExist" xml:space="preserve">
+        <value>Chosen path doesn't exist</value>
+    </data>
+    <data name="MissingSettingsTableError" xml:space="preserve">
+        <value>The [settings] table is missing. Default configuration is possibly corrupted.</value>
+    </data>
+    <data name="MissingSettingsAppearanceTableError" xml:space="preserve">
+        <value>The [settings] or [appearance] table is missing. Configuration is possibly corrupted.</value>
+    </data>
+    <data name="WindowTitleError" xml:space="preserve">
+        <value>Error: </value>
+    </data>
+    <data name="ChangesAccepted" xml:space="preserve">
+        <value>All changes accepted</value>
+    </data>
+    <data name="NoChanges" xml:space="preserve">
+        <value>No changes</value>
+    </data>
+    <data name="SettingsLabel" xml:space="preserve">
+        <value>Settings</value>
+    </data>
+    <data name="SettingsGeneral" xml:space="preserve">
+        <value>General</value>
+    </data>
+    <data name="SettingsAppearance" xml:space="preserve">
+        <value>Appearance</value>
+    </data>
+    <data name="SettingsUpdates" xml:space="preserve">
+        <value>Updates</value>
+    </data>
+    <data name="CreateLabel" xml:space="preserve">
+        <value>Create</value>
+    </data>
+    <data name="CreateTile" xml:space="preserve">
+        <value>Create New Tile</value>
+    </data>
+    <data name="CreateDirectoryPortal" xml:space="preserve">
+        <value>Create Directory Portal</value>
+    </data>
+    <data name="CreateNote" xml:space="preserve">
+        <value>Create Sticky Note</value>
+    </data>
+    <data name="CreateFloatingImage" xml:space="preserve">
+        <value>Create Floating Image</value>
+    </data>
+    <data name="ManagementLabel" xml:space="preserve">
+        <value>Management</value>
+    </data>
+    <data name="ManagementTiles" xml:space="preserve">
+        <value>Tiles</value>
+    </data>
+    <data name="ManagementNotes" xml:space="preserve">
+        <value>Notes</value>
+    </data>
+    <data name="ManagementFloatingImages" xml:space="preserve">
+        <value>Floating Images</value>
+    </data>
+    <data name="AutostartEnabled" xml:space="preserve">
+        <value>Autostart enabled</value>
+    </data>
+    <data name="HideAtStartup" xml:space="preserve">
+        <value>Hide this window after application startup</value>
+    </data>
+    <data name="SpecialEffects" xml:space="preserve">
+        <value>UI Effects</value>
+    </data>
+    <data name="ExperimentalFeatures" xml:space="preserve">
+        <value>Experimental features</value>
+    </data>
+    <data name="EffectsPerformanceWarning" xml:space="preserve">
+        <value>Disabling will increase performance</value>
+    </data>
+    <data name="Apply" xml:space="preserve">
+        <value>Apply</value>
+    </data>
+    <data name="Default" xml:space="preserve">
+        <value>Default</value>
+    </data>
+    <data name="DefaultTilesDirectory" xml:space="preserve">
+        <value>Default tiles directory</value>
+    </data>
+</root>

@@ -27,8 +27,30 @@
     </ItemGroup>
     <ItemGroup>
       <None Remove="Resources\global.default.toml" />
-      <Resource Include="Resources\global.default.toml">
+      <Resource Include="Assets\global.default.toml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Resource>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\Resources.pl.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.pl.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Resources.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Resources\Resources.pl.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.pl.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 </Project>

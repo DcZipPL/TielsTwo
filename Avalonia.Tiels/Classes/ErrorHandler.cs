@@ -14,7 +14,7 @@ public class ErrorHandler
 		System.Diagnostics.Process.Start(System.Reflection.Assembly.GetExecutingAssembly().Location.Replace(".dll", ".exe"),
 			ErrorHandler.ERROR_MODE +
 			" " +
-			Convert.ToBase64String(Encoding.UTF8.GetBytes("Error: " + e.Message)) +
+			Convert.ToBase64String(Encoding.UTF8.GetBytes(App.I18n.GetString("WindowTitleError") + e.Message)) +
 			" " +
 			Convert.ToBase64String(Encoding.UTF8.GetBytes(hex + " " + e)));
 	}

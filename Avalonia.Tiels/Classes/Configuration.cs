@@ -39,7 +39,7 @@ public class Configuration
             var defaultConf = Path.Combine(Environment.CurrentDirectory, "global.default.toml");
             if (!File.Exists(defaultConf))
             {
-                throw new FileNotFoundException("Couldn't find default configuration file.", defaultConf);
+                throw new FileNotFoundException(App.I18n.GetString("DefaultConfigMissingError"), defaultConf);
             }
 
             var defaultModel = File.ReadAllText(defaultConf);
@@ -51,7 +51,7 @@ public class Configuration
 
                 File.WriteAllText(Path.Combine(GetConfigDirectory(), "global.toml"), toml);
             }
-            else throw new NoNullAllowedException("The [settings] table is missing. Default configuration is possibly corrupted. Redownload file to continue.");
+            else throw new NoNullAllowedException(App.I18n.GetString("MissingConfigError"));
         }
         catch (UnauthorizedAccessException uae)
         {
@@ -198,8 +198,7 @@ public class Configuration
             var defaultModel = File.ReadAllText(Path.Combine(GetConfigDirectory(), "global.toml"));
             var model = Toml.ToModel<Models.GlobalModel>(defaultModel);
             if (model.Appearance == null || model.Settings == null)
-                throw new NoNullAllowedException(
-                    "The [settings] or [appearance] table is missing. Configuration is possibly corrupted.");
+                throw new NoNullAllowedException(App.I18n.GetString("MissingSettingsAppearanceTableError"));
             return model;
         }
     }

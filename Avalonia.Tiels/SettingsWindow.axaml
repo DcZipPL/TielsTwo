@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Avalonia.Tiels.Controls"
+        xmlns:p="clr-namespace:Avalonia.Tiels.Resources"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.Tiels.SettingsWindow"
         Width="1000" Height="550"
@@ -15,21 +16,21 @@
                 <!-- Side Navbar -->
                 <Border BorderThickness="0,0,0.6,0" BorderBrush="{StaticResource BaseBorderColor}">
                         <StackPanel>
-                                <controls:SidebarCategory Title="Create"/>
-                                <controls:SidebarButton Text="Create New Tile" Font="codicon" Icon=""/>
-                                <controls:SidebarButton Text="Create Directory Portal" Font="codicon" Icon=""/>
-                                <controls:SidebarButton Text="Create Floating Image" Font="codicon" Icon="" IsEnabled="False"/>
-                                <controls:SidebarButton Text="Create Sticky Note" Font="codicon" Icon="" IsEnabled="False"/>
+                                <controls:SidebarCategory Title="{x:Static p:Resources.CreateLabel}"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.CreateTile}" Font="codicon" Icon=""/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.CreateDirectoryPortal}" Font="codicon" Icon=""/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.CreateFloatingImage}" Font="codicon" Icon="" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.CreateNote}" Font="codicon" Icon="" IsEnabled="False"/>
                                 
-                                <controls:SidebarCategory Title="Settings"/>
-                                <controls:SidebarButton Text="General" Font="codicon" Icon=""/>
-                                <controls:SidebarButton Text="Appearance" Font="codicon" Icon=""/>
-                                <controls:SidebarButton Text="Updates" Font="codicon" Icon=""/>
+                                <controls:SidebarCategory Title="{x:Static p:Resources.SettingsLabel}"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsGeneral}" Font="codicon" Icon=""/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsAppearance}" Font="codicon" Icon=""/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsUpdates}" Font="codicon" Icon=""/>
                                 
-                                <controls:SidebarCategory Title="Management"/>
-                                <controls:SidebarButton Text="Tiles" Font="codicon" Icon=""/>
-                                <controls:SidebarButton Text="Floating Images" Font="codicon" Icon="" IsEnabled="False"/>
-                                <controls:SidebarButton Text="Notes" Font="codicon" Icon="" IsEnabled="False"/>
+                                <controls:SidebarCategory Title="{x:Static p:Resources.ManagementLabel}"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementTiles}" Font="codicon" Icon=""/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementFloatingImages}" Font="codicon" Icon="" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementNotes}" Font="codicon" Icon="" IsEnabled="False"/>
                         </StackPanel>
                 </Border>
                 <!-- Settings: General -->
@@ -63,22 +64,26 @@
                         <Border.Background><SolidColorBrush Color="#0A000000"></SolidColorBrush></Border.Background>
                         <Grid>
                                 <StackPanel Margin="10">
-                                        <TextBlock FontSize="16" Margin="0,0,0,10" Foreground="{StaticResource BaseTitleColor}">Settings: General</TextBlock>
-                                        <Label>Default tiles directory</Label>
+                                        <TextBlock FontSize="16" Margin="0,0,0,10" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.SettingsLabel}"/>
+                                        <Label Content="{x:Static p:Resources.DefaultTilesDirectory}"/>
                                         <TextBox x:Name="TilesDirectoryBox" Margin="0,0,0,10" KeyUp="TilePathTextBoxChanged"></TextBox>
-                                        <CheckBox x:Name="AutostartCheckBox">Autostart enabled</CheckBox>
-                                        <CheckBox x:Name="HideWindowCheckBox">Hide this window after application startup</CheckBox>
+                                        <CheckBox x:Name="AutostartCheckBox" Content="{x:Static p:Resources.AutostartEnabled}"/>
+                                        <CheckBox x:Name="HideWindowCheckBox" Content="{x:Static p:Resources.HideAtStartup}"/>
                                         <CheckBox x:Name="EffectsCheckBox"><WrapPanel>
-                                                <TextBlock Padding="0,3,6,0">UI Effects</TextBlock>
+                                                <TextBlock Padding="0,3,6,0" Text="{x:Static p:Resources.SpecialEffects}"/>
                                                 <Border CornerRadius="5" Background="#0A0A0A">
-                                                        <TextBlock Foreground="#ffffff" Padding="3">Disabling will will increase performance</TextBlock>
+                                                        <TextBlock Foreground="#ffffff" Padding="3" Text="{x:Static p:Resources.EffectsPerformanceWarning}"/>
                                                 </Border>
                                         </WrapPanel></CheckBox>
-                                        <CheckBox x:Name="ExperimentalCheckBox">Experimental features</CheckBox>
+                                        <CheckBox x:Name="ExperimentalCheckBox" Content="{x:Static p:Resources.ExperimentalFeatures}"/>
                                 </StackPanel>
                                 <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">
-                                        <Button Click="DefaultButtonClicked">Default</Button>
-                                        <Button x:Name="ApplyButton" Margin="5,0,0,0" Click="ApplyButtonClicked">Apply</Button>
+                                        <Button Click="DefaultButtonClicked" Content="{x:Static p:Resources.Default}"/>
+                                        <Button x:Name="ApplyButton" Margin="5,0,0,0" Click="ApplyButtonClicked" Content="{x:Static p:Resources.Apply}"/>
+                                </WrapPanel>
+                                <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="15">
+                                        <TextBlock x:Name="StatusIcon" FontFamily="codicon" Padding="0,0,5,0"></TextBlock>
+                                        <TextBlock x:Name="StatusText" Text="{x:Static p:Resources.NoChanges}"/>
                                 </WrapPanel>
                         </Grid>
                 </Border>

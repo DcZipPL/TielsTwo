@@ -102,4 +102,7 @@
     <data name="DefaultTilesDirectory" xml:space="preserve">
         <value>Default tiles directory</value>
     </data>
+    <data name="LanguageSelection" xml:space="preserve">
+        <value>Application language</value>
+    </data>
 </root>

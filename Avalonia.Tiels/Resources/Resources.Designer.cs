@@ -150,7 +150,7 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Default tiles directory.
         /// </summary>
         public static string DefaultTilesDirectory {
             get {
@@ -182,6 +182,15 @@ namespace Avalonia.Tiels.Resources {
         public static string HideAtStartup {
             get {
                 return ResourceManager.GetString("HideAtStartup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application language.
+        /// </summary>
+        public static string LanguageSelection {
+            get {
+                return ResourceManager.GetString("LanguageSelection", resourceCulture);
             }
         }
         

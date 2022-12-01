@@ -102,4 +102,7 @@
     <data name="DefaultTilesDirectory" xml:space="preserve">
         <value>Domyślna lokalizacja kafelek</value>
     </data>
+    <data name="LanguageSelection" xml:space="preserve">
+        <value>Język programu</value>
+    </data>
 </root>

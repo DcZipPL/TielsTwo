@@ -24,9 +24,6 @@ namespace Avalonia.Tiels
 
 		public override void OnFrameworkInitializationCompleted()
 		{
-			/*CultureInfo ci = new CultureInfo("en-US");
-			Thread.CurrentThread.CurrentCulture = ci;
-			Thread.CurrentThread.CurrentUICulture = ci;*/
 			var args = Environment.GetCommandLineArgs();
 
 			if (args.Length <= 1 || args[1] != ErrorHandler.ERROR_MODE)

@@ -47,6 +47,7 @@ public class Configuration
             if (model.Settings != null)
             {
                 model.Settings.TilesPath = GetDefaultTilesDirectory();
+                Directory.CreateDirectory(GetDefaultTilesDirectory());
                 var toml = Toml.FromModel(model);
 
                 File.WriteAllText(Path.Combine(GetConfigDirectory(), "global.toml"), toml);

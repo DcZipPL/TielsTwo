@@ -79,6 +79,11 @@ namespace Avalonia.Tiels
 			LanguageBox.SelectedItem = ((IEnumerable<CultureInfo>)LanguageBox.Items).ToList()
 				.FirstOrDefault(item => Equals(item, CultureInfo.CurrentUICulture),
 					((IEnumerable<CultureInfo>)LanguageBox.Items).ToList()[0]);
+
+			AutostartCheckBox.IsChecked = app.Config.Autostart;
+			HideWindowCheckBox.IsChecked = app.Config.AutostartHideSettings;
+			EffectsCheckBox.IsChecked = app.Config.SpecialEffects;
+			ExperimentalCheckBox.IsChecked = app.Config.Experimental;
 		}
 
 		private void TilePathTextBoxChanged(object? sender, KeyEventArgs e)

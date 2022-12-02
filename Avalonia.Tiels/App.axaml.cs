@@ -65,5 +65,21 @@ namespace Avalonia.Tiels
 				ActiveSettingsWindow.Show();
 			}
 		}
+		
+		private void TrayExitClick(object? sender, EventArgs e)
+		{
+			if (ApplicationLifetime is IControlledApplicationLifetime desktop)
+			{
+				desktop.Shutdown();
+			}
+		}
+
+		private void TrayOpenSettings(object? sender, EventArgs e)
+		{
+			if ((ActiveSettingsWindow == null || ActiveSettingsWindow.PlatformImpl != null) &&
+			    ActiveSettingsWindow != null) return;
+			ActiveSettingsWindow = new SettingsWindow();
+			ActiveSettingsWindow.Show();
+		}
 	}
 }

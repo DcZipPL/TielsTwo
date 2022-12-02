@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using System;
+using Avalonia.Controls;
 
 namespace Avalonia.Tiels
 {
@@ -10,7 +11,7 @@ namespace Avalonia.Tiels
 		// yet and stuff might break.
 		[STAThread]
 		public static void Main(string[] args) => BuildAvaloniaApp()
-			.StartWithClassicDesktopLifetime(args);
+			.StartWithClassicDesktopLifetime(args, ShutdownMode.OnExplicitShutdown);
 
 		// Avalonia configuration, don't remove; also used by visual designer.
 		public static AppBuilder BuildAvaloniaApp()

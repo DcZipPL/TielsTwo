@@ -4,126 +4,80 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.Media;
+using Avalonia.Tiels.Controls;
+using Avalonia.Tiels.Pages;
 
 namespace Avalonia.Tiels
 {
 	public partial class SettingsWindow : Window
 	{
-		private App app = (App)Application.Current!;
-		private (string, string?) status = ("", App.I18n.GetString("NoChanges"));
-		
+		private App _app = (App)Application.Current!;
+		private List<SidebarButton> _sidebarButtons;
+
 		public SettingsWindow()
 		{
-			InitializeComponent();
+			LoadWindow();
 		}
-		
-		private void ApplySettings()
+
+		private void LoadSidebar()
 		{
-			// Check if tiles path didn't changed. If changed apply new location if valid to config and give status.
-			var newPath = string.IsNullOrEmpty(TilesDirectoryBox.Text)
-				? Configuration.GetDefaultTilesDirectory()
-				: TilesDirectoryBox.Text;
-				
-			if (app.Config.TilesPath != newPath)
-				if (Directory.Exists(newPath))
+			// TODO: Less hardcoding pls
+			_sidebarButtons = new List<SidebarButton>
+			{
+				SB_CT.WithPage(TileCreatePage),
+				SB_CDP.WithPage(null),
+				SB_CFI.WithPage(null),
+				SB_CN.WithPage(null),
+				SB_SG.WithPage(GeneralSettingsPage),
+				SB_SA.WithPage(AppearanceSettingsPage),
+				SB_SU.WithPage(UpdatesSettingsPage),
+				SB_MT.WithPage(null),
+				SB_MFI.WithPage(null),
+				SB_MN.WithPage(null)
+			};
+			
+			// Load default page
+			IPage.ChangeVisibility(GeneralSettingsPage, true);
+			
+			foreach (var sidebarButton in _sidebarButtons)
+			{
+				sidebarButton.Top.Click += (rawSender, args) =>
 				{
-					app.Config.TilesPath = TilesDirectoryBox.Text;
-					ChangeSettingsStatus(App.I18n.GetString("ChangesAccepted")!, false);
-				}
-				else
-					ChangeSettingsStatus(App.I18n.GetString("PathDontExist")!, true);
-			else
-				ChangeSettingsStatus(App.I18n.GetString("NoChanges")!, false);
-			
-			// Apply selections to config
-			ApplyIfChanged(app.Config.Autostart,             b => app.Config.Autostart = b,             AutostartCheckBox);
-			ApplyIfChanged(app.Config.AutostartHideSettings, b => app.Config.AutostartHideSettings = b, HideWindowCheckBox);
-			ApplyIfChanged(app.Config.SpecialEffects,        b => app.Config.SpecialEffects = b,        EffectsCheckBox);
-			ApplyIfChanged(app.Config.Experimental,          b => app.Config.Experimental = b,          ExperimentalCheckBox);
-			
-			// Save draft data before reinitialize
-			var draftTilesPath = TilesDirectoryBox.Text;
-			
-			// Reinitialize everything if language is changed
+					// Change page if checked
+					var sender = (ToggleButton)rawSender!;
+					if (sender.IsChecked.HasValue && sender.IsChecked.Value)
+					{
+						foreach (var sidebarButton in _sidebarButtons)
+						{
+							if (sidebarButton.Top.Equals(sender))
+								IPage.ChangeVisibility(sidebarButton.Page, true);
+							else
+							{
+								sidebarButton.Top.IsChecked = false;
+								IPage.ChangeVisibility(sidebarButton.Page, false);
+							}
+						}
+					}
+					else
+					{
+						// Disable unchecking
+						sender.IsChecked = true;
+					}
+				};
+			}
+		}
+
+		internal void LoadWindow()
+		{
 			InitializeComponent();
-			WindowOpened();
+			GeneralSettingsPage.Root = this;
 			
-			// Load draft data
-			TilesDirectoryBox.Text = draftTilesPath;
-			
-			// Show status
-			StatusIcon.Text = status.Item1;
-			StatusText.Text = status.Item2;
+			LoadSidebar();
 		}
-
-		private void ChangeSettingsStatus(string message, bool invalid)
-		{
-			status = (invalid ? "" : "", message);
-		}
-
-		private void RollbackSettings()
-		{
-			
-		}
-
-		private void WindowOpened()
-		{
-			TilesDirectoryBox.Text = app.Config.TilesPath;
-			TilesDirectoryBox.Watermark = Configuration.GetDefaultTilesDirectory();
-			
-			LanguageBox.Items = Util.ImplementedCultures();
-			LanguageBox.SelectedItem = ((IEnumerable<CultureInfo>)LanguageBox.Items).ToList()
-				.FirstOrDefault(item => Equals(item, CultureInfo.CurrentUICulture),
-					((IEnumerable<CultureInfo>)LanguageBox.Items).ToList()[0]);
-
-			AutostartCheckBox.IsChecked = app.Config.Autostart;
-			HideWindowCheckBox.IsChecked = app.Config.AutostartHideSettings;
-			EffectsCheckBox.IsChecked = app.Config.SpecialEffects;
-			ExperimentalCheckBox.IsChecked = app.Config.Experimental;
-		}
-
-		private void TilePathTextBoxChanged(object? sender, KeyEventArgs e)
-		{
-			if (!Directory.Exists(TilesDirectoryBox.Text))
-			{
-				TilesDirectoryBox.BorderBrush = new SolidColorBrush(0xFFFF0000);
-				TilesDirectoryBox.Foreground = new SolidColorBrush(0xFFFF0000);
-			}
-			else
-			{
-				// TODO: Use resources and not hardcoded values
-				TilesDirectoryBox.BorderBrush = new SolidColorBrush(0xFF2A2A2A);
-				TilesDirectoryBox.Foreground = new SolidColorBrush(0xFF000000);
-			}
-		}
-
-		private void ApplyIfChanged(bool getter, Action<bool> setter, CheckBox checkBox)
-		{
-			if (getter != checkBox.IsChecked && checkBox.IsChecked != null)
-				setter(checkBox.IsChecked!.Value);
-		}
-		
-		private void LanguageChanged(object? sender, SelectionChangedEventArgs e)
-		{
-			try
-			{
-				CultureInfo ci = (CultureInfo)LanguageBox.SelectedItem;
-				CultureInfo.CurrentCulture = ci;
-				CultureInfo.CurrentUICulture = ci;
-			}
-			catch (Exception ex)
-			{
-				ErrorHandler.ShowErrorWindow(ex,"~(0x0003)");
-				throw;
-			}
-		}
-		
-		private void SettingsOpened(object? sender, EventArgs e) => WindowOpened();
-		private void ApplyButtonClicked(object? sender, RoutedEventArgs e) => ApplySettings();
-		private void DefaultButtonClicked(object? sender, RoutedEventArgs e) => RollbackSettings();
 	}
 }

@@ -57,5 +57,20 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>Resources.resx</DependentUpon>
       </Compile>
+      <Compile Update="Pages\Settings\UpdatesPage.axaml.cs">
+        <DependentUpon>UpdatesSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Pages\Settings\GeneralPage.axaml.cs">
+        <DependentUpon>GeneralSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Pages\Settings\AppearancePage.axaml.cs">
+        <DependentUpon>AppearanceSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Pages\Management" />
     </ItemGroup>
 </Project>

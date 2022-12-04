@@ -87,6 +87,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Utwórz.
+        /// </summary>
+        public static string CreateButton {
+            get {
+                return ResourceManager.GetString("CreateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Utwórz Portal do folderu.
         /// </summary>
         public static string CreateDirectoryPortal {

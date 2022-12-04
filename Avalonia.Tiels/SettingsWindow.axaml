@@ -35,23 +35,7 @@
                                 <controls:SidebarButton Text="{x:Static p:Resources.ManagementNotes}" x:Name="SB_MN"           Font="codicon" Icon="" IsEnabled="False"/>
                         </StackPanel>
                 </Border>
-                <!-- Settings: General -->
-                <Border Grid.Column="1"
-                        BorderThickness="0,0.6,0.6,0.6" BorderBrush="{StaticResource BaseBorderColor}"
-                        IsVisible="False">
-                        <Border.Background><SolidColorBrush Color="#0A000000"></SolidColorBrush></Border.Background>
-                        <Grid>
-                                <StackPanel Margin="10">
-                                        <TextBlock FontSize="16" Margin="0,0,0,5" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.CreateLabel}"/>
-                                        
-                                </StackPanel>
-                                <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">
-                                        <Button>Default</Button>
-                                        <Button Margin="5,0,0,0">Apply</Button>
-                                </WrapPanel>
-                        </Grid>
-                </Border>
-                <!-- Settings: General -->
+                <!-- Content -->
                 <Border Grid.Column="1"
                         BorderThickness="0,0.6,0.6,0.6" BorderBrush="{StaticResource BaseBorderColor}"
                         IsVisible="True">

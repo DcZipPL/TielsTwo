@@ -105,4 +105,7 @@
     <data name="LanguageSelection" xml:space="preserve">
         <value>Język programu</value>
     </data>
+    <data name="CreateButton" xml:space="preserve">
+        <value>Utwórz</value>
+    </data>
 </root>

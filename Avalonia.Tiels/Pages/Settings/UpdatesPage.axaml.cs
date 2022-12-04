@@ -9,9 +9,4 @@ public partial class UpdatesPage : UserPage
 	{
 		InitializeComponent();
 	}
-
-	private void InitializeComponent()
-	{
-		AvaloniaXamlLoader.Load(this);
-	}
 }

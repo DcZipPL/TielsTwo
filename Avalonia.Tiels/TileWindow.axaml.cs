@@ -16,11 +16,6 @@ public partial class TileWindow : Window
 		#endif
 	}
 
-	private void InitializeComponent()
-	{
-		AvaloniaXamlLoader.Load(this);
-	}
-
 	private void OnLoad(object? sender, EventArgs e)
 	{
 		

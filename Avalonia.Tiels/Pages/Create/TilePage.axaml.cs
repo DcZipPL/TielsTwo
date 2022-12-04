@@ -10,9 +10,4 @@ public partial class TilePage : UserPage
 	{
 		InitializeComponent();
 	}
-
-	private void InitializeComponent()
-	{
-		AvaloniaXamlLoader.Load(this);
-	}
 }

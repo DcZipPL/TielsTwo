@@ -44,7 +44,10 @@
                                 <pagesSettings:GeneralPage x:Name="GeneralSettingsPage" IsVisible="False"/>
                                 <pagesSettings:AppearancePage x:Name="AppearanceSettingsPage" IsVisible="False"/>
                                 <pagesSettings:UpdatesPage x:Name="UpdatesSettingsPage" IsVisible="False"/>
-                                <pagesCreate:TilePage x:Name="TileCreatePage" IsVisible="False"/>
+                                <pagesCreate:QuickTilePage x:Name="TileCreatePage" IsVisible="False"/>
+                                <pagesCreate:DirectoryPortalPage x:Name="DirectoryPortalPage" IsVisible="False"/>
+                                <pagesCreate:DirectoryPortalPage x:Name="FloatingImagePage" IsVisible="False"/>
+                                <pagesCreate:DirectoryPortalPage x:Name="NotesPage" IsVisible="False"/>
                         </Grid>
                 </Border>
         </Grid>

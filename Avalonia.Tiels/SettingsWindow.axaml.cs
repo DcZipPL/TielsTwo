@@ -11,6 +11,7 @@ using Avalonia.Logging;
 using Avalonia.Media;
 using Avalonia.Tiels.Controls;
 using Avalonia.Tiels.Pages;
+using Avalonia.Tiels.Pages.Create;
 
 namespace Avalonia.Tiels
 {
@@ -30,9 +31,9 @@ namespace Avalonia.Tiels
 			_sidebarButtons = new List<SidebarButton>
 			{
 				SB_CT.WithPage(TileCreatePage),
-				SB_CDP.WithPage(null),
-				SB_CFI.WithPage(null),
-				SB_CN.WithPage(null),
+				SB_CDP.WithPage(DirectoryPortalPage),
+				SB_CFI.WithPage(FloatingImagePage),
+				SB_CN.WithPage(NotesPage),
 				SB_SG.WithPage(GeneralSettingsPage),
 				SB_SA.WithPage(AppearanceSettingsPage),
 				SB_SU.WithPage(UpdatesSettingsPage),
@@ -55,7 +56,9 @@ namespace Avalonia.Tiels
 						foreach (var sidebarButton in _sidebarButtons)
 						{
 							if (sidebarButton.Top.Equals(sender))
+							{
 								IPage.ChangeVisibility(sidebarButton.Page, true);
+							}
 							else
 							{
 								sidebarButton.Top.IsChecked = false;

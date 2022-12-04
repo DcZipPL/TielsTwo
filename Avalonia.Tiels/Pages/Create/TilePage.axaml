@@ -11,33 +11,32 @@
         <Label>Name</Label>
         <TextBox Watermark="The name of your new tile..."/>
         <Label Margin="0,10,0,0">Type</Label>
-        <ComboBox HorizontalAlignment="Stretch">
-            <ComboBox.Items>
-                <ComboBoxItem>Quick Tile</ComboBoxItem>
-                <ComboBoxItem>Directory Portal</ComboBoxItem>
-                <ComboBoxItem IsEnabled="False">Floating Image</ComboBoxItem>
-                <ComboBoxItem IsEnabled="False">Note</ComboBoxItem>
-            </ComboBox.Items>
-        </ComboBox>
+        <ComboBox x:Name="TileTypeBox" HorizontalAlignment="Stretch"/>
         <CheckBox x:Name="UseGlobalThemeBox" Margin="0,10,0,0" Content="Use global theme" IsChecked="True"/>
-        <Grid x:Name="CustomAppearanceGrid" Margin="0,5,0,0" IsEnabled="False">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="1">
-                <Label>Transparency Mode</Label>
-                <ComboBox x:Name="TransparencyModeBox" HorizontalAlignment="Stretch"/>
+        <StackPanel x:Name="CustomAppearanceGrid" Margin="0,5,0,0" IsEnabled="False">
+            <StackPanel>
+                <Label>Theme Mode</Label>
+                <ComboBox x:Name="ThemeBox" HorizontalAlignment="Stretch"/>
             </StackPanel>
-
-            <StackPanel Grid.Column="0">
-                <Label>Color</Label>
-                <colorpicker:ColorButton Color="#88000000" Margin="0,3,10,0"/>
-            </StackPanel>
-        </Grid>
-        <Label FontStyle="Italic" Foreground="#FF9500" Margin="0,5,0,0" IsVisible="False">Caution! Using other options than Solid or Transparent won't work on some systems and will fallback to these options.</Label>
-        <Label FontStyle="Italic" Foreground="#FF9500" Margin="0,5,0,0" IsVisible="False">This option only works on Windows 11.</Label>
-        <Label FontStyle="Italic" Foreground="#666666" Margin="0,5,0,0">Transparency level can be changed in color option.</Label>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <Label>Color</Label>
+                    <colorpicker:ColorButton Color="#88000000" Margin="0,3,10,0"/>
+                </StackPanel>
+            
+                <StackPanel Grid.Column="1">
+                    <Label>Transparency Mode</Label>
+                    <ComboBox x:Name="TransparencyModeBox" HorizontalAlignment="Stretch"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <TextBlock Foreground="#FF9500" Margin="0,5,0,0" IsVisible="False" x:Name="WarnUnsupportedOptionText" TextWrapping="Wrap">Caution! Using other options than Solid or Transparent won't work on some systems and will fallback to these options.</TextBlock>
+        <TextBlock Foreground="#FF9500" Margin="0,5,0,0" IsVisible="False" x:Name="NewestWinOnlyText" TextWrapping="Wrap">This option only works on Windows 11.</TextBlock>
+        <TextBlock FontStyle="Italic" Foreground="#666666" Margin="0,5,0,0">Transparency level can be changed in color option.</TextBlock>
         <Button Margin="0,10,0,0" Content="{x:Static p:Resources.CreateButton}"/>
     </StackPanel>
 </UserControl>

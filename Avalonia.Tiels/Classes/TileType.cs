@@ -4,6 +4,6 @@ public enum TileType
 {
 	Tile,
 	DirectoryPortal,
-	FloatingImage,
-	Note
+	//FloatingImage,
+	//Note
 }

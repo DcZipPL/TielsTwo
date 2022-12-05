@@ -1,28 +1,46 @@
-# TielsTwo
+# Tiels II
 Complete Rewrite of Tiels: An alternative for Fences.
+With Tiels you can organize your desktop icons with tiles.
 
-This rewrite focuses in Stablity and making this program cross-platform.
+This rewrite focuses in Stability and making this program cross-platform.
 
 ## Building instructions
-Clone code and build. I will make better instructions soon.
+### Pre-requirements
+Operating System (OR):
+- Linux 4.x.x+
+- Windows 10+
+- or any operating system that works with Avalonia UI
 
-# Original README.md:
-## Tiels
-Tiels is Open Source Fences Aternative.
+Installed tooling (AND):
+- dotnet
+- cargo
+- rustc
 
-With Tiels you can organize your desktop icons with tiles.
-### ~~Alpha version is available~~
-~~Alpha version of Tiels can be bugged.~~
+### Building
 
-~~Requirements after 0.8v:~~
-- ~~Windows 10, Version > 1903~~
-- ~~.NET Core 3.1~~
+Linux:
+```shell
+git clone git@github.com:DcZipPL/TielsTwo.git
+./build.sh
+```
+Windows (Powershell) {NOT TESTED}:
+```batch
+git clone git@github.com:DcZipPL/TielsTwo.git
+md "out"
+cd ./Tiels
+cargo build --release
+Copy-Item ./target/release/Tiels -Destination ../out
+cd ../Avalonia.Tiels
+dotnet build -o ../out
+```
+All compiled binaries should be in `out` directory.
 
-~~Requirements before 0.8v:~~
-- ~~Windows 10, Version > 1806~~
-- ~~.NET Framework 4.8~~
+## Q&A
+Q: What with Tiels repository
+- A: Tiels I repository will be archived when this project will be stable.
 
-If you encounter an error please add an Issue.
-### Work in progress
-Go to Project Tab in github to see the progress.
-ETA for realese is unknown.
+Q: Will I keep my files after update?
+- A: Yes. You will loose only all theming of your tiles. There is plan for conversion tool but i don't promise.
+
+Q: When version 1.0.0 / When stable... ETA?
+- A: Project is work in progress there is no ETA. But you can track progress [here (Github Projects)](https://github.com/users/DcZipPL/projects/1).

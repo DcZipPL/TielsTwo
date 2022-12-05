@@ -1,4 +1,5 @@
 using System;
+using System.Buffers.Text;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
@@ -6,6 +7,8 @@ using System.IO;
 using System.Numerics;
 using System.Runtime.Serialization;
 using System.Security;
+using System.Text;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Layout;
@@ -36,7 +39,7 @@ public class Configuration
             var defaultConf = Path.Combine(Environment.CurrentDirectory, "global.default.toml");
             if (!File.Exists(defaultConf))
             {
-                throw new FileNotFoundException("Couldn't find default configuration file.", defaultConf);
+                throw new FileNotFoundException(App.I18n.GetString("DefaultConfigMissingError"), defaultConf);
             }
 
             var defaultModel = File.ReadAllText(defaultConf);
@@ -44,26 +47,23 @@ public class Configuration
             if (model.Settings != null)
             {
                 model.Settings.TilesPath = GetDefaultTilesDirectory();
+                Directory.CreateDirectory(GetDefaultTilesDirectory());
                 var toml = Toml.FromModel(model);
 
                 File.WriteAllText(Path.Combine(GetConfigDirectory(), "global.toml"), toml);
             }
-            else throw new NoNullAllowedException("The [settings] table is missing. Default configuration is possibly corrupted. Redownload file to continue.");
+            else throw new NoNullAllowedException(App.I18n.GetString("MissingConfigError"));
         }
         catch (UnauthorizedAccessException uae)
         {
-            MessageWindow.Open("Error: " + uae.Message, "~0x0001 " + uae).Closed += (sender, args) =>
-            {
-                closer.Shutdown();
-            };
+            ErrorHandler.ShowErrorWindow(uae, "~(0x0001)");
+            throw;
             // TODO: Open as administrator / sudo
         }
         catch (Exception e)
         {
-            MessageWindow.Open("Error: " + e.Message, "~0x0002 " + e).Closed += (sender, args) =>
-            {
-                closer.Shutdown();
-            };
+            ErrorHandler.ShowErrorWindow(e, "~(0x0002)");
+            throw;
         }
 
         return new Configuration(closer);
@@ -93,7 +93,7 @@ public class Configuration
     }
     public static bool IsFirstStartup()
     {
-        return !Directory.Exists(GetConfigDirectory());
+        return !Directory.Exists(GetConfigDirectory()) || !File.Exists(Path.Combine(GetConfigDirectory(), "global.toml"));
     }
 
     #endregion
@@ -192,6 +192,15 @@ public class Configuration
 
     #endregion
     
+    #region Tile Management
+
+    public bool TileExist(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    #endregion
+    
     private Models.GlobalModel ReqModel()
     {
         lock (_readWriteLock)
@@ -199,8 +208,7 @@ public class Configuration
             var defaultModel = File.ReadAllText(Path.Combine(GetConfigDirectory(), "global.toml"));
             var model = Toml.ToModel<Models.GlobalModel>(defaultModel);
             if (model.Appearance == null || model.Settings == null)
-                throw new NoNullAllowedException(
-                    "The [settings] or [appearance] table is missing. Configuration is possibly corrupted.");
+                throw new NoNullAllowedException(App.I18n.GetString("MissingSettingsAppearanceTableError"));
             return model;
         }
     }

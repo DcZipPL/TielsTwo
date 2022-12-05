@@ -1,53 +1,86 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.Media;
+using Avalonia.Tiels.Controls;
+using Avalonia.Tiels.Pages;
+using Avalonia.Tiels.Pages.Create;
 
 namespace Avalonia.Tiels
 {
 	public partial class SettingsWindow : Window
 	{
+		private App _app = (App)Application.Current!;
+		private List<SidebarButton> _sidebarButtons;
+
 		public SettingsWindow()
 		{
-			InitializeComponent();
+			LoadWindow();
 		}
-		
-		private void ApplySettings()
+
+		private void LoadSidebar()
 		{
-			var current = (App)Application.Current!;
+			// TODO: Less hardcoding pls
+			_sidebarButtons = new List<SidebarButton>
+			{
+				SB_CT.WithPage(TileCreatePage),
+				SB_CDP.WithPage(DirectoryPortalPage),
+				SB_CFI.WithPage(FloatingImagePage),
+				SB_CN.WithPage(NotesPage),
+				SB_SG.WithPage(GeneralSettingsPage),
+				SB_SA.WithPage(AppearanceSettingsPage),
+				SB_SU.WithPage(UpdatesSettingsPage),
+				SB_MT.WithPage(null),
+				SB_MFI.WithPage(null),
+				SB_MN.WithPage(null)
+			};
 			
-			var newPath = TilesDirectoryBox.Text == ""
-				? Configuration.GetDefaultTilesDirectory()
-				: TilesDirectoryBox.Text;
-				
-			if (current.Config.TilesPath != TilesDirectoryBox.Text)
-				if (Directory.Exists(TilesDirectoryBox.Text))
-						current.Config.TilesPath = TilesDirectoryBox.Text;
-
-		}
-		
-		private void SettingsOpened(object? sender, EventArgs e)
-		{
-			TilesDirectoryBox.Watermark = Configuration.GetDefaultTilesDirectory();
-		}
-		
-		private void ApplyButtonClicked(object? sender, RoutedEventArgs e) => ApplySettings();
-
-		private void TilePathTextBoxChanged(object? sender, KeyEventArgs e)
-		{
-			if (!Directory.Exists(TilesDirectoryBox.Text))
+			// Load default page
+			IPage.ChangeVisibility(GeneralSettingsPage, true);
+			
+			foreach (var sidebarButton in _sidebarButtons)
 			{
-				TilesDirectoryBox.BorderBrush = new SolidColorBrush(0xFFFF0000);
-				TilesDirectoryBox.Foreground = new SolidColorBrush(0xFFFF0000);
+				sidebarButton.Top.Click += (rawSender, args) =>
+				{
+					// Change page if checked
+					var sender = (ToggleButton)rawSender!;
+					if (sender.IsChecked.HasValue && sender.IsChecked.Value)
+					{
+						foreach (var sidebarButton in _sidebarButtons)
+						{
+							if (sidebarButton.Top.Equals(sender))
+							{
+								IPage.ChangeVisibility(sidebarButton.Page, true);
+							}
+							else
+							{
+								sidebarButton.Top.IsChecked = false;
+								IPage.ChangeVisibility(sidebarButton.Page, false);
+							}
+						}
+					}
+					else
+					{
+						// Disable unchecking
+						sender.IsChecked = true;
+					}
+				};
 			}
-			else
-			{
-				TilesDirectoryBox.BorderBrush = new SolidColorBrush(0xFF2A2A2A);
-				TilesDirectoryBox.Foreground = new SolidColorBrush(0xFF000000);
-			}
+		}
+
+		internal void LoadWindow()
+		{
+			InitializeComponent();
+			GeneralSettingsPage.Root = this;
+			
+			LoadSidebar();
 		}
 	}
 }

@@ -27,18 +27,13 @@ public partial class MessageWindow : Window
 		return msgw;
 	}
 
-	private void InitializeComponent()
-	{
-		AvaloniaXamlLoader.Load(this);
-	}
-
 	private void OnOpened(object? sender, EventArgs e)
 	{
 		if (WindowTitle != null && Message != null)
 		{
 			this.Title = WindowTitle;
 			this.Width = Message.Length * 2.5f;
-			this.FindControl<TextBlock>("MessageText").Text = Message; // I don't know why I can't normally ref
+			MessageText.Text = Message;
 		}
 	}
 }

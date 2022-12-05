@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Numerics;
+using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
 namespace Avalonia.Tiels;
 
-public partial class TileWindow : Window, Tile
+public partial class TileWindow : Window
 {
+	private App _app = (App)Application.Current!;
+	
+	public Guid ID { get; set; }
+	
 	public TileWindow()
 	{
 		InitializeComponent();
@@ -16,16 +21,16 @@ public partial class TileWindow : Window, Tile
 		#endif
 	}
 
-	private void InitializeComponent()
-	{
-		AvaloniaXamlLoader.Load(this);
-	}
-
 	private void OnLoad(object? sender, EventArgs e)
 	{
-		
+		var loadTileThread = new Thread(() => this.LoadTile(_app.Config, ID));
 	}
 
-	public string TypeName => "FileTile";
-	public Vector2 Size { get; set; }
+	public void LoadTile(Configuration configuration, Guid id)
+	{
+		if (configuration.TileExist(id))
+		{
+			
+		}
+	}
 }

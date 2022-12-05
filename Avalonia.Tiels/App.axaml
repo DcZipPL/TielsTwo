@@ -8,4 +8,17 @@
         <Color x:Key="BaseBorderColor">#CFCFCF</Color>
         <Color x:Key="BaseTitleColor">#666666</Color>
     </Application.Resources>
+    <TrayIcon.Icons>
+        <TrayIcons>
+            <TrayIcon Icon="/Assets/tiels_color.ico" ToolTipText="Tiels">
+                <TrayIcon.Menu>
+                    <NativeMenu>
+                        <NativeMenuItem Icon="/Assets/tiels_color.ico" Header="Open settings" Click="TrayOpenSettings"/>
+                        <NativeMenuItemSeparator/>
+                        <NativeMenuItem Header="Exit" Click="TrayExitClick"/>
+                    </NativeMenu>
+                </TrayIcon.Menu>
+            </TrayIcon>
+        </TrayIcons>
+    </TrayIcon.Icons>
 </Application>

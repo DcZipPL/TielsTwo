@@ -192,6 +192,15 @@ public class Configuration
 
     #endregion
     
+    #region Tile Management
+
+    public bool TileExist(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    #endregion
+    
     private Models.GlobalModel ReqModel()
     {
         lock (_readWriteLock)

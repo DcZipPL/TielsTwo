@@ -4,8 +4,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.Tiels.TileWindow"
-        TransparencyLevelHint="Transparent"
-        Title="TileWindow" Opened="OnLoad">
+        TransparencyLevelHint="AcrylicBlur"
+        SystemDecorations="None"
+        Title="TileWindow" Opened="OnLoad" Background="{x:Null}">
     <Grid>
         <Grid.Background><SolidColorBrush Color="#55000000"/></Grid.Background>
         <Grid x:Name="EditBar"></Grid>

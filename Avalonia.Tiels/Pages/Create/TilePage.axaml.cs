@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Themes.Fluent;
 
@@ -40,4 +41,13 @@ public partial class TilePage : UserPage
 			NewestWinOnlyText.IsVisible = selection == WindowTransparencyLevel.Mica.ToString();
 		};
 	}
+	
+	private void CreateTile()
+	{
+		var window = new TileWindow();
+		window.ID = Guid.NewGuid();
+		window.Show();
+	}
+	
+	private void CreateButton(object? sender, RoutedEventArgs e) => CreateTile();
 }

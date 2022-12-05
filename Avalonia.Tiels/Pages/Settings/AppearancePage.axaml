@@ -2,7 +2,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avaloniaColorPicker="clr-namespace:AvaloniaColorPicker;assembly=AvaloniaColorPicker"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia.Tiels.Pages.Settings.AppearancePage">
-    Welcome to Avalonia!
+    <Grid>
+        <StackPanel x:Name="CustomAppearanceGrid" Margin="0,5,0,0" IsEnabled="False">
+            <StackPanel>
+                <Label>Theme Mode</Label>
+                <ComboBox x:Name="ThemeBox" HorizontalAlignment="Stretch"/>
+            </StackPanel>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <Label>Color</Label>
+                    <avaloniaColorPicker:ColorPicker Color="#88000000" IsPaletteVisible="False" Margin="0,3,10,0"/>
+                </StackPanel>
+            
+                <StackPanel Grid.Column="1">
+                    <Label>Transparency Mode</Label>
+                    <ComboBox x:Name="TransparencyModeBox" HorizontalAlignment="Stretch"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
 </UserControl>

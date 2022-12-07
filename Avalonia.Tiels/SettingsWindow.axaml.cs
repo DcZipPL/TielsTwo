@@ -17,7 +17,6 @@ namespace Avalonia.Tiels
 {
 	public partial class SettingsWindow : Window
 	{
-		private App _app = (App)Application.Current!;
 		private List<SidebarButton> _sidebarButtons;
 
 		public SettingsWindow()

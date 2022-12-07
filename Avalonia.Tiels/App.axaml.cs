@@ -12,6 +12,8 @@ namespace Avalonia.Tiels
 {
 	public partial class App : Application
 	{
+		public static App Instance;
+		
 		public static readonly ResourceManager I18n = Avalonia.Tiels.Resources.Resources.ResourceManager;
 		public Configuration Config { get; set; }
 
@@ -20,6 +22,8 @@ namespace Avalonia.Tiels
 		public override void Initialize()
 		{
 			AvaloniaXamlLoader.Load(this);
+			
+			Instance = (App)Application.Current!;
 		}
 
 		public override void OnFrameworkInitializationCompleted()

@@ -12,7 +12,6 @@ namespace Avalonia.Tiels.Pages.Settings;
 
 public partial class GeneralPage : UserPage
 {
-	private readonly App app = (App)Application.Current!;
 	private (string, string?) status = ("", App.I18n.GetString("NoChanges"));
 
 	internal SettingsWindow Root;
@@ -30,10 +29,10 @@ public partial class GeneralPage : UserPage
 			? Configuration.GetDefaultTilesDirectory()
 			: TilesDirectoryBox.Text;
 
-		if (app.Config.TilesPath != newPath)
+		if (App.Instance.Config.TilesPath != newPath)
 			if (Directory.Exists(newPath))
 			{
-				app.Config.TilesPath = TilesDirectoryBox.Text;
+				App.Instance.Config.TilesPath = TilesDirectoryBox.Text;
 				ChangeSettingsStatus(App.I18n.GetString("ChangesAccepted")!, false);
 			}
 			else
@@ -44,10 +43,10 @@ public partial class GeneralPage : UserPage
 			ChangeSettingsStatus(App.I18n.GetString("NoChanges")!, false);
 
 		// Apply selections to config
-		ApplyIfChanged(app.Config.Autostart, b => app.Config.Autostart = b, AutostartCheckBox);
-		ApplyIfChanged(app.Config.AutostartHideSettings, b => app.Config.AutostartHideSettings = b, HideWindowCheckBox);
-		ApplyIfChanged(app.Config.SpecialEffects, b => app.Config.SpecialEffects = b, EffectsCheckBox);
-		ApplyIfChanged(app.Config.Experimental, b => app.Config.Experimental = b, ExperimentalCheckBox);
+		ApplyIfChanged(App.Instance.Config.Autostart, b => App.Instance.Config.Autostart = b, AutostartCheckBox);
+		ApplyIfChanged(App.Instance.Config.AutostartHideSettings, b => App.Instance.Config.AutostartHideSettings = b, HideWindowCheckBox);
+		ApplyIfChanged(App.Instance.Config.SpecialEffects, b => App.Instance.Config.SpecialEffects = b, EffectsCheckBox);
+		ApplyIfChanged(App.Instance.Config.Experimental, b => App.Instance.Config.Experimental = b, ExperimentalCheckBox);
 
 		// Save draft data before reinitialize
 		var draftTilesPath = TilesDirectoryBox.Text;
@@ -76,7 +75,7 @@ public partial class GeneralPage : UserPage
 
 	private void LoadSettingsValues()
 	{
-		TilesDirectoryBox.Text = app.Config.TilesPath;
+		TilesDirectoryBox.Text = App.Instance.Config.TilesPath;
 		TilesDirectoryBox.Watermark = Configuration.GetDefaultTilesDirectory();
 
 		LanguageBox.Items = Util.ImplementedCultures();
@@ -84,10 +83,10 @@ public partial class GeneralPage : UserPage
 			.FirstOrDefault(item => Equals(item, CultureInfo.CurrentUICulture),
 				((IEnumerable<CultureInfo>)LanguageBox.Items).ToList()[0]);
 
-		AutostartCheckBox.IsChecked = app.Config.Autostart;
-		HideWindowCheckBox.IsChecked = app.Config.AutostartHideSettings;
-		EffectsCheckBox.IsChecked = app.Config.SpecialEffects;
-		ExperimentalCheckBox.IsChecked = app.Config.Experimental;
+		AutostartCheckBox.IsChecked = App.Instance.Config.Autostart;
+		HideWindowCheckBox.IsChecked = App.Instance.Config.AutostartHideSettings;
+		EffectsCheckBox.IsChecked = App.Instance.Config.SpecialEffects;
+		ExperimentalCheckBox.IsChecked = App.Instance.Config.Experimental;
 	}
 
 	private void TilePathTextBoxChanged(object? sender, KeyEventArgs e)

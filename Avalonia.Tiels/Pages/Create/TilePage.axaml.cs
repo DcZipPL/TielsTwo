@@ -11,17 +11,15 @@ namespace Avalonia.Tiels.Pages.Create;
 
 public partial class TilePage : UserPage
 {
-	private App _app = (App)Application.Current!;
-
 	public TilePage()
 	{
 		InitializeComponent();
 
 		TransparencyModeBox.Items = Enum.GetNames(typeof(WindowTransparencyLevel)).Select(name => Regex.Replace(name, "(\\B[A-Z])", " $1"));
-		TransparencyModeBox.SelectedIndex = (int)_app.Config.GlobalTransparencyLevel;
+		TransparencyModeBox.SelectedIndex = (int)App.Instance.Config.GlobalTransparencyLevel;
 
 		ThemeBox.Items = Enum.GetNames(typeof(FluentThemeMode));
-		ThemeBox.SelectedIndex = (int)_app.Config.GlobalTheme;
+		ThemeBox.SelectedIndex = (int)App.Instance.Config.GlobalTheme;
 		
 		UseGlobalThemeBox.Checked += (sender, args) => CustomAppearanceGrid.IsEnabled = false;
 		UseGlobalThemeBox.Unchecked += (sender, args) => CustomAppearanceGrid.IsEnabled = true;

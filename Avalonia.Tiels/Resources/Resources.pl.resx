@@ -108,4 +108,40 @@
     <data name="CreateButton" xml:space="preserve">
         <value>Utwórz</value>
     </data>
+    <data name="Name" xml:space="preserve">
+        <value>Nazwa</value>
+    </data>
+    <data name="NameOfTileWatermark" xml:space="preserve">
+        <value>Nazwa twojego nowego kafelka...</value>
+    </data>
+    <data name="ThemeMode" xml:space="preserve">
+        <value>Motyw</value>
+    </data>
+    <data name="ThemeModeTooltip" xml:space="preserve">
+        <value>Motyw aplikacji i ikonek. Jeśli naprzykład masz na kafelku czarne tło to motyw czarny i vice versa.</value>
+    </data>
+    <data name="TransparencyChangedInColor" xml:space="preserve">
+        <value>Przeźroczystość można zmienić w ustawieniach koloru.</value>
+    </data>
+    <data name="TransparencyMode" xml:space="preserve">
+        <value>Typ przeźroczystości</value>
+    </data>
+    <data name="Type" xml:space="preserve">
+        <value>Typ</value>
+    </data>
+    <data name="UseGlobalTheme" xml:space="preserve">
+        <value>Używaj globalnego motywu</value>
+    </data>
+    <data name="WarnNewerSysReq" xml:space="preserve">
+        <value>Ta opcja działa tylko z Windows 11.</value>
+    </data>
+    <data name="WarnOtherPrograms" xml:space="preserve">
+        <value>Uwaga! Ta opcja nie jest obsługiwana przez większość programów umożliwiających animowane tapety.</value>
+    </data>
+    <data name="WarnPossiblyUnsupported" xml:space="preserve">
+        <value>Uwaga! Używanie innej opcji niż Solidne tło czy Przeźroczyste może nie zadziałać na nie których systemach. Jeśl nie uda się ustawić to domyślnie program przywróci do powyższych opcji.</value>
+    </data>
+    <data name="Color" xml:space="preserve">
+        <value>Kolor</value>
+    </data>
 </root>

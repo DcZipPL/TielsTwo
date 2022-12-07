@@ -4,5 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia.Tiels.Pages.Settings.UpdatesPage">
-    Welcome to Avalonia!
+    <StackPanel>
+        <TextBlock>Manual updates only. Download new updates from</TextBlock>
+        <TextBlock Foreground="#0000ff" TextDecorations="Underline">
+            https://github.com/DcZipPL/TielsTwo
+        </TextBlock>
+    </StackPanel>
+    
 </UserControl>

@@ -108,4 +108,40 @@
     <data name="CreateButton" xml:space="preserve">
         <value>Create</value>
     </data>
+    <data name="Color" xml:space="preserve">
+        <value>Color</value>
+    </data>
+    <data name="TransparencyMode" xml:space="preserve">
+        <value>Transparency Type</value>
+    </data>
+    <data name="ThemeMode" xml:space="preserve">
+        <value>Theme</value>
+    </data>
+    <data name="ThemeModeTooltip" xml:space="preserve">
+        <value>Theme of application/icons. If you have tile with dark background then dark and vice versa.</value>
+    </data>
+    <data name="UseGlobalTheme" xml:space="preserve">
+        <value>Use global theme</value>
+    </data>
+    <data name="Name" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="NameOfTileWatermark" xml:space="preserve">
+        <value>Display name of your new tile...</value>
+    </data>
+    <data name="Type" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="WarnPossiblyUnsupported" xml:space="preserve">
+        <value>Caution! Using other options than Solid or Transparent won't work on some systems and will fallback to these options.</value>
+    </data>
+    <data name="WarnNewerSysReq" xml:space="preserve">
+        <value>This option only works on Windows 11.</value>
+    </data>
+    <data name="WarnOtherPrograms" xml:space="preserve">
+        <value>Caution! This option doesn't support most animated desktop software.</value>
+    </data>
+    <data name="TransparencyChangedInColor" xml:space="preserve">
+        <value>Transparency level can be changed in color option.</value>
+    </data>
 </root>

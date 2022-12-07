@@ -37,6 +37,7 @@ public partial class TilePage : UserPage
 			WarnUnsupportedOptionText.IsVisible = selection != WindowTransparencyLevel.None.ToString() &&
 			                                      selection != WindowTransparencyLevel.Transparent.ToString();
 			NewestWinOnlyText.IsVisible = selection == WindowTransparencyLevel.Mica.ToString();
+			WarnOtherProgramsText.IsVisible = selection == WindowTransparencyLevel.Mica.ToString();
 		};
 	}
 	

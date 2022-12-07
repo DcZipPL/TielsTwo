@@ -3,15 +3,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:avaloniaColorPicker="clr-namespace:AvaloniaColorPicker;assembly=AvaloniaColorPicker"
-             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="450"
+             xmlns:p="clr-namespace:Avalonia.Tiels.Resources"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="500"
              x:Class="Avalonia.Tiels.Pages.Settings.AppearancePage">
     <Grid Margin="10">
-        <StackPanel x:Name="CustomAppearanceGrid" Margin="0,5,0,0">
-            <Label>Theme Mode</Label>
-            <ComboBox x:Name="ThemeBox" HorizontalAlignment="Stretch"/>
-            <Label>Transparency Mode</Label>
-            <ComboBox x:Name="TransparencyModeBox" HorizontalAlignment="Stretch"/>
-            <Label>Color</Label>
+        <StackPanel x:Name="CustomAppearanceGrid">
+            <TextBlock FontSize="16" Margin="0,0,0,10" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.SettingsLabel}"/>
+            <WrapPanel><Label Content="{x:Static p:Resources.ThemeMode}"/><Label FontFamily="codicon" Content="" Padding="2,5,0,0"><ToolTip.Tip>
+                <TextBlock Text="{x:Static p:Resources.ThemeModeTooltip}"/>
+            </ToolTip.Tip></Label></WrapPanel>
+            <ComboBox x:Name="ThemeBox" HorizontalAlignment="Stretch" Margin="0,0,0,10"/>
+            <Label Content="{x:Static p:Resources.TransparencyMode}"/>
+            <ComboBox x:Name="TransparencyModeBox" HorizontalAlignment="Stretch" Margin="0,0,0,10"/>
+            <Label Content="{x:Static p:Resources.Color}"/>
             <avaloniaColorPicker:ColorPicker x:Name="ColorWheel" Color="#88000000" PropertyChanged="ColorWheelSizeChanged"
                                              IsPaletteVisible="False"
                                              IsCIELABVisible="False"
@@ -19,6 +23,9 @@
                                              IsColourSpacePreviewVisible="True"
                                              IsColourSpaceSelectorVisible="False"
                                              IsHSBVisible="True" IsAlphaVisible="True" IsHexVisible="True" IsRGBVisible="True" Margin="0,3,10,0"/>
+            <TextBlock Foreground="#FF9500" Margin="0,5,0,0" IsVisible="False" x:Name="WarnUnsupportedOptionText" TextWrapping="Wrap" Text="{x:Static p:Resources.WarnPossiblyUnsupported}"/>
+            <TextBlock Foreground="#FF0000" Margin="0,5,0,0" IsVisible="False" x:Name="NewestWinOnlyText" TextWrapping="Wrap" Text="{x:Static p:Resources.WarnNewerSysReq}"/>
+            <TextBlock Foreground="#FF0000" Margin="0,5,0,0" IsVisible="False" x:Name="WarnOtherProgramsText" TextWrapping="Wrap" Text="{x:Static p:Resources.WarnOtherPrograms}"/>
         </StackPanel>
         
     </Grid>

@@ -87,6 +87,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Color.
+        /// </summary>
+        public static string Color {
+            get {
+                return ResourceManager.GetString("Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create.
         /// </summary>
         public static string CreateButton {
@@ -258,6 +267,24 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display name of your new tile....
+        /// </summary>
+        public static string NameOfTileWatermark {
+            get {
+                return ResourceManager.GetString("NameOfTileWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No changes.
         /// </summary>
         public static string NoChanges {
@@ -317,6 +344,87 @@ namespace Avalonia.Tiels.Resources {
         public static string SpecialEffects {
             get {
                 return ResourceManager.GetString("SpecialEffects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme.
+        /// </summary>
+        public static string ThemeMode {
+            get {
+                return ResourceManager.GetString("ThemeMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme of application/icons. If you have tile with dark background then dark and vice versa..
+        /// </summary>
+        public static string ThemeModeTooltip {
+            get {
+                return ResourceManager.GetString("ThemeModeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transparency level can be changed in color option..
+        /// </summary>
+        public static string TransparencyChangedInColor {
+            get {
+                return ResourceManager.GetString("TransparencyChangedInColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transparency Type.
+        /// </summary>
+        public static string TransparencyMode {
+            get {
+                return ResourceManager.GetString("TransparencyMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use global theme.
+        /// </summary>
+        public static string UseGlobalTheme {
+            get {
+                return ResourceManager.GetString("UseGlobalTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This option only works on Windows 11..
+        /// </summary>
+        public static string WarnNewerSysReq {
+            get {
+                return ResourceManager.GetString("WarnNewerSysReq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Caution! This option doesn&apos;t support most animated desktop software..
+        /// </summary>
+        public static string WarnOtherPrograms {
+            get {
+                return ResourceManager.GetString("WarnOtherPrograms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Caution! Using other options than Solid or Transparent won&apos;t work on some systems and will fallback to these options..
+        /// </summary>
+        public static string WarnPossiblyUnsupported {
+            get {
+                return ResourceManager.GetString("WarnPossiblyUnsupported", resourceCulture);
             }
         }
         

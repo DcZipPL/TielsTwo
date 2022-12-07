@@ -22,6 +22,7 @@ public partial class TileWindow : Window
 	private void OnLoad(object? sender, EventArgs e)
 	{
 		var loadTileThread = new Thread(() => this.LoadTile(App.Instance.Config, ID));
+		loadTileThread.Start();
 	}
 
 	public void LoadTile(Configuration configuration, Guid id)

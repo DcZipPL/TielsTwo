@@ -87,6 +87,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kolor.
+        /// </summary>
+        public static string Color {
+            get {
+                return ResourceManager.GetString("Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Utwórz.
         /// </summary>
         public static string CreateButton {
@@ -258,6 +267,24 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nazwa.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nazwa twojego nowego kafelka....
+        /// </summary>
+        public static string NameOfTileWatermark {
+            get {
+                return ResourceManager.GetString("NameOfTileWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Brak zmian.
         /// </summary>
         public static string NoChanges {
@@ -317,6 +344,87 @@ namespace Avalonia.Tiels.Resources {
         public static string SpecialEffects {
             get {
                 return ResourceManager.GetString("SpecialEffects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Motyw.
+        /// </summary>
+        public static string ThemeMode {
+            get {
+                return ResourceManager.GetString("ThemeMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Motyw aplikacji i ikonek. Jeśli naprzykład masz na kafelku czarne tło to motyw czarny i vice versa..
+        /// </summary>
+        public static string ThemeModeTooltip {
+            get {
+                return ResourceManager.GetString("ThemeModeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Przeźroczystość można zmienić w ustawieniach koloru..
+        /// </summary>
+        public static string TransparencyChangedInColor {
+            get {
+                return ResourceManager.GetString("TransparencyChangedInColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Typ przeźroczystości.
+        /// </summary>
+        public static string TransparencyMode {
+            get {
+                return ResourceManager.GetString("TransparencyMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Typ.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Używaj globalnego motywu.
+        /// </summary>
+        public static string UseGlobalTheme {
+            get {
+                return ResourceManager.GetString("UseGlobalTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ta opcja działa tylko z Windows 11..
+        /// </summary>
+        public static string WarnNewerSysReq {
+            get {
+                return ResourceManager.GetString("WarnNewerSysReq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uwaga! Ta opcja nie jest obsługiwana przez większość programów umożliwiających animowane tapety..
+        /// </summary>
+        public static string WarnOtherPrograms {
+            get {
+                return ResourceManager.GetString("WarnOtherPrograms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uwaga! Używanie innej opcji niż Solidne tło czy Przeźroczyste może nie zadziałać na nie których systemach. Jeśl nie uda się ustawić to domyślnie program przywróci do powyższych opcji..
+        /// </summary>
+        public static string WarnPossiblyUnsupported {
+            get {
+                return ResourceManager.GetString("WarnPossiblyUnsupported", resourceCulture);
             }
         }
         

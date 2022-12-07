@@ -196,7 +196,15 @@ public class Configuration
 
     public bool TileExist(Guid id)
     {
-        throw new NotImplementedException();
+        if (!Directory.Exists(GetConfigDirectory())) return false;
+        
+        var tilesConfig = Path.Combine(GetConfigDirectory(), "tiles/");
+        if (!Directory.Exists(tilesConfig))
+            Directory.CreateDirectory(tilesConfig);
+        else
+            return File.Exists(Path.Combine(tilesConfig, id.ToString(), ".toml"));
+
+        return false;
     }
 
     #endregion

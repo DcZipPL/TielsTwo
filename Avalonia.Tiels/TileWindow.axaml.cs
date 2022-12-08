@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Numerics;
 using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using Avalonia.Tiels.Classes;
 
 namespace Avalonia.Tiels;
 
@@ -29,7 +31,7 @@ public partial class TileWindow : Window
 	{
 		if (configuration.TileExist(id))
 		{
-			
+			Configuration.CreateTileConfig(id);
 		}
 	}
 }

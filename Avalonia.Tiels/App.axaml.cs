@@ -1,12 +1,9 @@
 using System;
-using System.Globalization;
-using System.Reflection;
 using System.Resources;
 using System.Text;
-using System.Threading;
-using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Tiels.Classes;
 
 namespace Avalonia.Tiels
 {
@@ -78,7 +75,8 @@ namespace Avalonia.Tiels
 			}
 		}
 
-		private void TrayOpenSettings(object? sender, EventArgs e)
+		private void TrayOpenSettings(object? sender, EventArgs e) => OpenSettings();
+		private void OpenSettings()
 		{
 			if ((ActiveSettingsWindow == null || ActiveSettingsWindow.PlatformImpl != null) &&
 			    ActiveSettingsWindow != null) return;

@@ -1,23 +1,16 @@
 using System;
-using System.Buffers.Text;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Numerics;
-using System.Runtime.Serialization;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Layout;
-using Avalonia.Platform;
 using Avalonia.Themes.Fluent;
 using Tomlyn;
 using Tomlyn.Model;
 
-namespace Avalonia.Tiels;
+namespace Avalonia.Tiels.Classes;
 
 public class Configuration
 {
@@ -91,6 +84,12 @@ public class Configuration
         
         return "./TielsConfig";
     }
+    
+    public static string GetTilesConfigDirectory(string withFile = "")
+    {
+        return Path.Combine(GetConfigDirectory(), "tiles/", withFile);
+    }
+    
     public static bool IsFirstStartup()
     {
         return !Directory.Exists(GetConfigDirectory()) || !File.Exists(Path.Combine(GetConfigDirectory(), "global.toml"));
@@ -198,13 +197,29 @@ public class Configuration
     {
         if (!Directory.Exists(GetConfigDirectory())) return false;
         
-        var tilesConfig = Path.Combine(GetConfigDirectory(), "tiles/");
-        if (!Directory.Exists(tilesConfig))
-            Directory.CreateDirectory(tilesConfig);
+        if (!Directory.Exists(GetTilesConfigDirectory()))
+            Directory.CreateDirectory(GetTilesConfigDirectory());
         else
-            return File.Exists(Path.Combine(tilesConfig, id.ToString(), ".toml"));
+            return File.Exists(Path.Combine(GetTilesConfigDirectory(), id.ToString(), ".toml"));
 
         return false;
+    }
+
+    public static void CreateTileConfig(Guid id)
+    {
+        File.WriteAllText(GetTilesConfigDirectory(id + ".toml"), "");
+        File.WriteAllBytes(GetTilesConfigDirectory(id + ".bin"), new []{(byte)0b0000_0000_0000_0001});
+    }
+
+    public static void SaveThumbnail(string path, string thumbnailPath)
+    {
+        
+    }
+    
+    public static void LoadThumbnail(string path)
+    {
+        byte[] bytes = File.ReadAllBytes(path);
+        uint buffer = 2048;
     }
 
     #endregion

@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Numerics;
+using System.Text.RegularExpressions;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Themes.Fluent;
@@ -16,10 +19,27 @@ public class Configuration
 {
     private readonly object _readWriteLock = new object();
     private static readonly object ThumbnailLock = new object();
-    
+
+    public Dictionary<Guid, Tile> Tiles = new();
+
     #region Loaders
     private Configuration(IControlledApplicationLifetime closer)
     {
+        // Load Tile configs
+        if (!Directory.Exists(GetTilesConfigDirectory()))
+            Directory.CreateDirectory(GetTilesConfigDirectory());
+        List<(string, string)> cfgs = new();
+        foreach (var filePath in Directory.EnumerateFiles(GetTilesConfigDirectory()))
+        {
+            if (Regex.IsMatch(filePath, @"\..*(toml)")) // is toml
+            {
+                
+            }
+            if (Regex.IsMatch(filePath, @"\..*(bin)")) // is binary (thumbnail)
+            {
+                cfgs.Any(f => f.Item1 == Path.GetFileName(filePath))
+            }
+        }
     }
 
     public static Configuration Init(IControlledApplicationLifetime closer)
@@ -193,53 +213,58 @@ public class Configuration
     #endregion
     
     #region Tile Management
-
-    public bool TileExist(Guid id)
+    public class Tile
     {
-        if (!Directory.Exists(GetConfigDirectory())) return false;
+        private readonly Guid _id;
+        public Tile(string thumbnailDbPath, string configPath)
+        {
+            _id = id;
+        }
         
-        if (!Directory.Exists(GetTilesConfigDirectory()))
-            Directory.CreateDirectory(GetTilesConfigDirectory());
-        else
-            return File.Exists(Path.Combine(GetTilesConfigDirectory(), id.ToString(), ".toml"));
+        public bool TileExist()
+        {
+            if (!Directory.Exists(GetConfigDirectory())) return false;
+        
+            if (!Directory.Exists(GetTilesConfigDirectory()))
+                Directory.CreateDirectory(GetTilesConfigDirectory());
+            
+            return File.Exists(Path.Combine(GetTilesConfigDirectory(), _id.ToString(), ".toml"));
+        }
 
-        return false;
-    }
+        public static void CreateTileConfig(Guid id)
+        {
+            File.WriteAllText(GetTilesConfigDirectory(id + ".toml"), "");
+            File.WriteAllBytes(GetTilesConfigDirectory(id + ".bin"), new []{(byte)0b0000_0000_0000_0001});
+        }
 
-    public static void CreateTileConfig(Guid id)
-    {
-        File.WriteAllText(GetTilesConfigDirectory(id + ".toml"), "");
-        File.WriteAllBytes(GetTilesConfigDirectory(id + ".bin"), new []{(byte)0b0000_0000_0000_0001});
-    }
-
-    public static void SaveThumbnail(string path, string thumbnailPath)
-    {
-        lock (ThumbnailLock)
+        public static void SaveThumbnail(string path, string thumbnailPath)
+        {
+            lock (ThumbnailLock)
+            {
+                int header = System.Text.Encoding.ASCII.GetByteCount("BPT");
+                const uint maxBufferSize = sizeof(uint);
+                const uint bufferSize = sizeof(uint) * maxBufferSize;
+        
+                byte[] bytes = File.ReadAllBytes(path);
+        
+                //File.WriteAllBytes(path, new []{});
+            }
+        }
+    
+        public static void LoadThumbnails(string path)
         {
             int header = System.Text.Encoding.ASCII.GetByteCount("BPT");
             const uint maxBufferSize = sizeof(uint);
             const uint bufferSize = sizeof(uint) * maxBufferSize;
         
             byte[] bytes = File.ReadAllBytes(path);
-        
-            //File.WriteAllBytes(path, new []{});
-        }
-    }
-    
-    public static void LoadThumbnails(string path)
-    {
-        int header = System.Text.Encoding.ASCII.GetByteCount("BPT");
-        const uint maxBufferSize = sizeof(uint);
-        const uint bufferSize = sizeof(uint) * maxBufferSize;
-        
-        byte[] bytes = File.ReadAllBytes(path);
-        for (var i = (uint)(header + maxBufferSize + bufferSize); i <= bytes.Length; i++)
-        {
+            for (var i = (uint)(header + maxBufferSize + bufferSize); i <= bytes.Length; i++)
+            {
             
+            }
+            //uint buffer = 2048;
         }
-        //uint buffer = 2048;
     }
-
     #endregion
     
     private Models.GlobalModel ReqModel()

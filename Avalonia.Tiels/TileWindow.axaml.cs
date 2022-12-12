@@ -37,9 +37,7 @@ public partial class TileWindow : Window
 
 	public void LoadTile(Configuration configuration, Guid id)
 	{
-		if (configuration.TileExist(id))
-		{
+		if (!configuration.Tile.TileExist(id))
 			Configuration.CreateTileConfig(id);
-		}
 	}
 }

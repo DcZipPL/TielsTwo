@@ -15,6 +15,7 @@ namespace Avalonia.Tiels.Classes;
 public class Configuration
 {
     private readonly object _readWriteLock = new object();
+    private static readonly object ThumbnailLock = new object();
     
     #region Loaders
     private Configuration(IControlledApplicationLifetime closer)
@@ -213,13 +214,30 @@ public class Configuration
 
     public static void SaveThumbnail(string path, string thumbnailPath)
     {
+        lock (ThumbnailLock)
+        {
+            int header = System.Text.Encoding.ASCII.GetByteCount("BPT");
+            const uint maxBufferSize = sizeof(uint);
+            const uint bufferSize = sizeof(uint) * maxBufferSize;
         
+            byte[] bytes = File.ReadAllBytes(path);
+        
+            //File.WriteAllBytes(path, new []{});
+        }
     }
     
-    public static void LoadThumbnail(string path)
+    public static void LoadThumbnails(string path)
     {
+        int header = System.Text.Encoding.ASCII.GetByteCount("BPT");
+        const uint maxBufferSize = sizeof(uint);
+        const uint bufferSize = sizeof(uint) * maxBufferSize;
+        
         byte[] bytes = File.ReadAllBytes(path);
-        uint buffer = 2048;
+        for (var i = (uint)(header + maxBufferSize + bufferSize); i <= bytes.Length; i++)
+        {
+            
+        }
+        //uint buffer = 2048;
     }
 
     #endregion

@@ -18,9 +18,9 @@ namespace Avalonia.Tiels.Classes;
 public class Configuration
 {
     private readonly object _readWriteLock = new object();
-    private static readonly object ThumbnailLock = new object();
+    private readonly object _thumbnailLock = new object();
 
-    public Dictionary<Guid, Tile> Tiles = new();
+    public Dictionary<Guid, Tile> Tiles = new Dictionary<Guid, Tile>();
 
     #region Loaders
     private Configuration(IControlledApplicationLifetime closer)
@@ -28,16 +28,32 @@ public class Configuration
         // Load Tile configs
         if (!Directory.Exists(GetTilesConfigDirectory()))
             Directory.CreateDirectory(GetTilesConfigDirectory());
-        List<(string, string)> cfgs = new();
         foreach (var filePath in Directory.EnumerateFiles(GetTilesConfigDirectory()))
         {
-            if (Regex.IsMatch(filePath, @"\..*(toml)")) // is toml
+            if (Path.GetExtension(filePath) == "toml") // config
             {
-                
+                if (Guid.TryParse(Path.GetFileNameWithoutExtension(filePath), out var guid))
+                {
+                    if (Tiles.ContainsKey(guid))
+                        Tiles.Add(guid, new Tile());
+                    
+                    #pragma warning disable CS0612
+                    Tiles[guid]._configPath = filePath;
+                    #pragma warning enable CS0612
+                    
+                } else { ErrorHandler.ShowErrorWindow(new InvalidDataException("Name of file: " + filePath + "has invalid Guid."), "~(0x0004)"); }
             }
-            if (Regex.IsMatch(filePath, @"\..*(bin)")) // is binary (thumbnail)
+            if (Path.GetExtension(filePath) == "bin") // thumbnail
             {
-                cfgs.Any(f => f.Item1 == Path.GetFileName(filePath))
+                if (Guid.TryParse(Path.GetFileNameWithoutExtension(filePath), out var guid))
+                {
+                    if (Tiles.ContainsKey(guid))
+                        Tiles.Add(guid, new Tile());
+                    
+                    #pragma warning disable CS0612
+                    Tiles[guid]._thumbnailDbPath = filePath;
+                    #pragma warning enable CS0612
+                } else { ErrorHandler.ShowErrorWindow(new InvalidDataException("Name of file: \"" + filePath + "\" has invalid Guid."), "~(0x0004)"); }
             }
         }
     }
@@ -54,6 +70,12 @@ public class Configuration
             if (!File.Exists(defaultConf))
             {
                 throw new FileNotFoundException(App.I18n.GetString("DefaultConfigMissingError"), defaultConf);
+            }
+            
+            var tileConf = Path.Combine(Environment.CurrentDirectory, "tile.default.toml");
+            if (!File.Exists(defaultConf))
+            {
+                throw new FileNotFoundException(App.I18n.GetString("DefaultConfigMissingError"), tileConf);
             }
 
             var defaultModel = File.ReadAllText(defaultConf);
@@ -213,13 +235,15 @@ public class Configuration
     #endregion
     
     #region Tile Management
-    public class Tile
+    public sealed class Tile
     {
-        private readonly Guid _id;
-        public Tile(string thumbnailDbPath, string configPath)
-        {
-            _id = id;
-        }
+        // ReSharper disable InconsistentNaming
+        [Obsolete] internal string _thumbnailDbPath;
+        [Obsolete] internal string _configPath;
+        private readonly object _tileConfigLock = new object();
+        // ReSharper restore InconsistentNaming
+
+        #region Helpers
         
         public bool TileExist()
         {
@@ -228,27 +252,44 @@ public class Configuration
             if (!Directory.Exists(GetTilesConfigDirectory()))
                 Directory.CreateDirectory(GetTilesConfigDirectory());
             
-            return File.Exists(Path.Combine(GetTilesConfigDirectory(), _id.ToString(), ".toml"));
+            return File.Exists(_configPath);
         }
 
-        public static void CreateTileConfig(Guid id)
+        public static void CreateTileConfig(Configuration configAccess, Guid id, string name, string path)
         {
-            File.WriteAllText(GetTilesConfigDirectory(id + ".toml"), "");
+            // TODO: Do bin
+            var tileConf = System.IO.Path.Combine(Environment.CurrentDirectory, "tile.default.toml");
+            
+            var defaultModel = File.ReadAllText(tileConf);
+            var model = Toml.ToModel<Models.TileModel>(defaultModel);
+            
+            model.Id = id.ToString();
+            model.Path = path;
+            model.Name = name;
+            Directory.CreateDirectory(GetDefaultTilesDirectory());
+            var toml = Toml.FromModel(model);
+
+            File.WriteAllText(GetTilesConfigDirectory(id+".toml"), toml);
             File.WriteAllBytes(GetTilesConfigDirectory(id + ".bin"), new []{(byte)0b0000_0000_0000_0001});
+            
+            if (configAccess.Tiles.ContainsKey(id))
+                configAccess.Tiles.Add(id, new Tile());
+                    
+            #pragma warning disable CS0612
+            configAccess.Tiles[id]._configPath = GetTilesConfigDirectory(id + ".toml");
+            configAccess.Tiles[id]._thumbnailDbPath = GetTilesConfigDirectory(id + ".bin");
+            #pragma warning enable CS0612
         }
 
-        public static void SaveThumbnail(string path, string thumbnailPath)
+        public void SaveThumbnail(string path, string thumbnailPath)
         {
-            lock (ThumbnailLock)
-            {
-                int header = System.Text.Encoding.ASCII.GetByteCount("BPT");
-                const uint maxBufferSize = sizeof(uint);
-                const uint bufferSize = sizeof(uint) * maxBufferSize;
+            int header = System.Text.Encoding.ASCII.GetByteCount("BPT");
+            const uint maxBufferSize = sizeof(uint);
+            const uint bufferSize = sizeof(uint) * maxBufferSize;
         
-                byte[] bytes = File.ReadAllBytes(path);
+            byte[] bytes = File.ReadAllBytes(path);
         
-                //File.WriteAllBytes(path, new []{});
-            }
+            //File.WriteAllBytes(path, new []{});
         }
     
         public static void LoadThumbnails(string path)
@@ -264,9 +305,95 @@ public class Configuration
             }
             //uint buffer = 2048;
         }
+        
+        #endregion
+
+        #region Request
+        
+        public string Id
+        {
+            get { return ReqModel().Id ?? ""; }
+            set
+            {
+                var model = ReqModel();
+                model.Id = value;
+                SeedModel(model);
+            }
+        }
+        
+        public string Name
+        {
+            get { return ReqModel().Name ?? ""; }
+            set
+            {
+                var model = ReqModel();
+                model.Name = value;
+                SeedModel(model);
+            }
+        }
+        
+        public string Path
+        {
+            get { return ReqModel().Path ?? ""; }
+            set
+            {
+                var model = ReqModel();
+                model.Path = value;
+                SeedModel(model);
+            }
+        }
+        
+        public bool Hidden
+        {
+            get { return ReqModel().Hidden; }
+            set
+            {
+                var model = ReqModel();
+                model.Hidden = value;
+                SeedModel(model);
+            }
+        }
+        
+        public BarAlignment EditBarAlignment
+        {
+            get { return (BarAlignment)ReqModel().EditBarAlignment; }
+            set
+            {
+                var model = ReqModel();
+                model.EditBarAlignment = (int)value;
+                SeedModel(model);
+            }
+        }
+                
+        #endregion
+        
+        #region Model Management
+        private Models.TileModel ReqModel()
+        {
+            lock (_tileConfigLock)
+            {
+                var defaultModel = File.ReadAllText(_configPath);
+                var model = Toml.ToModel<Models.TileModel>(defaultModel);
+                if (model.Appearance == null || model.Size == null || model.Location == null)
+                    throw new NoNullAllowedException(App.I18n.GetString("MissingSettingsAppearanceTableError"));
+                return model;
+            }
+        }
+
+        private void SeedModel(Models.TileModel model)
+        {
+            lock (_tileConfigLock)
+            {
+                var toml = Toml.FromModel(model);
+
+                File.WriteAllText(_configPath, toml);
+            }
+        }
+        #endregion
     }
     #endregion
     
+    #region Model Management
     private Models.GlobalModel ReqModel()
     {
         lock (_readWriteLock)
@@ -288,6 +415,7 @@ public class Configuration
             File.WriteAllText(Path.Combine(GetConfigDirectory(), "global.toml"), toml);
         }
     }
+    #endregion
     
     #region Models
     #pragma warning disable CS8618
@@ -331,14 +459,22 @@ public class Configuration
 
         public class TileModel : ITomlMetadataProvider
         {
-            public string Id;
-            public string Name;
-            public bool Hidden;
-            public Vector2 Size;
-            public Vector2 Location;
-            public int EditBarAlignment; // BarAlignment
-            public Appearance? Appearance;
+            public string? Id { get; set; }
+            public string? Name { get; set; }
+            public string? Path { get; set; }
+            public bool Hidden { get; set; }
+            public int EditBarAlignment { get; set; } // BarAlignment
+            public Vec2? Size { get; set; }
+            public Vec2? Location { get; set; }
+            public Appearance? Appearance { get; set; }
         
+            public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
+        }
+        
+        public class Vec2
+        {
+            public int X { get; set; }
+            public int Y { get; set; }
             public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
         }
     }

@@ -9,9 +9,11 @@
     <StackPanel Margin="10">
         <TextBlock FontSize="16" Margin="0,0,0,10" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.CreateLabel}"/>
         <Label Content="{x:Static p:Resources.Name}"/>
-        <TextBox Watermark="{x:Static p:Resources.NameOfTileWatermark}"/>
+        <TextBox x:Name="NameBox" Watermark="{x:Static p:Resources.NameOfTileWatermark}"/>
         <Label Margin="0,10,0,0" Content="{x:Static p:Resources.Type}"/>
         <ComboBox x:Name="TileTypeBox" HorizontalAlignment="Stretch"/>
+        <Label Content="{x:Static p:Resources.TilePath}"/>
+        <TextBox x:Name="PathBox" Watermark="{x:Static p:Resources.NameOfTileWatermark}"/>
         <CheckBox x:Name="UseGlobalThemeBox" Margin="0,10,0,0" Content="{x:Static p:Resources.UseGlobalTheme}" IsChecked="True"/>
         <StackPanel x:Name="CustomAppearanceGrid" Margin="0,5,0,0" IsEnabled="False">
             <StackPanel>

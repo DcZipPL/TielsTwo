@@ -7,7 +7,9 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Themes.Fluent;
+using Avalonia.Threading;
 using Avalonia.Tiels.Classes;
+using Avalonia.Tiels.Controls;
 
 namespace Avalonia.Tiels;
 
@@ -31,13 +33,27 @@ public partial class TileWindow : Window
 
 	private void OnLoad(object? sender, EventArgs e)
 	{
-		var loadTileThread = new Thread(() => this.LoadTile(App.Instance.Config, ID));
-		loadTileThread.Start();
+		var loadConfig = new Thread(() => this.LoadConfigs(App.Instance.Config, ID));
+		loadConfig.Start();
+		
+		var loadContentThread = new Thread(() => this.LoadContent(App.Instance.Config, ID));
+		loadContentThread.Start();
 	}
 
-	public void LoadTile(Configuration configuration, Guid id)
+	public void LoadConfigs(Configuration configuration, Guid id)
 	{
-		if (!configuration.Tile.TileExist(id))
-			Configuration.CreateTileConfig(id);
+	}
+	
+	public void LoadContent(Configuration configuration, Guid id)
+	{
+		foreach (var systemEntry in Directory.EnumerateFileSystemEntries(configuration.Tiles[id].Path))
+		{
+			Dispatcher.UIThread.Post(() =>
+			{
+				var entry = new EntryComponent();
+				entry.EntryName = Path.GetFileName(systemEntry);
+				EntryContent.Children.Add(entry);
+			});
+		}
 	}
 }

@@ -6,6 +6,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Themes.Fluent;
+using Avalonia.Tiels.Classes;
 
 namespace Avalonia.Tiels.Pages.Create;
 
@@ -29,7 +30,7 @@ public partial class TilePage : UserPage
 			TileTypeBox.SelectedIndex = (int)((ITileCreationPage)this).CreationType;
 		else
 			throw new InvalidOperationException(
-				"Tried to initialize TileTypeBox.SelectedIndex when it isn't party of ITileCreationPage");
+				"Tried to initialize TileTypeBox.SelectedIndex when it isn't part of ITileCreationPage");
 
 		TransparencyModeBox.SelectionChanged += (sender, args) =>
 		{
@@ -39,12 +40,16 @@ public partial class TilePage : UserPage
 			NewestWinOnlyText.IsVisible = selection == WindowTransparencyLevel.Mica.ToString();
 			WarnOtherProgramsText.IsVisible = selection == WindowTransparencyLevel.Mica.ToString();
 		};
+
+		PathBox.Text = Configuration.GetDefaultTilesDirectory();
 	}
 	
 	private void CreateTile()
 	{
+		var id = Guid.NewGuid();
+		Configuration.Tile.CreateTileConfig(App.Instance.Config, id, NameBox.Text, PathBox.Text);
 		var window = new TileWindow();
-		window.ID = Guid.NewGuid();
+		window.ID = id;
 		window.Show();
 	}
 	

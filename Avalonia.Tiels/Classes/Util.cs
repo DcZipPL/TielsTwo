@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 
 namespace Avalonia.Tiels;
 
-public class Util
+public static class Util
 {
 	public static Color ColorFromHex(string? colorcode)
 	{

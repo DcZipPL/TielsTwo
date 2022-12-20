@@ -144,4 +144,7 @@
     <data name="TransparencyChangedInColor" xml:space="preserve">
         <value>Transparency level can be changed in color option.</value>
     </data>
+    <data name="TilePath" xml:space="preserve">
+        <value>Path</value>
+    </data>
 </root>

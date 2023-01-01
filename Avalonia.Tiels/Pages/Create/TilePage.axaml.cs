@@ -44,8 +44,9 @@ public partial class TilePage : UserPage
 		TileTypeBox.SelectionChanged += (sender, args) =>
 		{
 			var selection = (string?)TileTypeBox.SelectedItem ?? TileType.Tile.ToString();
-
-			TilePathGrid.IsVisible = selection == TileType.DirectoryPortal.ToString();
+			
+			// Add spaces with regex to match selection.
+			TilePathPanel.IsVisible = selection == Regex.Replace(TileType.DirectoryPortal.ToString(), "(\\B[A-Z])", " $1");
 		};
 
 		PathBox.Text = Configuration.GetDefaultTilesDirectory();

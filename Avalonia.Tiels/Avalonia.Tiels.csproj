@@ -29,13 +29,17 @@
     </ItemGroup>
     <ItemGroup>
       <None Remove="Resources\global.default.toml" />
-      <Resource Include="Assets\global.default.toml">
+      <AdditionalFiles Include="Assets\global.default.toml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Resource>
+      </AdditionalFiles>
       <None Remove="Assets\tiles_colored.ico" />
       <AvaloniaResource Include="Assets\tiels_color.ico">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </AvaloniaResource>
+      <None Remove="Assets\tile.default.toml" />
+      <AdditionalFiles Include="Assets\tile.default.toml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </AdditionalFiles>
     </ItemGroup>
     <ItemGroup>
       <EmbeddedResource Update="Resources\Resources.pl.resx">

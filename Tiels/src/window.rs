@@ -18,7 +18,7 @@ impl Sandbox for ErrorWindow {
     type Message = Message;
 
     fn new() -> Self {
-        Self { }
+        Self { title }
     }
 
     fn title(&self) -> String {

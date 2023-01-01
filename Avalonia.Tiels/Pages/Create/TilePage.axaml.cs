@@ -41,6 +41,13 @@ public partial class TilePage : UserPage
 			WarnOtherProgramsText.IsVisible = selection == WindowTransparencyLevel.Mica.ToString();
 		};
 
+		TileTypeBox.SelectionChanged += (sender, args) =>
+		{
+			var selection = (string?)TileTypeBox.SelectedItem ?? TileType.Tile.ToString();
+
+			TilePathGrid.IsVisible = selection == TileType.DirectoryPortal.ToString();
+		};
+
 		PathBox.Text = Configuration.GetDefaultTilesDirectory();
 	}
 	

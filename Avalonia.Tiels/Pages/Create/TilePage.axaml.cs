@@ -54,6 +54,7 @@ public partial class TilePage : UserPage
 	
 	private void CreateTile()
 	{
+		// TODO: Save appearance.
 		var id = Guid.NewGuid();
 		Configuration.Tile.CreateTileConfig(App.Instance.Config, id, NameBox.Text, PathBox.Text);
 		var window = new TileWindow();

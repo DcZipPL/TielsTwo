@@ -48,6 +48,7 @@ public partial class TileWindow : Window
 	{
 		foreach (var systemEntry in Directory.EnumerateFileSystemEntries(configuration.Tiles[id].Path))
 		{
+			// TODO: Better threading if possible
 			Dispatcher.UIThread.Post(() =>
 			{
 				var entry = new EntryComponent();

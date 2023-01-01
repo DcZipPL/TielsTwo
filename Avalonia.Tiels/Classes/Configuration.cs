@@ -37,10 +37,8 @@ public class Configuration
                     if (Tiles.ContainsKey(guid))
                         Tiles.Add(guid, new Tile());
                     
-                    #pragma warning disable CS0612
                     Tiles[guid]._configPath = filePath;
-                    #pragma warning enable CS0612
-                    
+
                 } else { ErrorHandler.ShowErrorWindow(new InvalidDataException("Name of file: " + filePath + "has invalid Guid."), "~(0x0004)"); }
             }
             if (Path.GetExtension(filePath) == "bin") // thumbnail
@@ -50,9 +48,7 @@ public class Configuration
                     if (Tiles.ContainsKey(guid))
                         Tiles.Add(guid, new Tile());
                     
-                    #pragma warning disable CS0612
                     Tiles[guid]._thumbnailDbPath = filePath;
-                    #pragma warning enable CS0612
                 } else { ErrorHandler.ShowErrorWindow(new InvalidDataException("Name of file: \"" + filePath + "\" has invalid Guid."), "~(0x0004)"); }
             }
         }
@@ -238,8 +234,8 @@ public class Configuration
     public sealed class Tile
     {
         // ReSharper disable InconsistentNaming
-        [Obsolete] internal string _thumbnailDbPath;
-        [Obsolete] internal string _configPath;
+        internal string _thumbnailDbPath;
+        internal string _configPath;
         private readonly object _tileConfigLock = new object();
         // ReSharper restore InconsistentNaming
 
@@ -269,16 +265,14 @@ public class Configuration
             Directory.CreateDirectory(GetDefaultTilesDirectory());
             var toml = Toml.FromModel(model);
 
-            File.WriteAllText(GetTilesConfigDirectory(id+".toml"), toml);
+            File.WriteAllText(GetTilesConfigDirectory(id + ".toml"), toml);
             File.WriteAllBytes(GetTilesConfigDirectory(id + ".bin"), new []{(byte)0b0000_0000_0000_0001});
             
-            if (configAccess.Tiles.ContainsKey(id))
+            if (!configAccess.Tiles.ContainsKey(id))
                 configAccess.Tiles.Add(id, new Tile());
-                    
-            #pragma warning disable CS0612
+            
             configAccess.Tiles[id]._configPath = GetTilesConfigDirectory(id + ".toml");
             configAccess.Tiles[id]._thumbnailDbPath = GetTilesConfigDirectory(id + ".bin");
-            #pragma warning enable CS0612
         }
 
         public void SaveThumbnail(string path, string thumbnailPath)
@@ -467,15 +461,14 @@ public class Configuration
             public Vec2? Size { get; set; }
             public Vec2? Location { get; set; }
             public Appearance? Appearance { get; set; }
-        
-            public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
+            
+            TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
         }
         
         public class Vec2
         {
             public int X { get; set; }
             public int Y { get; set; }
-            public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
         }
     }
     #pragma warning restore CS8618

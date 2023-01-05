@@ -76,6 +76,7 @@
       </Compile>
     </ItemGroup>
     <ItemGroup>
+      <Folder Include="Assets\Icons\out" />
       <Folder Include="Pages\Management" />
     </ItemGroup>
 </Project>

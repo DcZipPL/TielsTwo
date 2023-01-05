@@ -1,0 +1,9 @@
+icons = [
+    "paintbrush",
+    "paintbrush-2",
+    "slash",
+    "settings",
+    "folder-cog",
+    "folder-symlink",
+    "download-cloud"
+]

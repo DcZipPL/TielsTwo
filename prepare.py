@@ -95,7 +95,7 @@ def build(release: bool):
     release_flag = "build"
     if release:
         release_flag = "publish"
-    exitcode = subprocess.call("cd ./Avalonia.Tiels && dotnet "+release_flag+" -o ../out/bin",
+    exitcode = subprocess.call("cd ./Avalonia.Tiels && dotnet "+release_flag+" -c Release -d -o ../out/bin",
                                shell=True)
 
     # Exit script if it failed

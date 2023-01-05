@@ -33,6 +33,8 @@ def download_dependencies():
                 exit(137)
 
         # Check if icons exist already and download icons
+        if not os.path.isdir("./Avalonia.Tiels/Assets/Icons/out"):
+            os.mkdir("./Avalonia.Tiels/Assets/Icons/out")
         for icon in toml_data.get("icons"):
             try:
                 if not os.path.exists(f"{ICONS_PATH}{icon}.svg"):

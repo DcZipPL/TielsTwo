@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+# Deprecated linux build script. Use python script instead.
+
 # Tool checks
 echo "Checking if cargo and rustc installed."
 if ! command -v cargo || ! command -v rustc

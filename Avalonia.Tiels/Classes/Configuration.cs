@@ -62,13 +62,13 @@ public class Configuration
             Directory.CreateDirectory(GetConfigDirectory());
 
             // Create config file
-            var defaultConf = Path.Combine(Environment.CurrentDirectory, "global.default.toml");
+            var defaultConf = Path.Combine(Environment.CurrentDirectory, "Defaults/global.default.toml");
             if (!File.Exists(defaultConf))
             {
                 throw new FileNotFoundException(App.I18n.GetString("DefaultConfigMissingError"), defaultConf);
             }
             
-            var tileConf = Path.Combine(Environment.CurrentDirectory, "tile.default.toml");
+            var tileConf = Path.Combine(Environment.CurrentDirectory, "Defaults/tile.default.toml");
             if (!File.Exists(defaultConf))
             {
                 throw new FileNotFoundException(App.I18n.GetString("DefaultConfigMissingError"), tileConf);
@@ -254,7 +254,7 @@ public class Configuration
         public static void CreateTileConfig(Configuration configAccess, Guid id, string name, string path)
         {
             // TODO: Do bin
-            var tileConf = System.IO.Path.Combine(Environment.CurrentDirectory, "tile.default.toml");
+            var tileConf = System.IO.Path.Combine(Environment.CurrentDirectory, "Defaults/tile.default.toml");
             
             var defaultModel = File.ReadAllText(tileConf);
             var model = Toml.ToModel<Models.TileModel>(defaultModel);

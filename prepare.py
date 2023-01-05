@@ -35,13 +35,13 @@ def download_dependencies():
         # Check if icons exist already and download icons
         for icon in toml_data.get("icons"):
             try:
-                if not os.path.exists(ICONS_PATH + icon + ".svg"):
-                    urllib.request.urlretrieve(ICONS_URL + icon + ".svg", ICONS_PATH + icon + ".svg")
-                    print("Downloaded " + icon + ".svg")
+                if not os.path.exists(f"{ICONS_PATH}{icon}.svg"):
+                    urllib.request.urlretrieve(f"{ICONS_URL}{icon}.svg", f"{ICONS_PATH}{icon}.svg")
+                    print(f"Downloaded {icon}.svg")
                 else:
-                    print("Skipping " + icon + ".svg, already exists!")
+                    print(f"Skipping {icon}.svg, already exists!")
             except urllib.error.HTTPError:
-                print("Couldn't download " + icon + ".svg")
+                print(f"Couldn't download {icon}.svg")
     # Other deps
 
 
@@ -73,7 +73,7 @@ def build(release: bool):
     # Launcher/Updater
     if release:
         release_flag = " --release"
-    exitcode = subprocess.call("cd ./Tiels && cargo build"+release_flag,
+    exitcode = subprocess.call(f"cd ./Tiels && cargo build{release_flag}",
                                shell=True)  # --out-dir is unstable.
     # Exit script if it failed
     if exitcode != 0:
@@ -88,14 +88,14 @@ def build(release: bool):
         cp_ext = ".exe"
     if release:
         cp_dr = "release"
-    shutil.copy("./Tiels/target/"+cp_dr+"/Tiels"+cp_ext, "./out/Tiels"+cp_ext)
+    shutil.copy(f"./Tiels/target/{cp_dr}/Tiels{cp_ext}", f"./out/Tiels{cp_ext}")
 
     # Main program
     print("Starting build tasks (2/2)...")
     release_flag = "build"
     if release:
         release_flag = "publish"
-    exitcode = subprocess.call("cd ./Avalonia.Tiels && dotnet "+release_flag+" -c Release -d -o ../out/bin",
+    exitcode = subprocess.call(f"cd ./Avalonia.Tiels && dotnet {release_flag} -c Release -d -o ../out/bin",
                                shell=True)
 
     # Exit script if it failed

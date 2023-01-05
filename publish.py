@@ -10,3 +10,5 @@ if prepare.check_buildtools():
     prepare.create_output()
     prepare.build(True)
     print("Build successfully in " + str(datetime.now() - start_time))
+else:
+    print("Missing dependencies. Please fix and rerun.")

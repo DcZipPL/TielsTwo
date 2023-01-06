@@ -5,5 +5,8 @@ icons = [
     "settings",
     "folder-cog",
     "folder-symlink",
-    "download-cloud"
+    "download-cloud",
+    "alert-octagon",
+    "wrench",
+    "info"
 ]

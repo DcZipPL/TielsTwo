@@ -19,20 +19,20 @@
                 <Border BorderThickness="0,0,0.6,0" BorderBrush="{StaticResource BaseBorderColor}">
                         <StackPanel>
                                 <controls:SidebarCategory Title="{x:Static p:Resources.CreateLabel}"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.CreateTile}" x:Name="SB_CT"                Font="codicon" Icon=""/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.CreateDirectoryPortal}" x:Name="SB_CDP"    Font="codicon" Icon=""/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.CreateFloatingImage}" x:Name="SB_CFI"      Font="codicon" Icon="" IsEnabled="False"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.CreateNote}" x:Name="SB_CN"                Font="codicon" Icon="" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.CreateTile}" x:Name="SB_CT"                Icon="/Assets/Icons/window-plus.svg"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.CreateDirectoryPortal}" x:Name="SB_CDP"    Icon="/Assets/Icons/out/folder-symlink.svg"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.CreateFloatingImage}" x:Name="SB_CFI"      Icon="/Assets/Icons/out/slash.svg" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.CreateNote}" x:Name="SB_CN"                Icon="/Assets/Icons/out/slash.svg" IsEnabled="False"/>
                                 
                                 <controls:SidebarCategory Title="{x:Static p:Resources.SettingsLabel}"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsGeneral}" x:Name="SB_SG"           Font="codicon" Icon=""/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsAppearance}" x:Name="SB_SA"        Font="codicon" Icon=""/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsUpdates}" x:Name="SB_SU"           Font="codicon" Icon=""/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsGeneral}" x:Name="SB_SG"           Icon="/Assets/Icons/out/settings.svg"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsAppearance}" x:Name="SB_SA"        Icon="/Assets/Icons/out/paintbrush.svg"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsUpdates}" x:Name="SB_SU"           Icon="/Assets/Icons/out/download-cloud.svg"/>
                                 
                                 <controls:SidebarCategory Title="{x:Static p:Resources.ManagementLabel}"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementTiles}" x:Name="SB_MT"           Font="codicon" Icon=""/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementFloatingImages}" x:Name="SB_MFI" Font="codicon" Icon="" IsEnabled="False"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementNotes}" x:Name="SB_MN"           Font="codicon" Icon="" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementTiles}" x:Name="SB_MT"           Icon="/Assets/Icons/out/wrench.svg"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementFloatingImages}" x:Name="SB_MFI" Icon="/Assets/Icons/out/slash.svg" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementNotes}" x:Name="SB_MN"           Icon="/Assets/Icons/out/slash.svg" IsEnabled="False"/>
                         </StackPanel>
                 </Border>
                 <!-- Content -->

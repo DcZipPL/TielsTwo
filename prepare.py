@@ -39,6 +39,13 @@ def download_dependencies():
             try:
                 if not os.path.exists(f"{ICONS_PATH}{icon}.svg"):
                     urllib.request.urlretrieve(f"{ICONS_URL}{icon}.svg", f"{ICONS_PATH}{icon}.svg")
+                    # Make svg stroke smaller for icons
+                    i_st: str
+                    with open(f"{ICONS_PATH}{icon}.svg", "r") as i:
+                        i_st = i.read().replace("stroke-width=\"2\"", "stroke-width=\"1\"")
+                    with open(f"{ICONS_PATH}{icon}.svg", "w") as i:
+                        i.write(i_st)
+
                     print(f"Downloaded {icon}.svg")
                 else:
                     print(f"Skipping {icon}.svg, already exists!")

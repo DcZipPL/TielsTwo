@@ -24,6 +24,7 @@ public partial class AppearancePage : UserPage
 
 		ThemeBox.Items = Enum.GetNames(typeof(FluentThemeMode));
 		ThemeBox.SelectedIndex = (int)App.Instance.Config.GlobalTheme;
+		Util.SetSvgImage("/Assets/Icons/out/info.svg", ThemeInfoIcon);
 		
 		TransparencyModeBox.SelectionChanged += (sender, args) =>
 		{

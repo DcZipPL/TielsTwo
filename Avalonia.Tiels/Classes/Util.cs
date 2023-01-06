@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using Avalonia.Svg;
 
 namespace Avalonia.Tiels;
 
@@ -38,5 +40,16 @@ public static class Util
 			CultureInfo.GetCultureInfo("en-UK"),
 			CultureInfo.GetCultureInfo("pl-PL")
 		};
+	}
+
+	public static Avalonia.Controls.Image SetSvgImage(string iconPath, Avalonia.Controls.Image image)
+	{
+		var svg = new SvgImage
+		{
+			Source = SvgSource.Load(iconPath?? "/Assets/Icons/out/alert-octagon.svg",
+				new Uri("avares://Avalonia.Tiels"+iconPath))
+		};
+		image.Source = svg;
+		return image;
 	}
 }

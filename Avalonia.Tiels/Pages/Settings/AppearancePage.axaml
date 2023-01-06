@@ -9,9 +9,9 @@
     <Grid Margin="10">
         <StackPanel x:Name="CustomAppearanceGrid">
             <TextBlock FontSize="16" Margin="0,0,0,10" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.SettingsLabel}"/>
-            <WrapPanel><Label Content="{x:Static p:Resources.ThemeMode}"/><Label FontFamily="codicon" Content="" Padding="2,5,0,0"><ToolTip.Tip>
+            <WrapPanel><Label Content="{x:Static p:Resources.ThemeMode}"/><Image x:Name="ThemeInfoIcon" Width="16" Height="16"/><ToolTip.Tip>
                 <TextBlock Text="{x:Static p:Resources.ThemeModeTooltip}"/>
-            </ToolTip.Tip></Label></WrapPanel>
+            </ToolTip.Tip></WrapPanel>
             <ComboBox x:Name="ThemeBox" HorizontalAlignment="Stretch" Margin="0,0,0,10"/>
             <Label Content="{x:Static p:Resources.TransparencyMode}"/>
             <ComboBox x:Name="TransparencyModeBox" HorizontalAlignment="Stretch" Margin="0,0,0,10"/>

@@ -55,7 +55,10 @@ def download_dependencies():
                     print(f"Skipping {icon}.svg, already exists!")
 
                 # Add icon to C# class
-                cs_const_lines += f"""\n\tpublic static readonly string {__to_camel_case(icon).replace("2","Alt")} = \"{ICONS_PATH}{icon}\";"""
+                cs_const_lines += f"""\n\tpublic static readonly string {
+                __to_camel_case(icon).replace("2","Alt")
+                } = \"{ICONS_PATH.replace("./Avalonia.Tiels/","/")}{icon}.svg\";"""
+
             except urllib.error.HTTPError:
                 print(f"Couldn't download {icon}.svg")
         print("Writing all icons to C# file...")

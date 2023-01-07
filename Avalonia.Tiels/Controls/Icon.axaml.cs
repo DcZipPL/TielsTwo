@@ -6,20 +6,7 @@ namespace Avalonia.Tiels.Controls;
 
 public partial class Icon : UserControl
 {
-    private string _path;
-    public string Path
-    {
-        get => _path;
-        set
-        {
-            _path = value;
-            if (this.IsInitialized && IconImage.IsInitialized)
-            {
-                Util.SetSvgImage(value, IconImage);
-            }
-        }
-    }
-
+    public string Path { get; set; }
     public Icon()
     {
         InitializeComponent();

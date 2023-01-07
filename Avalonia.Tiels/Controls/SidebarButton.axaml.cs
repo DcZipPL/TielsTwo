@@ -19,7 +19,6 @@ public partial class SidebarButton : UserControl
 	public SidebarButton WithPage(UserPage? page)
 	{
 		this.Page = page;
-		Util.SetSvgImage(Icon, SvgIcon);
 		return this;
 	}
 
@@ -27,4 +26,6 @@ public partial class SidebarButton : UserControl
 	{
 		InitializeComponent();
 	}
+
+	private void IconInitialized(object? sender, EventArgs e) => SvgIcon.Path = Icon;
 }

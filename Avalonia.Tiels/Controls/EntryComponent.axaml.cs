@@ -7,7 +7,7 @@ namespace Avalonia.Tiels.Controls;
 
 public partial class EntryComponent : UserControl
 {
-	public Image Preview { get; set; }
+	public Avalonia.Controls.Image Preview { get; set; }
 	public string EntryName { get; set; }
 	
 	public EntryComponent()

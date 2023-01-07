@@ -21,8 +21,7 @@ public partial class TilePage : UserPage
 
 		ThemeBox.Items = Enum.GetNames(typeof(FluentThemeMode));
 		ThemeBox.SelectedIndex = (int)App.Instance.Config.GlobalTheme;
-		Util.SetSvgImage("/Assets/Icons/out/info.svg", ThemeInfoIcon);
-		
+
 		UseGlobalThemeBox.Checked += (sender, args) => CustomAppearanceGrid.IsEnabled = false;
 		UseGlobalThemeBox.Unchecked += (sender, args) => CustomAppearanceGrid.IsEnabled = true;
 		

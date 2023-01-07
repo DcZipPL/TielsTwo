@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:avaloniaColorPicker="clr-namespace:AvaloniaColorPicker;assembly=AvaloniaColorPicker"
              xmlns:p="clr-namespace:Avalonia.Tiels.Resources"
+             xmlns:controls="clr-namespace:Avalonia.Tiels.Controls"
              mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="500"
              x:Class="Avalonia.Tiels.Pages.Settings.AppearancePage">
     <Grid Margin="10">
         <StackPanel x:Name="CustomAppearanceGrid">
             <TextBlock FontSize="16" Margin="0,0,0,10" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.SettingsLabel}"/>
-            <WrapPanel><Label Content="{x:Static p:Resources.ThemeMode}"/><Image x:Name="ThemeInfoIcon" Width="16" Height="16"/><ToolTip.Tip>
+            <WrapPanel><Label Content="{x:Static p:Resources.ThemeMode}"/><controls:Icon Path="/Assets/Icons/out/info.svg"/><ToolTip.Tip>
                 <TextBlock Text="{x:Static p:Resources.ThemeModeTooltip}"/>
             </ToolTip.Tip></WrapPanel>
             <ComboBox x:Name="ThemeBox" HorizontalAlignment="Stretch" Margin="0,0,0,10"/>

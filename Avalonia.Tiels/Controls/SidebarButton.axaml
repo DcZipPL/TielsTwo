@@ -13,7 +13,7 @@
             </Style>
         </Button.Styles>
         <Grid>
-            <Image Width="16" Height="16" HorizontalAlignment="Left" x:Name="SvgIcon"/>
+            <controls:Icon HorizontalAlignment="Left" x:Name="SvgIcon" Initialized="IconInitialized"/>
             <TextBlock Margin="20,0" Text="{Binding Text, RelativeSource={RelativeSource AncestorType={x:Type controls:SidebarButton}}}"/>
         </Grid>
     </ToggleButton>

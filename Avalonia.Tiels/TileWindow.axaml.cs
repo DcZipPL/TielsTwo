@@ -51,8 +51,13 @@ public partial class TileWindow : Window
 			// TODO: Better threading if possible
 			Dispatcher.UIThread.Post(() =>
 			{
-				var entry = new EntryComponent();
-				entry.EntryName = Path.GetFileName(systemEntry);
+				// TODO: Get thumbnails from os
+				var thumbnail = Util.SetSvgImage("/Assets/Icons/out/alert-octagon.svg", new Image());
+				var entry = new EntryComponent
+				{
+					EntryName = Path.GetFileName(systemEntry),
+					Preview = thumbnail
+				};
 				EntryContent.Children.Add(entry);
 			});
 		}

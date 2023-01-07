@@ -36,7 +36,7 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </AdditionalFiles>
       <None Remove="Resources\global.default.toml" />
-      <AvaloniaResource Include="Assets\**"/>
+      <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
     <ItemGroup>
       <EmbeddedResource Update="Resources\Resources.pl.resx">
@@ -69,6 +69,10 @@
       </Compile>
       <Compile Update="Pages\Settings\AppearancePage.axaml.cs">
         <DependentUpon>AppearanceSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\Icon.axaml.cs">
+        <DependentUpon>Icon.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Avalonia.Tiels.Pages.Settings;
 
 public partial class GeneralPage : UserPage
 {
-	private (string, string?) status = ("", App.I18n.GetString("NoChanges"));
+	private (string, string?) status = (Icons.Check, App.I18n.GetString("NoChanges"));
 
 	internal SettingsWindow Root;
 
@@ -61,13 +62,13 @@ public partial class GeneralPage : UserPage
 		TilesDirectoryBox.Text = draftTilesPath;
 
 		// Show status
-		StatusIcon.Text = status.Item1;
+		StatusIcon.Path = status.Item1;
 		StatusText.Text = status.Item2;
 	}
 
 	private void ChangeSettingsStatus(string message, bool invalid)
 	{
-		status = (invalid ? "" : "", message);
+		status = (invalid ? Icons.X : Icons.Check, message);
 	}
 
 	private void RollbackSettings()

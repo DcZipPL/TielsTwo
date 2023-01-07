@@ -2,6 +2,7 @@ import urllib.request
 import urllib.error
 import shutil
 import os
+import re
 import sys
 import subprocess
 import platform
@@ -35,23 +36,42 @@ def download_dependencies():
         # Check if icons exist already and download icons
         if not os.path.isdir("./Avalonia.Tiels/Assets/Icons/out"):
             os.mkdir("./Avalonia.Tiels/Assets/Icons/out")
+
+        cs_const_lines: str = ""
         for icon in toml_data.get("icons"):
             try:
                 if not os.path.exists(f"{ICONS_PATH}{icon}.svg"):
+                    print(f"Downloading... {icon}.svg")
                     urllib.request.urlretrieve(f"{ICONS_URL}{icon}.svg", f"{ICONS_PATH}{icon}.svg")
+
                     # Make svg stroke smaller for icons
+                    print(f"Adjusting... {icon}.svg")
                     i_st: str
                     with open(f"{ICONS_PATH}{icon}.svg", "r") as i:
                         i_st = i.read().replace("stroke-width=\"2\"", "stroke-width=\"1\"")
                     with open(f"{ICONS_PATH}{icon}.svg", "w") as i:
                         i.write(i_st)
-
-                    print(f"Downloaded {icon}.svg")
                 else:
                     print(f"Skipping {icon}.svg, already exists!")
+
+                # Add icon to C# class
+                cs_const_lines += f"""\n\tpublic static readonly string {__to_camel_case(icon).replace("2","Alt")} = \"{ICONS_PATH}{icon}\";"""
             except urllib.error.HTTPError:
                 print(f"Couldn't download {icon}.svg")
+        print("Writing all icons to C# file...")
+        add_icons_to_cs(cs_const_lines)
     # Other deps
+
+
+def add_icons_to_cs(cs_consts: str):
+    temp_class: str
+    with open("./Avalonia.Tiels/Classes/Icons.cs", "r") as c:
+        temp_class = c.read()
+
+    temp_class = re.sub(r"(?<=\/\/!a).*(?=\/\/!a)", cs_consts+"\n\t", temp_class, flags=re.DOTALL)
+
+    with open("./Avalonia.Tiels/Classes/Icons.cs", "w") as c:
+        c.write(temp_class)
 
 
 def create_output():
@@ -90,24 +110,33 @@ def build(release: bool):
         exit(exitcode)
     
     # Copy compiled executable to output directory
-    print("Copying compiled binary...")
-    cp_ext: str = ""
-    cp_dr: str = "debug"
-    if platform.system() == "Windows":
-        cp_ext = ".exe"
-    if release:
-        cp_dr = "release"
-    shutil.copy(f"./Tiels/target/{cp_dr}/Tiels{cp_ext}", f"./out/Tiels{cp_ext}")
+    if not sys.argv[1] == "no_out":
+        print("Copying compiled binary...")
+        cp_ext: str = ""
+        cp_dr: str = "debug"
+        if platform.system() == "Windows":
+            cp_ext = ".exe"
+        if release:
+            cp_dr = "release"
+        shutil.copy(f"./Tiels/target/{cp_dr}/Tiels{cp_ext}", f"./out/Tiels{cp_ext}")
 
     # Main program
     print("Starting build tasks (2/2)...")
     release_flag = "build"
+    out_flag = ""
     if release:
         release_flag = "publish"
-    exitcode = subprocess.call(f"cd ./Avalonia.Tiels && dotnet {release_flag} -c Release -d -o ../out/bin",
+    if not sys.argv[1] == "no_out":
+        out_flag = "-o ../out/bin"
+    exitcode = subprocess.call(f"cd ./Avalonia.Tiels && dotnet {release_flag} -c Release -d {out_flag}",
                                shell=True)
 
     # Exit script if it failed
     if exitcode != 0:
         print("Compilation error occurred! Aborting!")
         exit(exitcode)
+
+
+def __to_camel_case(text: str):
+    temp = text.split('-')
+    return ''.join(ele.title() for ele in temp[0:])

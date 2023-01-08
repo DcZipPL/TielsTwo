@@ -5,6 +5,7 @@ import shutil
 import os
 import re
 import sys
+import json
 import subprocess
 import platform
 from typing import final
@@ -39,9 +40,9 @@ def download_dependencies():
         if not os.path.isdir("./icons"):
             os.mkdir("./icons")
 
+        shutil.copy("default.iconfont_metadata.json", "iconfont_metadata.json")
         cs_const_lines: str = ""
-        metadata_lines: str = ""
-        ii: int = 50
+        ii: int = 128
         for icon in toml_data.get("icons"):
             try:
                 if not os.path.exists(f"{ICONS_PATH}{icon}.svg"):
@@ -58,7 +59,11 @@ def download_dependencies():
                     print(f"Skipping {icon}.svg, already exists!")
 
                 # Add glyph to iconfont metadata
-                metadata_lines += "\"" + str(ii) + "\": { \"src\": \"" + icon + ".svg\" },\n"
+                with open(f"iconfont_metadata.json", "r") as metadata_file:
+                    loaded_metadata = json.load(metadata_file)
+                    loaded_metadata["glyphs"][str(ii)] = {"src": icon + ".svg"}
+                with open(f"iconfont_metadata.json", "w") as metadata_file:
+                    metadata_file.write(json.dumps(loaded_metadata))
                 ii += 1
 
                 # Add icon to C# class
@@ -70,17 +75,7 @@ def download_dependencies():
                 print(f"Couldn't download {icon}.svg")
         print("Writing all icons to C# file...")
         add_icons_to_cs(cs_const_lines)
-        add_glyphs_to_metadata(metadata_lines)
     # Other deps
-
-
-def add_glyphs_to_metadata(metadata: str):
-    with open(f"default.iconfont_metadata.json", "r") as default:
-        with open(f"iconfont_metadata.json", "w") as metadata_file:
-            metadata_file.write(
-                re.sub(r"(?<=\"_<\?\?\": null,).*(?=\"_\?\?>\": null)",
-                       metadata,
-                       default.read(), flags=re.DOTALL).replace("\"_<??\": null,", "").replace("\"_??>\": null", ""))
 
 
 def add_icons_to_cs(cs_consts: str):

@@ -10,12 +10,12 @@ from typing import final
 
 
 ICONS_URL: final(str) = "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/"
-ICONS_PATH: final(str) = "./Avalonia.Tiels/Assets/Icons/out/"
+ICONS_PATH: final(str) = "../Avalonia.Tiels/Assets/Icons/out/"
 
 
 def download_dependencies():
     # Download used icons. We don't want to download all, it will increase binary size.
-    with open("include.toml", "rb") as f:
+    with open("../include.toml", "rb") as f:
         toml_data: dict
 
         # Read include.toml file
@@ -34,8 +34,8 @@ def download_dependencies():
                 exit(137)
 
         # Check if icons exist already and download icons
-        if not os.path.isdir("./Avalonia.Tiels/Assets/Icons/out"):
-            os.mkdir("./Avalonia.Tiels/Assets/Icons/out")
+        if not os.path.isdir("./icons"):
+            os.mkdir("./icons")
 
         cs_const_lines: str = ""
         for icon in toml_data.get("icons"):
@@ -68,12 +68,12 @@ def download_dependencies():
 
 def add_icons_to_cs(cs_consts: str):
     temp_class: str
-    with open("./Avalonia.Tiels/Classes/Icons.cs", "r") as c:
+    with open("../Avalonia.Tiels/Classes/Icons.cs", "r") as c:
         temp_class = c.read()
 
     temp_class = re.sub(r"(?<=\/\/!a).*(?=\/\/!a)", cs_consts+"\n\t", temp_class, flags=re.DOTALL)
 
-    with open("./Avalonia.Tiels/Classes/Icons.cs", "w") as c:
+    with open("../Avalonia.Tiels/Classes/Icons.cs", "w") as c:
         c.write(temp_class)
 
 

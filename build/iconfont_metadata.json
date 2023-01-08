@@ -1,0 +1,14 @@
+{
+  "props": {
+    "ascent": 800,
+    "descent": 200,
+    "em": 1000,
+    "family": "lucidelight"
+  },
+  "input": "icons",
+  "output": [
+    "lucidelight.ttf"
+  ],
+  "glyphs": {
+  }
+}

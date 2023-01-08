@@ -224,3 +224,4 @@ out/
 Tiels/target/
 Avalonia.Tiels/Assets/Icons/out
 pyenv/
+build/icons/

@@ -1,3 +1,4 @@
+import json
 import urllib.request
 import urllib.error
 import shutil
@@ -10,12 +11,13 @@ from typing import final
 
 
 ICONS_URL: final(str) = "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/"
-ICONS_PATH: final(str) = "../Avalonia.Tiels/Assets/Icons/out/"
+ICONS_PATH: final(str) = "./icons/"
+
 
 
 def download_dependencies():
     # Download used icons. We don't want to download all, it will increase binary size.
-    with open("../include.toml", "rb") as f:
+    with open("include.toml", "rb") as f:
         toml_data: dict
 
         # Read include.toml file
@@ -38,6 +40,8 @@ def download_dependencies():
             os.mkdir("./icons")
 
         cs_const_lines: str = ""
+        metadata_lines: str = ""
+        ii: int = 50
         for icon in toml_data.get("icons"):
             try:
                 if not os.path.exists(f"{ICONS_PATH}{icon}.svg"):
@@ -45,7 +49,6 @@ def download_dependencies():
                     urllib.request.urlretrieve(f"{ICONS_URL}{icon}.svg", f"{ICONS_PATH}{icon}.svg")
 
                     # Make svg stroke smaller for icons
-                    print(f"Adjusting... {icon}.svg")
                     i_st: str
                     with open(f"{ICONS_PATH}{icon}.svg", "r") as i:
                         i_st = i.read().replace("stroke-width=\"2\"", "stroke-width=\"1\"")
@@ -54,16 +57,30 @@ def download_dependencies():
                 else:
                     print(f"Skipping {icon}.svg, already exists!")
 
+                # Add glyph to iconfont metadata
+                metadata_lines += "\"" + str(ii) + "\": { \"src\": \"" + icon + ".svg\" },\n"
+                ii += 1
+
                 # Add icon to C# class
                 cs_const_lines += f"""\n\tpublic static readonly string {
                 __to_camel_case(icon).replace("2","Alt")
-                } = \"{ICONS_PATH.replace("./Avalonia.Tiels/","/")}{icon}.svg\";"""
+                } = \"{ICONS_PATH}{icon}.svg\";"""
 
             except urllib.error.HTTPError:
                 print(f"Couldn't download {icon}.svg")
         print("Writing all icons to C# file...")
         add_icons_to_cs(cs_const_lines)
+        add_glyphs_to_metadata(metadata_lines)
     # Other deps
+
+
+def add_glyphs_to_metadata(metadata: str):
+    with open(f"default.iconfont_metadata.json", "r") as default:
+        with open(f"iconfont_metadata.json", "w") as metadata_file:
+            metadata_file.write(
+                re.sub(r"(?<=\"_<\?\?\": null,).*(?=\"_\?\?>\": null)",
+                       metadata,
+                       default.read(), flags=re.DOTALL).replace("\"_<??\": null,", "").replace("\"_??>\": null", ""))
 
 
 def add_icons_to_cs(cs_consts: str):
@@ -105,7 +122,7 @@ def build(release: bool):
     # Launcher/Updater
     if release:
         release_flag = " --release"
-    exitcode = subprocess.call(f"cd ./Tiels && cargo build{release_flag}",
+    exitcode = subprocess.call(f"cd ../Tiels && cargo build{release_flag}",
                                shell=True)  # --out-dir is unstable.
     # Exit script if it failed
     if exitcode != 0:
@@ -113,7 +130,7 @@ def build(release: bool):
         exit(exitcode)
     
     # Copy compiled executable to output directory
-    if not sys.argv[1] == "no_out":
+    if len(sys.argv) <= 1 or not sys.argv[1] == "no_out":
         print("Copying compiled binary...")
         cp_ext: str = ""
         cp_dr: str = "debug"
@@ -121,7 +138,7 @@ def build(release: bool):
             cp_ext = ".exe"
         if release:
             cp_dr = "release"
-        shutil.copy(f"./Tiels/target/{cp_dr}/Tiels{cp_ext}", f"./out/Tiels{cp_ext}")
+        shutil.copy(f"../Tiels/target/{cp_dr}/Tiels{cp_ext}", f"./out/Tiels{cp_ext}")
 
     # Main program
     print("Starting build tasks (2/2)...")
@@ -129,9 +146,9 @@ def build(release: bool):
     out_flag = ""
     if release:
         release_flag = "publish"
-    if not sys.argv[1] == "no_out":
-        out_flag = "-o ../out/bin"
-    exitcode = subprocess.call(f"cd ./Avalonia.Tiels && dotnet {release_flag} -c Release -d {out_flag}",
+    if len(sys.argv) <= 1 or not sys.argv[1] == "no_out":
+        out_flag = "-o ./out/bin"
+    exitcode = subprocess.call(f"cd ../Avalonia.Tiels && dotnet {release_flag} -c Release -d {out_flag}",
                                shell=True)
 
     # Exit script if it failed

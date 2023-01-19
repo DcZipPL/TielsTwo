@@ -48,18 +48,8 @@ def download_dependencies():
         # Local icons
         for local_icon in toml_data.get("local_icons"):
             shutil.copy(f"../assets/{local_icon}.svg", f"{ICONS_PATH}{local_icon}.svg")
-
-            # Add glyph to iconfont metadata
-            with open(f"iconfont_metadata.json", "r") as metadata_file:
-                loaded_metadata = json.load(metadata_file)
-                loaded_metadata["glyphs"][str(li)] = {"src": local_icon + ".svg"}
-            with open(f"iconfont_metadata.json", "w") as metadata_file:
-                metadata_file.write(json.dumps(loaded_metadata))
-
-            # Add icon to C# class
-            cs_const_lines += f"""\n\tpublic static readonly string {
-            __to_camel_case(local_icon).replace("2","Alt")
-            } = \"{chr(li)}\";"""
+            cs_const_lines = autogen_icons_to_files(li, local_icon, cs_const_lines)
+            li += 1
         # Remote icons
         for icon in toml_data.get("icons"):
             try:
@@ -76,24 +66,28 @@ def download_dependencies():
                 else:
                     print(f"Skipping {icon}.svg, already exists!")
 
-                # Add glyph to iconfont metadata
-                with open(f"iconfont_metadata.json", "r") as metadata_file:
-                    loaded_metadata = json.load(metadata_file)
-                    loaded_metadata["glyphs"][str(ii)] = {"src": icon + ".svg"}
-                with open(f"iconfont_metadata.json", "w") as metadata_file:
-                    metadata_file.write(json.dumps(loaded_metadata))
-
-                # Add icon to C# class
-                cs_const_lines += f"""\n\tpublic static readonly string {
-                __to_camel_case(icon).replace("2","Alt")
-                } = \"{chr(ii)}\";"""
-                
+                cs_const_lines = autogen_icons_to_files(ii, icon, cs_const_lines)
                 ii += 1
             except urllib.error.HTTPError:
                 print(f"Couldn't download {icon}.svg")
         print("Writing all icons to C# file...")
         add_icons_to_cs(cs_const_lines)
     # Other deps
+
+
+def autogen_icons_to_files(char_index: int, icon_name: str, cs_lines_to_expand: str):
+    # Add glyph to iconfont metadata
+    with open(f"iconfont_metadata.json", "r") as metadata_file:
+        loaded_metadata = json.load(metadata_file)
+        loaded_metadata["glyphs"][str(char_index)] = {"src": icon_name + ".svg"}
+    with open(f"iconfont_metadata.json", "w") as metadata_file:
+        metadata_file.write(json.dumps(loaded_metadata))
+
+    # Add icon to C# class
+    cs_lines_to_expand += f"""\n\tpublic static readonly string {
+    __to_camel_case(icon_name).replace("2", "Alt")
+    } = \"{chr(char_index)}\";"""
+    return cs_lines_to_expand
 
 
 def add_icons_to_cs(cs_consts: str):
@@ -177,3 +171,5 @@ def build(release: bool):
 def __to_camel_case(text: str):
     temp = text.split('-')
     return ''.join(ele.title() for ele in temp[0:])
+
+print("It's a lib, use build.py or publish.py")

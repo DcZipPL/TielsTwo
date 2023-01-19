@@ -3,11 +3,11 @@
     "ascent": 800,
     "descent": 200,
     "em": 1000,
-    "family": "lucidelight"
+    "family": "lucidelite"
   },
   "input": "icons",
   "output": [
-    "lucidelight.ttf"
+    "../Avalonia.Tiels/Assets/lucidelite.ttf"
   ],
   "glyphs": {
   }

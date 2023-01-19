@@ -34,7 +34,7 @@
                                         <Button x:Name="ApplyButton" Margin="5,0,0,0" Click="ApplyButtonClicked" Content="{x:Static p:Resources.Apply}"/>
                                 </WrapPanel>
                                 <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="15">
-                                        <controls:Icon x:Name="StatusIcon" Path="/Assets/Icons/out/check.svg" Padding="0,0,5,0"/>
+                                        <TextBlock x:Name="StatusIcon" FontFamily="codicon" Padding="0,0,5,0">󿚚</TextBlock>
                                         <TextBlock x:Name="StatusText" Text="{x:Static p:Resources.NoChanges}"/>
                                 </WrapPanel>
                         </Grid>

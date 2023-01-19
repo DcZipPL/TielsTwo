@@ -8,6 +8,7 @@ import sys
 import json
 import subprocess
 import platform
+import svg2font
 from typing import final
 
 
@@ -42,7 +43,7 @@ def download_dependencies():
 
         shutil.copy("default.iconfont_metadata.json", "iconfont_metadata.json")
         cs_const_lines: str = ""
-        ii: int = 128
+        ii: int = 1046160
         for icon in toml_data.get("icons"):
             try:
                 if not os.path.exists(f"{ICONS_PATH}{icon}.svg"):
@@ -64,13 +65,13 @@ def download_dependencies():
                     loaded_metadata["glyphs"][str(ii)] = {"src": icon + ".svg"}
                 with open(f"iconfont_metadata.json", "w") as metadata_file:
                     metadata_file.write(json.dumps(loaded_metadata))
-                ii += 1
 
                 # Add icon to C# class
                 cs_const_lines += f"""\n\tpublic static readonly string {
                 __to_camel_case(icon).replace("2","Alt")
-                } = \"{ICONS_PATH}{icon}.svg\";"""
-
+                } = \"{chr(ii)}\";"""
+                
+                ii += 1
             except urllib.error.HTTPError:
                 print(f"Couldn't download {icon}.svg")
         print("Writing all icons to C# file...")
@@ -111,10 +112,14 @@ def __check_buildtool(tool: str):
 
 
 def build(release: bool):
+    # Make icon font
+    print("Make iconfont...")
+    svg2font.main("iconfont_metadata.json")
+
+    # Launcher/Updater
     print("Starting build tasks (1/2)...")
     release_flag: str = ""
 
-    # Launcher/Updater
     if release:
         release_flag = " --release"
     exitcode = subprocess.call(f"cd ../Tiels && cargo build{release_flag}",
@@ -142,8 +147,8 @@ def build(release: bool):
     if release:
         release_flag = "publish"
     if len(sys.argv) <= 1 or not sys.argv[1] == "no_out":
-        out_flag = "-o ./out/bin"
-    exitcode = subprocess.call(f"cd ../Avalonia.Tiels && dotnet {release_flag} -c Release -d {out_flag}",
+        out_flag = "-o ../build/out/bin/"
+    exitcode = subprocess.call(f"cd ../Avalonia.Tiels && dotnet {release_flag} -c Release {out_flag}",
                                shell=True)
 
     # Exit script if it failed

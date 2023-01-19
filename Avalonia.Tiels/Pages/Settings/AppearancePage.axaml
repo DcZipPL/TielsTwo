@@ -10,9 +10,9 @@
     <Grid Margin="10">
         <StackPanel x:Name="CustomAppearanceGrid">
             <TextBlock FontSize="16" Margin="0,0,0,10" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.SettingsLabel}"/>
-            <WrapPanel><Label Content="{x:Static p:Resources.ThemeMode}"/><controls:Icon Path="/Assets/Icons/out/info.svg"/><ToolTip.Tip>
+            <WrapPanel><Label Content="{x:Static p:Resources.ThemeMode}"/><Label FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" Content="󿚙" Padding="2,5,0,0"><ToolTip.Tip>
                 <TextBlock Text="{x:Static p:Resources.ThemeModeTooltip}"/>
-            </ToolTip.Tip></WrapPanel>
+            </ToolTip.Tip></Label></WrapPanel>
             <ComboBox x:Name="ThemeBox" HorizontalAlignment="Stretch" Margin="0,0,0,10"/>
             <Label Content="{x:Static p:Resources.TransparencyMode}"/>
             <ComboBox x:Name="TransparencyModeBox" HorizontalAlignment="Stretch" Margin="0,0,0,10"/>

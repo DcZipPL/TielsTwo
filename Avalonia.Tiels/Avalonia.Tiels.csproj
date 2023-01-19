@@ -71,13 +71,8 @@
         <DependentUpon>AppearanceSettingsPage.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Controls\Icon.axaml.cs">
-        <DependentUpon>Icon.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Assets\Icons\out" />
       <Folder Include="Pages\Management" />
     </ItemGroup>
 </Project>

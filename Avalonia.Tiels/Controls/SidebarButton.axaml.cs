@@ -1,11 +1,7 @@
-﻿using System;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Avalonia.Media;
-using Avalonia.Svg;
+using Avalonia.Tiels.Classes;
 using Avalonia.Tiels.Pages;
 
 namespace Avalonia.Tiels.Controls;
@@ -26,6 +22,4 @@ public partial class SidebarButton : UserControl
 	{
 		InitializeComponent();
 	}
-
-	private void IconInitialized(object? sender, EventArgs e) => SvgIcon.Path = Icon;
 }

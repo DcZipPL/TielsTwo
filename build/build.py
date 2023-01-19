@@ -9,7 +9,7 @@ from datetime import datetime
 if prepare.check_buildtools():
     start_time = datetime.now()
     prepare.download_dependencies()
-    if not sys.argv[1] == "no_out":
+    if len(sys.argv) <= 1 or not sys.argv[1] == "no_out":
         prepare.create_output()
     prepare.build(False)
     print("Build successfully in " + str(datetime.now() - start_time))

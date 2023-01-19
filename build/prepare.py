@@ -1,16 +1,20 @@
+import json
 import urllib.request
 import urllib.error
 import shutil
 import os
 import re
 import sys
+import json
 import subprocess
 import platform
+import svg2font
 from typing import final
 
 
 ICONS_URL: final(str) = "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/"
-ICONS_PATH: final(str) = "./Avalonia.Tiels/Assets/Icons/out/"
+ICONS_PATH: final(str) = "./icons/"
+
 
 
 def download_dependencies():
@@ -34,10 +38,29 @@ def download_dependencies():
                 exit(137)
 
         # Check if icons exist already and download icons
-        if not os.path.isdir("./Avalonia.Tiels/Assets/Icons/out"):
-            os.mkdir("./Avalonia.Tiels/Assets/Icons/out")
+        if not os.path.isdir("./icons"):
+            os.mkdir("./icons")
 
+        shutil.copy("default.iconfont_metadata.json", "iconfont_metadata.json")
         cs_const_lines: str = ""
+        ii: int = 1046160
+        li: int = 1046160 + 256
+        # Local icons
+        for local_icon in toml_data.get("local_icons"):
+            shutil.copy(f"../assets/{local_icon}.svg", f"{ICONS_PATH}{local_icon}.svg")
+
+            # Add glyph to iconfont metadata
+            with open(f"iconfont_metadata.json", "r") as metadata_file:
+                loaded_metadata = json.load(metadata_file)
+                loaded_metadata["glyphs"][str(li)] = {"src": local_icon + ".svg"}
+            with open(f"iconfont_metadata.json", "w") as metadata_file:
+                metadata_file.write(json.dumps(loaded_metadata))
+
+            # Add icon to C# class
+            cs_const_lines += f"""\n\tpublic static readonly string {
+            __to_camel_case(local_icon).replace("2","Alt")
+            } = \"{chr(li)}\";"""
+        # Remote icons
         for icon in toml_data.get("icons"):
             try:
                 if not os.path.exists(f"{ICONS_PATH}{icon}.svg"):
@@ -45,20 +68,27 @@ def download_dependencies():
                     urllib.request.urlretrieve(f"{ICONS_URL}{icon}.svg", f"{ICONS_PATH}{icon}.svg")
 
                     # Make svg stroke smaller for icons
-                    print(f"Adjusting... {icon}.svg")
                     i_st: str
                     with open(f"{ICONS_PATH}{icon}.svg", "r") as i:
-                        i_st = i.read().replace("stroke-width=\"2\"", "stroke-width=\"1\"")
+                        i_st = i.read().replace("stroke-width=\"2\"", "stroke-width=\"1.5\"")
                     with open(f"{ICONS_PATH}{icon}.svg", "w") as i:
                         i.write(i_st)
                 else:
                     print(f"Skipping {icon}.svg, already exists!")
 
+                # Add glyph to iconfont metadata
+                with open(f"iconfont_metadata.json", "r") as metadata_file:
+                    loaded_metadata = json.load(metadata_file)
+                    loaded_metadata["glyphs"][str(ii)] = {"src": icon + ".svg"}
+                with open(f"iconfont_metadata.json", "w") as metadata_file:
+                    metadata_file.write(json.dumps(loaded_metadata))
+
                 # Add icon to C# class
                 cs_const_lines += f"""\n\tpublic static readonly string {
                 __to_camel_case(icon).replace("2","Alt")
-                } = \"{ICONS_PATH.replace("./Avalonia.Tiels/","/")}{icon}.svg\";"""
-
+                } = \"{chr(ii)}\";"""
+                
+                ii += 1
             except urllib.error.HTTPError:
                 print(f"Couldn't download {icon}.svg")
         print("Writing all icons to C# file...")
@@ -68,12 +98,12 @@ def download_dependencies():
 
 def add_icons_to_cs(cs_consts: str):
     temp_class: str
-    with open("./Avalonia.Tiels/Classes/Icons.cs", "r") as c:
+    with open("../Avalonia.Tiels/Classes/Icons.cs", "r") as c:
         temp_class = c.read()
 
     temp_class = re.sub(r"(?<=\/\/!a).*(?=\/\/!a)", cs_consts+"\n\t", temp_class, flags=re.DOTALL)
 
-    with open("./Avalonia.Tiels/Classes/Icons.cs", "w") as c:
+    with open("../Avalonia.Tiels/Classes/Icons.cs", "w") as c:
         c.write(temp_class)
 
 
@@ -99,13 +129,17 @@ def __check_buildtool(tool: str):
 
 
 def build(release: bool):
+    # Make icon font
+    print("Make iconfont...")
+    svg2font.main("iconfont_metadata.json")
+
+    # Launcher/Updater
     print("Starting build tasks (1/2)...")
     release_flag: str = ""
 
-    # Launcher/Updater
     if release:
         release_flag = " --release"
-    exitcode = subprocess.call(f"cd ./Tiels && cargo build{release_flag}",
+    exitcode = subprocess.call(f"cd ../Tiels && cargo build{release_flag}",
                                shell=True)  # --out-dir is unstable.
     # Exit script if it failed
     if exitcode != 0:
@@ -113,7 +147,7 @@ def build(release: bool):
         exit(exitcode)
     
     # Copy compiled executable to output directory
-    if not sys.argv[1] == "no_out":
+    if len(sys.argv) <= 1 or not sys.argv[1] == "no_out":
         print("Copying compiled binary...")
         cp_ext: str = ""
         cp_dr: str = "debug"
@@ -121,7 +155,7 @@ def build(release: bool):
             cp_ext = ".exe"
         if release:
             cp_dr = "release"
-        shutil.copy(f"./Tiels/target/{cp_dr}/Tiels{cp_ext}", f"./out/Tiels{cp_ext}")
+        shutil.copy(f"../Tiels/target/{cp_dr}/Tiels{cp_ext}", f"./out/Tiels{cp_ext}")
 
     # Main program
     print("Starting build tasks (2/2)...")
@@ -129,9 +163,9 @@ def build(release: bool):
     out_flag = ""
     if release:
         release_flag = "publish"
-    if not sys.argv[1] == "no_out":
-        out_flag = "-o ../out/bin"
-    exitcode = subprocess.call(f"cd ./Avalonia.Tiels && dotnet {release_flag} -c Release -d {out_flag}",
+    if len(sys.argv) <= 1 or not sys.argv[1] == "no_out":
+        out_flag = "-o ../build/out/bin/"
+    exitcode = subprocess.call(f"cd ../Avalonia.Tiels && dotnet {release_flag} -c Release {out_flag}",
                                shell=True)
 
     # Exit script if it failed

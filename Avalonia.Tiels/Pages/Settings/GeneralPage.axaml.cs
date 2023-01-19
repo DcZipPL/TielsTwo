@@ -62,7 +62,7 @@ public partial class GeneralPage : UserPage
 		TilesDirectoryBox.Text = draftTilesPath;
 
 		// Show status
-		StatusIcon.Path = status.Item1;
+		StatusIcon.Text = status.Item1;
 		StatusText.Text = status.Item2;
 	}
 

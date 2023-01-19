@@ -13,7 +13,9 @@
             </Style>
         </Button.Styles>
         <Grid>
-            <controls:Icon HorizontalAlignment="Left" x:Name="SvgIcon" Initialized="IconInitialized"/>
+            <TextBlock FontFamily="avares://Avalonia.Tiels/Assets#lucidelite"
+                       VerticalAlignment="Bottom"
+                       Text="{Binding Icon, RelativeSource={RelativeSource AncestorType={x:Type controls:SidebarButton}}}"/>
             <TextBlock Margin="20,0" Text="{Binding Text, RelativeSource={RelativeSource AncestorType={x:Type controls:SidebarButton}}}"/>
         </Grid>
     </ToggleButton>

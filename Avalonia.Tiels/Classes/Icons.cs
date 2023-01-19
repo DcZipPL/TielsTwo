@@ -1,11 +1,14 @@
+using Avalonia.Media;
+
 namespace Avalonia.Tiels.Classes;
 
 public static class Icons
 {
-    public static readonly string WindowPlus = "/Assets/Icons/window-plus.svg";
-
+	public static readonly FontFamily FONT = new FontFamily("avares://Avalonia.Tiels/Assets#lucidelite");
+	
     //Icons below are generated from build.py using include.toml. Changing anything below will be overwritten
     //!a
+	public static readonly string WindowPlus = "󿞐";
 	public static readonly string Paintbrush = "󿚐";
 	public static readonly string PaintbrushAlt = "󿚑";
 	public static readonly string Slash = "󿚒";

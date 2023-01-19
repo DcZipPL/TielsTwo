@@ -19,20 +19,20 @@
                 <Border BorderThickness="0,0,0.6,0" BorderBrush="{StaticResource BaseBorderColor}">
                         <StackPanel>
                                 <controls:SidebarCategory Title="{x:Static p:Resources.CreateLabel}"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.CreateTile}" x:Name="SB_CT"                Font="lucidelite" Icon=""/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.CreateDirectoryPortal}" x:Name="SB_CDP"    Font="lucidelite" Icon="󿚕"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.CreateFloatingImage}" x:Name="SB_CFI"      Font="lucidelite" Icon="󿚒" IsEnabled="False"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.CreateNote}" x:Name="SB_CN"                Font="lucidelite" Icon="󿚒" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.CreateTile}" x:Name="SB_CT"                Icon="󿞐"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.CreateDirectoryPortal}" x:Name="SB_CDP"    Icon="󿚕"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.CreateFloatingImage}" x:Name="SB_CFI"      Icon="󿚒" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.CreateNote}" x:Name="SB_CN"                Icon="󿚒" IsEnabled="False"/>
                                 
                                 <controls:SidebarCategory Title="{x:Static p:Resources.SettingsLabel}"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsGeneral}" x:Name="SB_SG"           Font="/Assets/lucidelite.ttf" Icon="󿚓"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsAppearance}" x:Name="SB_SA"        Font="lucidelite" Icon="󿚐"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsUpdates}" x:Name="SB_SU"           Font="lucidelite" Icon="󿚖"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsGeneral}" x:Name="SB_SG"           Icon="󿚓"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsAppearance}" x:Name="SB_SA"        Icon="󿚐"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsUpdates}" x:Name="SB_SU"           Icon="󿚖"/>
                                 
                                 <controls:SidebarCategory Title="{x:Static p:Resources.ManagementLabel}"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementTiles}" x:Name="SB_MT"           Font="lucidelite" Icon=""/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementFloatingImages}" x:Name="SB_MFI" Font="lucidelite" Icon="" IsEnabled="False"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementNotes}" x:Name="SB_MN"           Font="lucidelite" Icon="" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementTiles}" x:Name="SB_MT"           Icon=""/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementFloatingImages}" x:Name="SB_MFI" Icon="" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementNotes}" x:Name="SB_MN"           Icon="" IsEnabled="False"/>
                         </StackPanel>
                 </Border>
                 <!-- Content -->

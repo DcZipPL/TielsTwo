@@ -12,3 +12,7 @@ icons = [
     "check",
     "x"
 ]
+
+local_icons = [
+    "window-plus"
+]

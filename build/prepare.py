@@ -44,6 +44,23 @@ def download_dependencies():
         shutil.copy("default.iconfont_metadata.json", "iconfont_metadata.json")
         cs_const_lines: str = ""
         ii: int = 1046160
+        li: int = 1046160 + 256
+        # Local icons
+        for local_icon in toml_data.get("local_icons"):
+            shutil.copy(f"../assets/{local_icon}.svg", f"{ICONS_PATH}{local_icon}.svg")
+
+            # Add glyph to iconfont metadata
+            with open(f"iconfont_metadata.json", "r") as metadata_file:
+                loaded_metadata = json.load(metadata_file)
+                loaded_metadata["glyphs"][str(li)] = {"src": local_icon + ".svg"}
+            with open(f"iconfont_metadata.json", "w") as metadata_file:
+                metadata_file.write(json.dumps(loaded_metadata))
+
+            # Add icon to C# class
+            cs_const_lines += f"""\n\tpublic static readonly string {
+            __to_camel_case(local_icon).replace("2","Alt")
+            } = \"{chr(li)}\";"""
+        # Remote icons
         for icon in toml_data.get("icons"):
             try:
                 if not os.path.exists(f"{ICONS_PATH}{icon}.svg"):
@@ -53,7 +70,7 @@ def download_dependencies():
                     # Make svg stroke smaller for icons
                     i_st: str
                     with open(f"{ICONS_PATH}{icon}.svg", "r") as i:
-                        i_st = i.read().replace("stroke-width=\"2\"", "stroke-width=\"1\"")
+                        i_st = i.read().replace("stroke-width=\"2\"", "stroke-width=\"1.5\"")
                     with open(f"{ICONS_PATH}{icon}.svg", "w") as i:
                         i.write(i_st)
                 else:

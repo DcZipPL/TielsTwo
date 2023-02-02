@@ -6,6 +6,7 @@ special_effects = true
 experimental = false
 
 [appearance]
+override = false # Override global values
 theme = "dark" # 'light' and 'dark' options supported
 color = "#55000000" # ARGB Color
 

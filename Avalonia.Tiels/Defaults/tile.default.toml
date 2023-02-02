@@ -15,5 +15,14 @@ x = 100
 y = 100
 
 [appearance]
+override = false # Override global values
 theme = "dark" # 'light' and 'dark' options supported
 color = "#55000000" # ARGB Color
+
+# 0: None, The window background is Solid Color.
+# 1: Transparent, The window background is Transparent.
+# 2: Blur, The window background is a blur-behind.
+# 3: AcrylicBlur, The window background is a blur-behind with a high blur radius. This level may fallback to Blur.
+# 4: ForceAcrylicBlur, Force acrylic on some incompatible versions of Windows 10.
+# 5. Mica, The window background is based on desktop wallpaper tint with a blur. This will only work on Windows 11.
+transparency = 1

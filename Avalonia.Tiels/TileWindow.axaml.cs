@@ -26,10 +26,13 @@ public partial class TileWindow : Window
 		EditBar.Background = new SolidColorBrush((Color)EditBarColor());
 	}
 
-	public Color EditBarColor()
-	{
-		return Color.Parse(App.Instance.Config.GlobalTheme == FluentThemeMode.Dark ? "#25000000" : "#25ffffff");
-	}
+	public Color EditBarColor() => Color.Parse(App.Instance.Config.Tiles[ID].IsOverriden
+			? App.Instance.Config.Tiles[ID].GlobalTheme == FluentThemeMode.Dark
+				? "#25000000"
+				: "#25ffffff"
+			: App.Instance.Config.GlobalTheme == FluentThemeMode.Dark
+				? "#25000000"
+				: "#25ffffff");
 
 	private void OnLoad(object? sender, EventArgs e)
 	{

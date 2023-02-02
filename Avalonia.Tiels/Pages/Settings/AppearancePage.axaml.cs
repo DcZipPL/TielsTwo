@@ -18,7 +18,7 @@ public partial class AppearancePage : UserPage
 	{
 		InitializeComponent();
 
-		// FIXME: Duplicate from TilePage
+		// TODO: Duplicate from TilePage
 		TransparencyModeBox.Items = Enum.GetNames(typeof(WindowTransparencyLevel)).Select(name => Regex.Replace(name, "(\\B[A-Z])", " $1"));
 		TransparencyModeBox.SelectedIndex = (int)App.Instance.Config.GlobalTransparencyLevel;
 

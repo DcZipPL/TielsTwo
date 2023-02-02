@@ -68,6 +68,7 @@ public class Configuration
                 throw new FileNotFoundException(App.I18n.GetString("DefaultConfigMissingError"), defaultConf);
             }
             
+            // Create tile config file
             var tileConf = Path.Combine(Environment.CurrentDirectory, "Defaults/tile.default.toml");
             if (!File.Exists(defaultConf))
             {
@@ -139,33 +140,60 @@ public class Configuration
     #region Request Appearance
     public FluentThemeMode GlobalTheme
     {
-        get { Enum.TryParse(ReqModel().Appearance!.Theme, true, out FluentThemeMode theme); return theme; }
+        get
+        {
+            var appearanceReq = ReqModel().Appearance;
+            if (appearanceReq == null)
+            {
+                ErrorHandler.Warn("GlobalTheme", "Couldn't load Appearance settings!");
+                return FluentThemeMode.Light;
+            }
+            else
+            {
+                var result = Enum.TryParse(appearanceReq.Theme, true, out FluentThemeMode theme);
+                if (result == false)
+                {
+                    ErrorHandler.Warn("GlobalTheme", "Couldn't parse theme from config!");
+                }
+                return theme;
+            }
+        }
         set
         {
             var model = ReqModel();
-            model.Appearance!.Theme = value.ToString().ToLower();
+            model.Appearance.Theme = value.ToString().ToLower();
             SeedModel(model);
         }
     }
 
     public WindowTransparencyLevel GlobalTransparencyLevel
     {
-        get { return (WindowTransparencyLevel) ReqModel().Appearance!.Transparency; }
+        get
+        {
+            var appearanceReq = ReqModel().Appearance;
+            if (appearanceReq == null) ErrorHandler.Warn("GlobalTransparencyLevel", "Couldn't load Appearance settings!");
+            return appearanceReq != null ? (WindowTransparencyLevel)appearanceReq.Transparency : WindowTransparencyLevel.None;
+        }
         set
         {
             var model = ReqModel();
-            model.Appearance!.Transparency = (int)value;
+            model.Appearance.Transparency = (int)value;
             SeedModel(model);
         }
     }
 
     public Color GlobalColor
     {
-        get { return Util.ColorFromHex(ReqModel().Appearance!.Color); }
+        get
+        {
+            var appearanceReq = ReqModel().Appearance;
+            if (appearanceReq == null) ErrorHandler.Warn("GlobalColor", "Couldn't load Appearance settings!");
+            return appearanceReq != null ? Util.ColorFromHex(appearanceReq.Color) : Color.Fuchsia;
+        }
         set
         {
             var model = ReqModel();
-            model.Appearance!.Color = Util.ColorToHex(value);
+            model.Appearance.Color = Util.ColorToHex(value);
             SeedModel(model);
         }
     }
@@ -358,7 +386,86 @@ public class Configuration
                 SeedModel(model);
             }
         }
+
+        public bool IsOverriden
+        {
+            get
+            {
+                // TODO: Test this
+                var appearanceReq = ReqModel().Appearance;
+                return appearanceReq != null && (bool)appearanceReq.Override;
+            }
+            set
+            {
+                var model = ReqModel();
+                model.Appearance.Override = value;
+                SeedModel(model);
+            }
+        }
                 
+        #endregion
+        
+        // TODO: Duplicate from above
+        #region Request Appearance
+        public FluentThemeMode GlobalTheme
+        {
+            get
+            {
+                var appearanceReq = ReqModel().Appearance;
+                if (appearanceReq == null)
+                {
+                    ErrorHandler.Warn("GlobalTheme", "Couldn't load Appearance settings!");
+                    return FluentThemeMode.Light;
+                }
+                else
+                {
+                    var result = Enum.TryParse(appearanceReq.Theme, true, out FluentThemeMode theme);
+                    if (result == false)
+                    {
+                        ErrorHandler.Warn("GlobalTheme", "Couldn't parse theme from config!");
+                    }
+                    return theme;
+                }
+            }
+            set
+            {
+                var model = ReqModel();
+                model.Appearance.Theme = value.ToString().ToLower();
+                SeedModel(model);
+            }
+        }
+
+        public WindowTransparencyLevel GlobalTransparencyLevel
+        {
+            get
+            {
+                var appearanceReq = ReqModel().Appearance;
+                if (appearanceReq == null) ErrorHandler.Warn("GlobalTransparencyLevel", "Couldn't load Appearance settings!");
+                return appearanceReq != null ? (WindowTransparencyLevel)appearanceReq.Transparency : WindowTransparencyLevel.None;
+            }
+            set
+            {
+                var model = ReqModel();
+                model.Appearance.Transparency = (int)value;
+                SeedModel(model);
+            }
+        }
+
+        public Color GlobalColor
+        {
+            get
+            {
+                var appearanceReq = ReqModel().Appearance;
+                if (appearanceReq == null) ErrorHandler.Warn("GlobalColor", "Couldn't load Appearance settings!");
+                return appearanceReq != null ? Util.ColorFromHex(appearanceReq.Color) : Color.Fuchsia;
+            }
+            set
+            {
+                var model = ReqModel();
+                model.Appearance.Color = Util.ColorToHex(value);
+                SeedModel(model);
+            }
+        }
         #endregion
         
         #region Model Management
@@ -425,6 +532,7 @@ public class Configuration
     {
         public class Appearance : ITomlMetadataProvider
         {
+            public bool Override { get; set; }
             public string? Theme { get; set; } // FluentThemeMode (lowercase)
             public string? Color { get; set; }
             public int Transparency { get; set; } // WindowTransparencyLevel

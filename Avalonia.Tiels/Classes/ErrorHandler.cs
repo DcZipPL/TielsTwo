@@ -18,4 +18,9 @@ public class ErrorHandler
 			" " +
 			Convert.ToBase64String(Encoding.UTF8.GetBytes(hex + " " + e)));
 	}
+
+	public static void Warn(string source, string message)
+	{
+		Console.WriteLine("WARN: " + message);
+	}
 }

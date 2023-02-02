@@ -147,4 +147,7 @@
     <data name="TilePath" xml:space="preserve">
         <value>Path</value>
     </data>
+    <data name="Size" xml:space="preserve">
+        <value>Size</value>
+    </data>
 </root>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
@@ -49,7 +50,7 @@ public class Configuration
                         Tiles.Add(guid, new Tile());
                     
                     Tiles[guid]._thumbnailDbPath = filePath;
-                } else { ErrorHandler.ShowErrorWindow(new InvalidDataException("Name of file: \"" + filePath + "\" has invalid Guid."), "~(0x0004)"); }
+                } else { ErrorHandler.ShowErrorWindow(new InvalidDataException("Name of file: \"" + filePath + "\" has invalid Guid."), "~(0x0005)"); }
             }
         }
     }
@@ -279,17 +280,26 @@ public class Configuration
             return File.Exists(_configPath);
         }
 
-        public static void CreateTileConfig(Configuration configAccess, Guid id, string name, string path)
+        public static void CreateTileConfig(Configuration configAccess, Guid id, string name, string path, double sizeX, double sizeY)
         {
             // TODO: Do bin
             var tileConf = System.IO.Path.Combine(Environment.CurrentDirectory, "Defaults/tile.default.toml");
             
             var defaultModel = File.ReadAllText(tileConf);
             var model = Toml.ToModel<Models.TileModel>(defaultModel);
+
+            if (model.Size == null)
+            {
+                var ex = new InvalidDataException("Tile config don't contain size or it is null!");
+                ErrorHandler.ShowErrorWindow(ex , "~(0x0006)");
+                throw ex;
+            }
             
             model.Id = id.ToString();
             model.Path = path;
             model.Name = name;
+            model.Size.X = sizeX;
+            model.Size.Y = sizeY;
             Directory.CreateDirectory(GetDefaultTilesDirectory());
             var toml = Toml.FromModel(model);
 
@@ -595,7 +605,7 @@ public class Configuration
             TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
         }
         
-        public class Vec2
+        public record Vec2
         {
             public double X { get; set; }
             public double Y { get; set; }

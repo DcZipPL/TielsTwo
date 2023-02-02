@@ -144,4 +144,10 @@
     <data name="Color" xml:space="preserve">
         <value>Kolor</value>
     </data>
+    <data name="TilePath" xml:space="preserve">
+        <value>Ścieżka</value>
+    </data>
+    <data name="Size" xml:space="preserve">
+        <value>Rozmiar</value>
+    </data>
 </root>

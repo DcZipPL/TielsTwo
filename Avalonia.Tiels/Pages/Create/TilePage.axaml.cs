@@ -54,12 +54,16 @@ public partial class TilePage : UserPage
 	
 	private void CreateTile()
 	{
-		// TODO: Save appearance.
-		var id = Guid.NewGuid();
-		Configuration.Tile.CreateTileConfig(App.Instance.Config, id, NameBox.Text, PathBox.Text);
-		var window = new TileWindow(id);
-		window.Show();
+		try
+		{
+			// TODO: Save appearance.
+			var id = Guid.NewGuid();
+			Configuration.Tile.CreateTileConfig(App.Instance.Config, id, NameBox.Text, PathBox.Text, double.Parse(SizeXBox.Text), double.Parse(SizeYBox.Text));
+			var window = new TileWindow(id);
+			window.Show();
+		}
+		catch (FormatException ex) {}
 	}
-	
+
 	private void CreateButton(object? sender, RoutedEventArgs e) => CreateTile();
 }

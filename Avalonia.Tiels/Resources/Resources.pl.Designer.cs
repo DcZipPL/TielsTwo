@@ -339,6 +339,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rozmiar.
+        /// </summary>
+        public static string Size {
+            get {
+                return ResourceManager.GetString("Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Efekty interfejsu użytkownika.
         /// </summary>
         public static string SpecialEffects {
@@ -362,6 +371,15 @@ namespace Avalonia.Tiels.Resources {
         public static string ThemeModeTooltip {
             get {
                 return ResourceManager.GetString("ThemeModeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ścieżka.
+        /// </summary>
+        public static string TilePath {
+            get {
+                return ResourceManager.GetString("TilePath", resourceCulture);
             }
         }
         

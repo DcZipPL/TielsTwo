@@ -386,6 +386,28 @@ public class Configuration
                 SeedModel(model);
             }
         }
+        
+        public Models.Vec2 Location
+        {
+            get { return (Models.Vec2)ReqModel().Location; }
+            set
+            {
+                var model = ReqModel();
+                model.Location = value;
+                SeedModel(model);
+            }
+        }
+        
+        public Models.Vec2 Size
+        {
+            get { return (Models.Vec2)ReqModel().Size; }
+            set
+            {
+                var model = ReqModel();
+                model.Size = value;
+                SeedModel(model);
+            }
+        }
 
         public bool IsOverriden
         {
@@ -575,8 +597,8 @@ public class Configuration
         
         public class Vec2
         {
-            public int X { get; set; }
-            public int Y { get; set; }
+            public double X { get; set; }
+            public double Y { get; set; }
         }
     }
     #pragma warning restore CS8618

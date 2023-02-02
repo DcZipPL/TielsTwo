@@ -15,7 +15,7 @@ namespace Avalonia.Tiels;
 
 public partial class TileWindow : Window
 {
-	public Guid ID { get; set; }
+	public Guid ID { get; }
 	
 	public TileWindow()
 	{
@@ -23,7 +23,17 @@ public partial class TileWindow : Window
 		#if DEBUG
 			this.AttachDevTools();
 		#endif
+	}
+
+	public TileWindow(Guid id) : this()
+	{
+		ID = id;
 		EditBar.Background = new SolidColorBrush((Color)EditBarColor());
+		var size = App.Instance.Config.Tiles[ID].Size;
+		this.Width = size.X; this.Height = size.Y;
+		
+		var location = App.Instance.Config.Tiles[ID].Location;
+		this.Position = new PixelPoint((int)location.X, (int)location.Y);
 	}
 
 	public Color EditBarColor() => Color.Parse(App.Instance.Config.Tiles[ID].IsOverriden
@@ -36,17 +46,10 @@ public partial class TileWindow : Window
 
 	private void OnLoad(object? sender, EventArgs e)
 	{
-		var loadConfig = new Thread(() => this.LoadConfigs(App.Instance.Config, ID));
-		loadConfig.Start();
-		
 		var loadContentThread = new Thread(() => this.LoadContent(App.Instance.Config, ID));
 		loadContentThread.Start();
 	}
 
-	public void LoadConfigs(Configuration configuration, Guid id)
-	{
-	}
-	
 	public void LoadContent(Configuration configuration, Guid id)
 	{
 		foreach (var systemEntry in Directory.EnumerateFileSystemEntries(configuration.Tiles[id].Path))

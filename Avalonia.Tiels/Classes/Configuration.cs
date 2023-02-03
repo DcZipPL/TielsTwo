@@ -1,13 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Numerics;
-using System.Text.RegularExpressions;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Themes.Fluent;
@@ -40,7 +36,7 @@ public class Configuration
                     
                     Tiles[guid]._configPath = filePath;
 
-                } else { ErrorHandler.ShowErrorWindow(new InvalidDataException("Name of file: " + filePath + "has invalid Guid."), "~(0x0004)"); }
+                } else { ErrorHandler.ShowErrorWindow(new InvalidDataException("Name of file: " + filePath + "has invalid Guid."), 0x0004); }
             }
             if (Path.GetExtension(filePath) == "bin") // thumbnail
             {
@@ -50,7 +46,7 @@ public class Configuration
                         Tiles.Add(guid, new Tile());
                     
                     Tiles[guid]._thumbnailDbPath = filePath;
-                } else { ErrorHandler.ShowErrorWindow(new InvalidDataException("Name of file: \"" + filePath + "\" has invalid Guid."), "~(0x0005)"); }
+                } else { ErrorHandler.ShowErrorWindow(new InvalidDataException("Name of file: \"" + filePath + "\" has invalid Guid."), 0x0005); }
             }
         }
     }
@@ -90,14 +86,12 @@ public class Configuration
         }
         catch (UnauthorizedAccessException uae)
         {
-            ErrorHandler.ShowErrorWindow(uae, "~(0x0001)");
-            throw;
+            throw ErrorHandler.ShowErrorWindow(uae, 0x0001);
             // TODO: Open as administrator / sudo
         }
         catch (Exception e)
         {
-            ErrorHandler.ShowErrorWindow(e, "~(0x0002)");
-            throw;
+            throw ErrorHandler.ShowErrorWindow(e, 0x0002);
         }
 
         return new Configuration(closer);
@@ -289,12 +283,8 @@ public class Configuration
             var model = Toml.ToModel<Models.TileModel>(defaultModel);
 
             if (model.Size == null)
-            {
-                var ex = new InvalidDataException("Tile config don't contain size or it is null!");
-                ErrorHandler.ShowErrorWindow(ex , "~(0x0006)");
-                throw ex;
-            }
-            
+                throw ErrorHandler.ShowErrorWindow(new InvalidDataException("Tile config don't contain size or it is null!") , 0x0006);
+
             model.Id = id.ToString();
             model.Path = path;
             model.Name = name;

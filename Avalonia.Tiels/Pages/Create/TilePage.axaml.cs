@@ -12,9 +12,14 @@ namespace Avalonia.Tiels.Pages.Create;
 
 public partial class TilePage : UserPage
 {
+	private const double DEFAULT_WIDTH = 250;
+	private const double DEFAULT_HEIGHT = 100;
+	
 	public TilePage()
 	{
 		InitializeComponent();
+		SizeXBox.Watermark = DEFAULT_WIDTH.ToString();
+		SizeYBox.Watermark = DEFAULT_HEIGHT.ToString();
 
 		TransparencyModeBox.Items = Enum.GetNames(typeof(WindowTransparencyLevel)).Select(name => Regex.Replace(name, "(\\B[A-Z])", " $1"));
 		TransparencyModeBox.SelectedIndex = (int)App.Instance.Config.GlobalTransparencyLevel;
@@ -58,11 +63,15 @@ public partial class TilePage : UserPage
 		{
 			// TODO: Save appearance.
 			var id = Guid.NewGuid();
-			Configuration.Tile.CreateTileConfig(App.Instance.Config, id, NameBox.Text, PathBox.Text, double.Parse(SizeXBox.Text), double.Parse(SizeYBox.Text));
+			Configuration.Tile.CreateTileConfig(App.Instance.Config, id, NameBox.Text, PathBox.Text,
+				SizeXBox.Text != null ? double.Parse(SizeXBox.Text) : DEFAULT_WIDTH, SizeYBox.Text != null ? double.Parse(SizeYBox.Text) : DEFAULT_HEIGHT);
 			var window = new TileWindow(id);
 			window.Show();
 		}
-		catch (FormatException ex) {}
+		catch (FormatException ex)
+		{
+			// TODO: Add error status message
+		}
 	}
 
 	private void CreateButton(object? sender, RoutedEventArgs e) => CreateTile();

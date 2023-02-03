@@ -29,6 +29,7 @@ public partial class TileWindow : Window
 	{
 		ID = id;
 		EditBar.Background = new SolidColorBrush((Color)EditBarColor());
+		TileName.Foreground = new SolidColorBrush((Color)TextColor());
 		var size = App.Instance.Config.Tiles[ID].Size;
 		this.Width = size.X; this.Height = size.Y;
 		
@@ -43,6 +44,14 @@ public partial class TileWindow : Window
 			: App.Instance.Config.GlobalTheme == FluentThemeMode.Dark
 				? "#25000000"
 				: "#25ffffff");
+	
+	public Color TextColor() => Color.Parse(App.Instance.Config.Tiles[ID].IsOverriden
+		? App.Instance.Config.Tiles[ID].GlobalTheme == FluentThemeMode.Dark
+			? "#ffffffff"
+			: "#ff000000"
+		: App.Instance.Config.GlobalTheme == FluentThemeMode.Dark
+			? "#ffffffff"
+			: "#ff000000");
 
 	private void OnLoad(object? sender, EventArgs e)
 	{

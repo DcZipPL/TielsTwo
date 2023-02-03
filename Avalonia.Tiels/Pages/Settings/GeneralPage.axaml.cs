@@ -122,8 +122,7 @@ public partial class GeneralPage : UserPage
 		}
 		catch (Exception ex)
 		{
-			ErrorHandler.ShowErrorWindow(ex, "~(0x0003)");
-			throw;
+			throw ErrorHandler.ShowErrorWindow(ex, 0x0003);
 		}
 	}
 

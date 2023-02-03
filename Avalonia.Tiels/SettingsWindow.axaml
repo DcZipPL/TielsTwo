@@ -25,8 +25,9 @@
                                 <controls:SidebarButton Text="{x:Static p:Resources.CreateNote}" x:Name="SB_CN"                Icon="󿚒" IsEnabled="False"/>
                                 
                                 <controls:SidebarCategory Title="{x:Static p:Resources.SettingsLabel}"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsGeneral}" x:Name="SB_SG"           Icon="󿚓"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsGeneral}" x:Name="SB_SG"           Icon="󿚓" IsToggled="True"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsAppearance}" x:Name="SB_SA"        Icon="󿚐"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsThumbnail}" x:Name="SB_ST"        Icon="󿚜"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsUpdates}" x:Name="SB_SU"           Icon="󿚖"/>
                                 
                                 <controls:SidebarCategory Title="{x:Static p:Resources.ManagementLabel}"/>
@@ -43,6 +44,7 @@
                         <Grid x:Name="Frame">
                                 <pagesSettings:GeneralPage x:Name="GeneralSettingsPage" IsVisible="False"/>
                                 <pagesSettings:AppearancePage x:Name="AppearanceSettingsPage" IsVisible="False"/>
+                                <pagesSettings:ThumbnailsPage x:Name="ThumbnailSettingsPage" IsVisible="False"/>
                                 <pagesSettings:UpdatesPage x:Name="UpdatesSettingsPage" IsVisible="False"/>
                                 <pagesCreate:QuickTilePage x:Name="TileCreatePage" IsVisible="False"/>
                                 <pagesCreate:DirectoryPortalPage x:Name="DirectoryPortalPage" IsVisible="False"/>

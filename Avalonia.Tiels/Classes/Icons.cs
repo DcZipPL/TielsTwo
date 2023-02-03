@@ -24,5 +24,6 @@ public static class Icons
 	public static readonly string Info = "󿚙";
 	public static readonly string Check = "󿚚";
 	public static readonly string X = "󿚛";
+	public static readonly string Image = "󿚜";
 	//!a
 }

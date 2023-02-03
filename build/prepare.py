@@ -8,7 +8,6 @@ import sys
 import json
 import subprocess
 import platform
-import svg2font
 from typing import final
 
 
@@ -59,9 +58,9 @@ def download_dependencies():
 
                     # Make svg stroke smaller for icons
                     i_st: str
-                    with open(f"{ICONS_PATH}{icon}.svg", "r") as i:
+                    with open(f"{ICONS_PATH}{icon}.svg", "r", encoding='utf-8') as i:
                         i_st = i.read().replace("stroke-width=\"2\"", "stroke-width=\"1.5\"")
-                    with open(f"{ICONS_PATH}{icon}.svg", "w") as i:
+                    with open(f"{ICONS_PATH}{icon}.svg", "w", encoding='utf-8') as i:
                         i.write(i_st)
                 else:
                     print(f"Skipping {icon}.svg, already exists!")
@@ -77,10 +76,10 @@ def download_dependencies():
 
 def autogen_icons_to_files(char_index: int, icon_name: str, cs_lines_to_expand: str):
     # Add glyph to iconfont metadata
-    with open(f"iconfont_metadata.json", "r") as metadata_file:
+    with open(f"iconfont_metadata.json", "r", encoding='utf-8') as metadata_file:
         loaded_metadata = json.load(metadata_file)
         loaded_metadata["glyphs"][str(char_index)] = {"src": icon_name + ".svg"}
-    with open(f"iconfont_metadata.json", "w") as metadata_file:
+    with open(f"iconfont_metadata.json", "w", encoding='utf-8') as metadata_file:
         metadata_file.write(json.dumps(loaded_metadata))
 
     # Add icon to C# class
@@ -92,12 +91,12 @@ def autogen_icons_to_files(char_index: int, icon_name: str, cs_lines_to_expand: 
 
 def add_icons_to_cs(cs_consts: str):
     temp_class: str
-    with open("../Avalonia.Tiels/Classes/Icons.cs", "r") as c:
+    with open("../Avalonia.Tiels/Classes/Icons.cs", "r", encoding='utf-8') as c:
         temp_class = c.read()
 
     temp_class = re.sub(r"(?<=\/\/!a).*(?=\/\/!a)", cs_consts+"\n\t", temp_class, flags=re.DOTALL)
 
-    with open("../Avalonia.Tiels/Classes/Icons.cs", "w") as c:
+    with open("../Avalonia.Tiels/Classes/Icons.cs", "w", encoding='utf-8') as c:
         c.write(temp_class)
 
 
@@ -125,8 +124,13 @@ def __check_buildtool(tool: str):
 def build(release: bool):
     # Make icon font
     print("Make iconfont...")
-    svg2font.main("iconfont_metadata.json")
-
+    try:
+        import pyfont
+        pyfont.make()
+    except:
+        print("Couldn't use fontforge. Make font yourself and click enter to continue!")
+        input()
+    
     # Launcher/Updater
     print("Starting build tasks (1/2)...")
     release_flag: str = ""

@@ -8,6 +8,7 @@ namespace Avalonia.Tiels.Controls;
 
 public partial class SidebarButton : UserControl
 {
+	public bool IsToggled { get; set; }
 	public string Text { get; set; }
 	public string Icon { get; set; }
 	public UserPage? Page { get; set; }

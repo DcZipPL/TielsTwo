@@ -330,6 +330,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Miniaturki.
+        /// </summary>
+        public static string SettingsThumbnail {
+            get {
+                return ResourceManager.GetString("SettingsThumbnail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aktualizacje.
         /// </summary>
         public static string SettingsUpdates {

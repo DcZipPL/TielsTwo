@@ -150,4 +150,7 @@
     <data name="Size" xml:space="preserve">
         <value>Size</value>
     </data>
+    <data name="SettingsThumbnail" xml:space="preserve">
+        <value>Thumbnails</value>
+    </data>
 </root>

@@ -10,7 +10,8 @@ icons = [
     "wrench",
     "info",
     "check",
-    "x"
+    "x",
+    "image"
 ]
 
 local_icons = [

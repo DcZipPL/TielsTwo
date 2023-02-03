@@ -46,15 +46,18 @@ public partial class TilePage : UserPage
 			WarnOtherProgramsText.IsVisible = selection == WindowTransparencyLevel.Mica.ToString();
 		};
 
-		TileTypeBox.SelectionChanged += (sender, args) =>
-		{
-			var selection = (string?)TileTypeBox.SelectedItem ?? TileType.Tile.ToString();
-			
-			// Add spaces with regex to match selection.
-			TilePathPanel.IsVisible = selection == Regex.Replace(TileType.DirectoryPortal.ToString(), "(\\B[A-Z])", " $1");
-		};
+		SetPathPanelVisibility();
+		TileTypeBox.SelectionChanged += (_, _) => SetPathPanelVisibility();
 
 		PathBox.Text = Configuration.GetDefaultTilesDirectory();
+	}
+
+	private void SetPathPanelVisibility()
+	{
+		var selection = (string?)TileTypeBox.SelectedItem ?? TileType.Tile.ToString();
+			
+		// Add spaces with regex to match selection.
+		TilePathPanel.IsVisible = selection == Regex.Replace(TileType.DirectoryPortal.ToString(), "(\\B[A-Z])", " $1");
 	}
 	
 	private void CreateTile()

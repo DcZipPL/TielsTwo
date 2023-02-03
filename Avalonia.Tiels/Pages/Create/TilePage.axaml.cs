@@ -62,11 +62,12 @@ public partial class TilePage : UserPage
 		try
 		{
 			// TODO: Save appearance.
-			var id = Guid.NewGuid();
-			Configuration.Tile.CreateTileConfig(App.Instance.Config, id, NameBox.Text, PathBox.Text,
-				SizeXBox.Text != null ? double.Parse(SizeXBox.Text) : DEFAULT_WIDTH, SizeYBox.Text != null ? double.Parse(SizeYBox.Text) : DEFAULT_HEIGHT);
-			var window = new TileWindow(id);
-			window.Show();
+			TileManagement.CreateTile(
+				NameBox.Text,
+				PathBox.Text,
+				SizeXBox.Text != null ? double.Parse(SizeXBox.Text) : DEFAULT_WIDTH,
+				SizeYBox.Text != null ? double.Parse(SizeYBox.Text) : DEFAULT_HEIGHT
+				);
 		}
 		catch (FormatException ex)
 		{

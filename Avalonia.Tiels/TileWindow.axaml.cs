@@ -55,26 +55,7 @@ public partial class TileWindow : Window
 
 	private void OnLoad(object? sender, EventArgs e)
 	{
-		var loadContentThread = new Thread(() => this.LoadContent(App.Instance.Config, ID));
+		var loadContentThread = new Thread(() => TileManagement.LoadTileContent(this, App.Instance.Config));
 		loadContentThread.Start();
-	}
-
-	public void LoadContent(Configuration configuration, Guid id)
-	{
-		foreach (var systemEntry in Directory.EnumerateFileSystemEntries(configuration.Tiles[id].Path))
-		{
-			// TODO: Better threading if possible
-			Dispatcher.UIThread.Post(() =>
-			{
-				// TODO: Get thumbnails from os
-				var thumbnail = Util.SetSvgImage("/Assets/Icons/out/alert-octagon.svg", new Image());
-				var entry = new EntryComponent
-				{
-					EntryName = Path.GetFileName(systemEntry),
-					Preview = thumbnail
-				};
-				EntryContent.Children.Add(entry);
-			});
-		}
 	}
 }

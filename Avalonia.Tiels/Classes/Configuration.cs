@@ -51,6 +51,13 @@ public class Configuration
         }
     }
 
+    /// <summary>
+    /// Initializes and checks configuration files.
+    /// </summary>
+    /// <returns>Returns initialized configuration.</returns>
+    /// <exception cref="FileNotFoundException">If config don't exist throws.</exception>
+    /// <exception cref="NoNullAllowedException">If in config Settings table don't exist then throws.</exception>
+    /// <exception cref="Exception">Throws other exceptions underway if something happen.</exception>
     public static Configuration Init(IControlledApplicationLifetime closer)
     {
         try
@@ -65,7 +72,7 @@ public class Configuration
                 throw new FileNotFoundException(App.I18n.GetString("DefaultConfigMissingError"), defaultConf);
             }
             
-            // Create tile config file
+            // Check if Tile config exist
             var tileConf = Path.Combine(Environment.CurrentDirectory, "Defaults/tile.default.toml");
             if (!File.Exists(defaultConf))
             {
@@ -94,9 +101,13 @@ public class Configuration
             throw ErrorHandler.ShowErrorWindow(e, 0x0002);
         }
 
-        return new Configuration(closer);
+        return Load(closer);
     }
 
+    /// <summary>
+    /// Loads configuration.
+    /// </summary>
+    /// <returns>Returns loaded configuration.</returns>
     public static Configuration Load(IControlledApplicationLifetime closer)
     {
         return new Configuration(closer);
@@ -274,8 +285,20 @@ public class Configuration
             return File.Exists(_configPath);
         }
 
-        public static void CreateTileConfig(Configuration configAccess, Guid id, string name, string path, double sizeX, double sizeY)
+        /// <summary>
+        /// Creates configuration files and caches for Tile. 
+        /// </summary>
+        /// <param name="configAccess">Access to configuration.</param>
+        /// <param name="name">Name of new Tile.</param>
+        /// <param name="path">Path to the Tile content.</param>
+        /// <param name="sizeX">Width of Tile.</param>
+        /// <param name="sizeY">Height of Tile.</param>
+        /// <returns>Guid of new Tile.</returns>
+        /// <exception cref="Exception">Throws InvalidDataException if default configuration file don't have Size table.</exception>
+        public static Guid CreateTileConfig(Configuration configAccess, string name, string path, double sizeX, double sizeY)
         {
+            var id = Guid.NewGuid();
+            
             // TODO: Do bin
             var tileConf = System.IO.Path.Combine(Environment.CurrentDirectory, "Defaults/tile.default.toml");
             
@@ -301,6 +324,8 @@ public class Configuration
             
             configAccess.Tiles[id]._configPath = GetTilesConfigDirectory(id + ".toml");
             configAccess.Tiles[id]._thumbnailDbPath = GetTilesConfigDirectory(id + ".bin");
+
+            return id;
         }
 
         public void SaveThumbnail(string path, string thumbnailPath)

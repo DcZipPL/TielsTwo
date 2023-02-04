@@ -114,7 +114,7 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Utwórz Pływający Obraz.
+        ///   Looks up a localized string similar to Utwórz Unoszący Obraz.
         /// </summary>
         public static string CreateFloatingImage {
             get {
@@ -398,6 +398,15 @@ namespace Avalonia.Tiels.Resources {
         public static string TilePath {
             get {
                 return ResourceManager.GetString("TilePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ustawienia: Kafelki.
+        /// </summary>
+        public static string TileSettingsLabel {
+            get {
+                return ResourceManager.GetString("TileSettingsLabel", resourceCulture);
             }
         }
         

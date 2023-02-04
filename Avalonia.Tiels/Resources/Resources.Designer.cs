@@ -402,6 +402,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings: Tile.
+        /// </summary>
+        public static string TileSettingsLabel {
+            get {
+                return ResourceManager.GetString("TileSettingsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transparency level can be changed in color option..
         /// </summary>
         public static string TransparencyChangedInColor {

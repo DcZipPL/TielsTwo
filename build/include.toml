@@ -16,7 +16,9 @@ icons = [
     "folder-open",
     "rotate-cw",
     "edit-2",
-    "chevron-up"
+    "chevron-up",
+    "sticky-note",
+    "file-image"
 ]
 
 local_icons = [

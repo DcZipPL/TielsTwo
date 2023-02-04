@@ -156,4 +156,7 @@
     <data name="HideTileButtons" xml:space="preserve">
         <value>Auto hide buttons on Tile</value>
     </data>
+    <data name="TileSettingsLabel" xml:space="preserve">
+        <value>Settings: Tile</value>
+    </data>
 </root>

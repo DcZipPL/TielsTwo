@@ -55,7 +55,7 @@
         <value>Utwórz</value>
     </data>
     <data name="CreateFloatingImage" xml:space="preserve">
-        <value>Utwórz Pływający Obraz</value>
+        <value>Utwórz Unoszący Obraz</value>
     </data>
     <data name="CreateDirectoryPortal" xml:space="preserve">
         <value>Utwórz Portal do folderu</value>
@@ -155,5 +155,8 @@
     </data>
     <data name="HideTileButtons" xml:space="preserve">
         <value>Ukryj automatycznie przyciski na kafelkach</value>
+    </data>
+    <data name="TileSettingsLabel" xml:space="preserve">
+        <value>Ustawienia: Kafelki</value>
     </data>
 </root>

@@ -9,7 +9,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.Tiels.SettingsWindow"
         Width="1000" Height="550"
-        Title="Tiels">
+        Title="Tiels" Icon="/Assets/tiels_color.ico">
         <Grid>
                 <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -21,19 +21,19 @@
                                 <controls:SidebarCategory Title="{x:Static p:Resources.CreateLabel}"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.CreateTile}" x:Name="SB_CT"                Icon="󿞐"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.CreateDirectoryPortal}" x:Name="SB_CDP"    Icon="󿚕"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.CreateFloatingImage}" x:Name="SB_CFI"      Icon="󿚒" IsEnabled="False"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.CreateNote}" x:Name="SB_CN"                Icon="󿚒" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.CreateFloatingImage}" x:Name="SB_CFI"      Icon="󿚜" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.CreateNote}" x:Name="SB_CN"                Icon="󿚢" IsEnabled="False"/>
                                 
                                 <controls:SidebarCategory Title="{x:Static p:Resources.SettingsLabel}"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsGeneral}" x:Name="SB_SG"           Icon="󿚓" IsToggled="True"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsAppearance}" x:Name="SB_SA"        Icon="󿚐"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsThumbnail}" x:Name="SB_ST"        Icon="󿚜"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsThumbnail}" x:Name="SB_ST"        Icon="󿚣"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsUpdates}" x:Name="SB_SU"           Icon="󿚖"/>
                                 
                                 <controls:SidebarCategory Title="{x:Static p:Resources.ManagementLabel}"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementTiles}" x:Name="SB_MT"           Icon=""/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementFloatingImages}" x:Name="SB_MFI" Icon="" IsEnabled="False"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementNotes}" x:Name="SB_MN"           Icon="" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementTiles}" x:Name="SB_MT"           Icon="󿚗"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementFloatingImages}" x:Name="SB_MFI" Icon="󿚗" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.ManagementNotes}" x:Name="SB_MN"           Icon="󿚗" IsEnabled="False"/>
                         </StackPanel>
                 </Border>
                 <!-- Content -->

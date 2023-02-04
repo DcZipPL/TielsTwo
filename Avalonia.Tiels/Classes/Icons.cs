@@ -30,5 +30,7 @@ public static class Icons
 	public static readonly string RotateCw = "󿚟";
 	public static readonly string EditAlt = "󿚠";
 	public static readonly string ChevronUp = "󿚡";
+	public static readonly string StickyNote = "󿚢";
+	public static readonly string FileImage = "󿚣";
 	//!a
 }

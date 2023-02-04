@@ -4,6 +4,7 @@ using System.Numerics;
 using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Themes.Fluent;
@@ -70,4 +71,21 @@ public partial class TileWindow : Window
 		var loadContentThread = new Thread(() => TileManagement.LoadTileContent(this, App.Instance.Config));
 		loadContentThread.Start();
 	}
+
+	// Window hints (Resize, move, etc.)
+	#region Window Resize
+
+	private bool _isResizing;
+	
+	private void ResizeDown(object? sender, PointerPressedEventArgs e) => _isResizing = true;
+	private void ResizeUp(object? sender, PointerReleasedEventArgs e) => _isResizing = false;
+
+	private void ResizeMove(object? sender, PointerEventArgs e)
+	{
+		if (!_isResizing) return;
+		this.Width = e.GetPosition(this).X;
+		System.Diagnostics.Debug.WriteLine($"[{DateTime.Now.Second}] X: {e.GetPosition(this).X} X: {e.GetPosition(this).Y}");
+	}
+
+	#endregion
 }

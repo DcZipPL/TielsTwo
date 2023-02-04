@@ -22,6 +22,6 @@ public class ErrorHandler
 
 	public static void Warn(string source, string message)
 	{
-		Console.WriteLine("WARN: " + message);
+		System.Diagnostics.Debug.WriteLine("WARN: " + message);
 	}
 }

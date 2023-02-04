@@ -6,12 +6,22 @@
         x:Class="Avalonia.Tiels.TileWindow"
         TransparencyLevelHint="Transparent"
         SystemDecorations="None"
-        Title="TileWindow" Opened="OnLoad" Background="{x:Null}">
+        Title="TileWindow" Opened="OnLoad" Background="{x:Null}" ShowInTaskbar="False">
     <Window.Styles>
+        <Style Selector="Button.EditBar:dark">
+            <Setter Property="Foreground" Value="#ffffffff"/>
+        </Style>
         <Style Selector="Button.EditBar">
+            <Setter Property="Padding" Value="3.5,6"/>
+            <Setter Property="FontSize" Value="15"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="Template"></Setter>
+            <Setter Property="Background" Value="#00000000"/>
+            <Setter Property="CornerRadius" Value="0"/>
+        </Style>
+        <Style Selector="Button.Arrow">
+            <Setter Property="Padding" Value="2,4.5,3,3"/>
+            <Setter Property="FontSize" Value="18"/>
         </Style>
     </Window.Styles>
     <Grid>
@@ -23,17 +33,17 @@
         <Grid x:Name="EntryContent"/>
         <Grid Grid.Row="1" x:Name="EditBar">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="28"></ColumnDefinition>
-                <ColumnDefinition Width="28"></ColumnDefinition>
-                <ColumnDefinition Width="28"></ColumnDefinition>
-                <ColumnDefinition Width="28"></ColumnDefinition>
+                <ColumnDefinition Width="24"></ColumnDefinition>
+                <ColumnDefinition Width="24"></ColumnDefinition>
+                <ColumnDefinition Width="24"></ColumnDefinition>
+                <ColumnDefinition Width="24"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" x:Name="HideBtn" Classes="EditBar"></Button>
-            <Button Grid.Column="1" x:Name="OpenDirBtn" Classes="EditBar"></Button>
-            <Button Grid.Column="2" x:Name="RotateBtn" Classes="EditBar"></Button>
-            <Button Grid.Column="3" x:Name="RenameBtn" Classes="EditBar"></Button>
-            <TextBlock Grid.Column="4" x:Name="TileName">{Name}</TextBlock>
+            <Button Grid.Column="0" x:Name="HideBtn" Classes="EditBar Arrow" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚝</Button>
+            <Button Grid.Column="1" x:Name="OpenDirBtn" Classes="EditBar" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚞</Button>
+            <Button Grid.Column="2" x:Name="RotateBtn" Classes="EditBar" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚟</Button>
+            <Button Grid.Column="3" x:Name="RenameBtn" Classes="EditBar" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚠</Button>
         </Grid>
+        <TextBlock Grid.Row="1" x:Name="TileName" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">{Name}</TextBlock>
     </Grid>
 </Window>

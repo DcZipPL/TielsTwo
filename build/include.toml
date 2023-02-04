@@ -11,7 +11,12 @@ icons = [
     "info",
     "check",
     "x",
-    "image"
+    "image",
+    "chevron-down",
+    "folder-open",
+    "rotate-cw",
+    "edit-2",
+    "chevron-up"
 ]
 
 local_icons = [

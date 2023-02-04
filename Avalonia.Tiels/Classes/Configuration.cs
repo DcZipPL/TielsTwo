@@ -27,22 +27,22 @@ public class Configuration
             Directory.CreateDirectory(GetTilesConfigDirectory());
         foreach (var filePath in Directory.EnumerateFiles(GetTilesConfigDirectory()))
         {
-            if (Path.GetExtension(filePath) == "toml") // config
+            if (Path.GetExtension(filePath) == ".toml") // config
             {
                 if (Guid.TryParse(Path.GetFileNameWithoutExtension(filePath), out var guid))
                 {
-                    if (Tiles.ContainsKey(guid))
+                    if (!Tiles.ContainsKey(guid))
                         Tiles.Add(guid, new Tile());
                     
                     Tiles[guid]._configPath = filePath;
 
                 } else { ErrorHandler.ShowErrorWindow(new InvalidDataException("Name of file: " + filePath + "has invalid Guid."), 0x0004); }
             }
-            if (Path.GetExtension(filePath) == "bin") // thumbnail
+            if (Path.GetExtension(filePath) == ".bin") // thumbnail
             {
                 if (Guid.TryParse(Path.GetFileNameWithoutExtension(filePath), out var guid))
                 {
-                    if (Tiles.ContainsKey(guid))
+                    if (!Tiles.ContainsKey(guid))
                         Tiles.Add(guid, new Tile());
                     
                     Tiles[guid]._thumbnailDbPath = filePath;

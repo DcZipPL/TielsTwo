@@ -25,5 +25,10 @@ public static class Icons
 	public static readonly string Check = "󿚚";
 	public static readonly string X = "󿚛";
 	public static readonly string Image = "󿚜";
+	public static readonly string ChevronDown = "󿚝";
+	public static readonly string FolderOpen = "󿚞";
+	public static readonly string RotateCw = "󿚟";
+	public static readonly string EditAlt = "󿚠";
+	public static readonly string ChevronUp = "󿚡";
 	//!a
 }

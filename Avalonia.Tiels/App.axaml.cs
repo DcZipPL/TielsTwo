@@ -41,8 +41,9 @@ namespace Avalonia.Tiels
 			}
 			else
 			{
-				// Load tiles
 				Config = Configuration.Load(desktop);
+				foreach (var tile in Config.Tiles)
+					TileManagement.LoadTile(tile.Key);
 			}
 			
 			if (!Config.AutostartHideSettings || Configuration.IsFirstStartup())

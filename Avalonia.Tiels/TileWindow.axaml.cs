@@ -30,11 +30,18 @@ public partial class TileWindow : Window
 		ID = id;
 		EditBar.Background = new SolidColorBrush((Color)EditBarColor());
 		TileName.Foreground = new SolidColorBrush((Color)TextColor());
+
+		PseudoClasses.Set(":dark", App.Instance.Config.Tiles[ID].IsOverriden
+			? App.Instance.Config.Tiles[ID].GlobalTheme == FluentThemeMode.Dark
+			: App.Instance.Config.GlobalTheme == FluentThemeMode.Dark);
+		
 		var size = App.Instance.Config.Tiles[ID].Size;
 		this.Width = size.X; this.Height = size.Y;
 		
 		var location = App.Instance.Config.Tiles[ID].Location;
 		this.Position = new PixelPoint((int)location.X, (int)location.Y);
+
+		this.TileName.Text = App.Instance.Config.Tiles[ID].Name;
 	}
 
 	public Color EditBarColor() => Color.Parse(App.Instance.Config.Tiles[ID].IsOverriden

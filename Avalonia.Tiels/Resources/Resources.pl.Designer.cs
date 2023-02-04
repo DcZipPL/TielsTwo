@@ -285,6 +285,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Przytrzymaj tutaj żeby przesunąć kafelek..
+        /// </summary>
+        public static string MoveWindow {
+            get {
+                return ResourceManager.GetString("MoveWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nazwa.
         /// </summary>
         public static string Name {

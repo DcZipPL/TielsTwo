@@ -5,6 +5,7 @@ using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Themes.Fluent;
@@ -16,6 +17,7 @@ namespace Avalonia.Tiels;
 
 public partial class TileWindow : Window
 {
+	private bool _editMode = false;
 	public Guid ID { get; }
 	
 	public TileWindow()
@@ -76,12 +78,17 @@ public partial class TileWindow : Window
 	#region Window Resize
 
 	private bool _isResizing;
-	private Vector2 _position;
+	private bool _isMoving;
+	private Vector2 _originPosition;
+	private Vector2? _originMousePosition;
 	
 	private void ResizeDown(object? sender, PointerPressedEventArgs e)
 	{
-		_isResizing = true;
-		_position = new Vector2((float)this.Width, (float)this.Height);
+		if (_editMode)
+		{
+			_isResizing = true;
+			_originPosition = new Vector2((float)this.Width, (float)this.Height);
+		}
 	}
 
 	private void ResizeUp(object? sender, PointerReleasedEventArgs e)
@@ -91,6 +98,7 @@ public partial class TileWindow : Window
 
 	private void ResizeMove(object? sender, PointerEventArgs e)
 	{
+		if (!_editMode) { _isResizing = false; return; }
 		if (!_isResizing) return;
 		if (sender == null) return;
 		var gridName = ((Grid)sender).Name!;
@@ -102,17 +110,44 @@ public partial class TileWindow : Window
 			this.Height = MathF.Ceiling((float)e.GetPosition(this).Y / snapping) * snapping;
 		if (gridName.Contains('U'))
 		{
-			this.Width = MathF.Ceiling((float)e.GetPosition(this).X / snapping) * snapping + _position.X;
-			//this.Position = new PixelPoint(this.Position.X - (int)(MathF.Ceiling((float)e.GetPosition(this).X / snapping) * snapping), this.Position.Y);
+			// TODO: impl win-like resize
+			this.Width = MathF.Ceiling((float)e.GetPosition(this).X / snapping) * snapping + _originPosition.X;
 		}
 		if (gridName.Contains('V'))
 		{
-			//this.Position = new PixelPoint(this.Position.X, this.Position.Y + (int)(MathF.Ceiling((float)e.GetPosition(this).Y / snapping) * snapping));
-			this.Height = MathF.Ceiling((float)e.GetPosition(this).Y / snapping) * snapping + _position.Y;
+			// TODO: impl win-like resize
+			this.Height = MathF.Ceiling((float)e.GetPosition(this).Y / snapping) * snapping + _originPosition.Y;
 		}
-
-		System.Diagnostics.Debug.WriteLine($"[{DateTime.Now.Second}] X: {e.GetPosition(this).X} X: {e.GetPosition(this).Y}");
 	}
 
 	#endregion
+
+	private void ToggleEditMode(object? sender, RoutedEventArgs e)
+	{
+		_editMode = !_editMode;
+		WindowHints.IsVisible = _editMode;
+		RenameBtn.Background = new SolidColorBrush(Color.Parse(_editMode ? "#25000000" : "#00000000"));
+	}
+
+	private void MoveDown(object? sender, PointerPressedEventArgs e) => _isMoving = true;
+
+	private void MoveUp(object? sender, PointerReleasedEventArgs e)
+	{
+		_originMousePosition = null;
+		_isMoving = false;
+	}
+
+	private void Move(object? sender, PointerEventArgs e)
+	{
+		if (!_editMode) { _isResizing = false; return; }
+		if (!_isMoving) return;
+		var snapping = App.Instance.Config.Snapping;
+
+		_originMousePosition ??= new Vector2((float)e.GetPosition(this).X, (float)e.GetPosition(this).Y);
+		
+		this.Position = new PixelPoint(
+			this.Position.X +(int)(MathF.Ceiling(((float)e.GetPosition(this).X - (int)_originMousePosition.Value.X) / snapping) * snapping), 
+			this.Position.Y + (int)(MathF.Ceiling(((float)e.GetPosition(this).Y - (int)_originMousePosition.Value.Y) / snapping) * snapping)
+		);
+	}
 }

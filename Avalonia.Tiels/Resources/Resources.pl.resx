@@ -165,4 +165,7 @@
     <data name="InvalidInput" xml:space="preserve">
         <value>Nieprawidłowe dane wejściowe!</value>
     </data>
+    <data name="MoveWindow" xml:space="preserve">
+        <value>Przytrzymaj tutaj żeby przesunąć kafelek.</value>
+    </data>
 </root>

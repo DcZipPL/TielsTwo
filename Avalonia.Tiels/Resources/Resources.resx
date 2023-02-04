@@ -165,4 +165,7 @@
     <data name="InvalidInput" xml:space="preserve">
         <value>Invalid input!</value>
     </data>
+    <data name="MoveWindow" xml:space="preserve">
+        <value>Press and hold here to move Tile.</value>
+    </data>
 </root>

@@ -153,4 +153,7 @@
     <data name="SettingsThumbnail" xml:space="preserve">
         <value>Thumbnails</value>
     </data>
+    <data name="HideTileButtons" xml:space="preserve">
+        <value>Auto hide buttons on Tile</value>
+    </data>
 </root>

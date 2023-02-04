@@ -153,4 +153,7 @@
     <data name="SettingsThumbnail" xml:space="preserve">
         <value>Miniaturki</value>
     </data>
+    <data name="HideTileButtons" xml:space="preserve">
+        <value>Ukryj automatycznie przyciski na kafelkach</value>
+    </data>
 </root>

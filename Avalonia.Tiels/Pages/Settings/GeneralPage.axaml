@@ -28,6 +28,7 @@
                                                 </Border>
                                         </WrapPanel></CheckBox>
                                         <CheckBox x:Name="ExperimentalCheckBox" Content="{x:Static p:Resources.ExperimentalFeatures}"/>
+                                        <CheckBox x:Name="HideTileButtonsCheckBox" Content="{x:Static p:Resources.HideTileButtons}"/>
                                 </StackPanel>
                                 <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">
                                         <Button Click="DefaultButtonClicked" Content="{x:Static p:Resources.Default}"/>

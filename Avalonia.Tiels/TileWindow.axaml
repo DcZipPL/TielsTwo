@@ -8,8 +8,17 @@
         SystemDecorations="None"
         Title="TileWindow" Opened="OnLoad" Background="{x:Null}" ShowInTaskbar="False">
     <Window.Styles>
-        <Style Selector="Button.EditBar:dark">
+        <Style Selector="TextBlock.Dark">
             <Setter Property="Foreground" Value="#ffffffff"/>
+        </Style>
+        <Style Selector="Button.Dark">
+            <Setter Property="TextBlock.Foreground" Value="#ffffffff"/>
+        </Style>
+        <Style Selector="Button.Dark:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="TextBlock.Foreground" Value="#ffffffff"/>
+        </Style>
+        <Style Selector="Button.Dark:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="TextBlock.Foreground" Value="#ffffffff"/>
         </Style>
         <Style Selector="Button.EditBar">
             <Setter Property="Padding" Value="3.5,6"/>
@@ -44,6 +53,6 @@
             <Button Grid.Column="2" x:Name="RotateBtn" Classes="EditBar" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚟</Button>
             <Button Grid.Column="3" x:Name="RenameBtn" Classes="EditBar" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚠</Button>
         </Grid>
-        <TextBlock Grid.Row="1" x:Name="TileName" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">{Name}</TextBlock>
+        <TextBlock Grid.Row="1" x:Name="TileName" Classes="EditBar" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">{Name}</TextBlock>
     </Grid>
 </Window>

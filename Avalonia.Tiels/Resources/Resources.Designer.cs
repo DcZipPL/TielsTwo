@@ -204,6 +204,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto hide buttons on Tile.
+        /// </summary>
+        public static string HideTileButtons {
+            get {
+                return ResourceManager.GetString("HideTileButtons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application language.
         /// </summary>
         public static string LanguageSelection {

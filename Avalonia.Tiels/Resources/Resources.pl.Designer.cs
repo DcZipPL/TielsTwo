@@ -204,6 +204,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ukryj automatycznie przyciski na kafelkach.
+        /// </summary>
+        public static string HideTileButtons {
+            get {
+                return ResourceManager.GetString("HideTileButtons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Język programu.
         /// </summary>
         public static string LanguageSelection {

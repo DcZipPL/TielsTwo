@@ -29,9 +29,12 @@ public partial class TileWindow : Window
 	{
 		ID = id;
 
+		MainGrid.Background = new SolidColorBrush(App.Instance.Config.Tiles[ID].IsOverriden
+			? App.Instance.Config.Tiles[ID].Color
+			: App.Instance.Config.GlobalColor);
 		EditBar.Background = new SolidColorBrush((Color)EditBarColor());
 		if (App.Instance.Config.Tiles[ID].IsOverriden
-			    ? App.Instance.Config.Tiles[ID].GlobalTheme == FluentThemeMode.Dark
+			    ? App.Instance.Config.Tiles[ID].Theme == FluentThemeMode.Dark
 			    : App.Instance.Config.GlobalTheme == FluentThemeMode.Dark)
 		{
 			TileName.Classes.Add("Dark");
@@ -40,6 +43,10 @@ public partial class TileWindow : Window
 			RotateBtn.Classes.Add("Dark");
 			RenameBtn.Classes.Add("Dark");
 		}
+
+		this.TransparencyLevelHint = App.Instance.Config.Tiles[ID].IsOverriden
+			? App.Instance.Config.Tiles[ID].TransparencyLevel
+			: App.Instance.Config.GlobalTransparencyLevel;
 
 		var size = App.Instance.Config.Tiles[ID].Size;
 		this.Width = size.X; this.Height = size.Y;
@@ -51,7 +58,7 @@ public partial class TileWindow : Window
 	}
 
 	public Color EditBarColor() => Color.Parse(App.Instance.Config.Tiles[ID].IsOverriden
-			? App.Instance.Config.Tiles[ID].GlobalTheme == FluentThemeMode.Dark
+			? App.Instance.Config.Tiles[ID].Theme == FluentThemeMode.Dark
 				? "#25000000"
 				: "#25ffffff"
 			: App.Instance.Config.GlobalTheme == FluentThemeMode.Dark

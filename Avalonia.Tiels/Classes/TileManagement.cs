@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using Avalonia.Controls;
+using Avalonia.Media;
+using Avalonia.Themes.Fluent;
 using Avalonia.Threading;
 using Avalonia.Tiels.Controls;
 
@@ -15,10 +17,10 @@ public class TileManagement
 	/// <param name="path">Path to Tile content.</param>
 	/// <param name="width">Width of Tile.</param>
 	/// <param name="height">Height of Tile.</param>
-	public static void CreateTile(string name, string path, double width, double height)
+	public static void CreateTile(string name, string path, double width, double height, bool overriteTheme, FluentThemeMode? theme, WindowTransparencyLevel? transparencyLevel, Color? color)
 	{
 		var window = new TileWindow(
-			Configuration.Tile.CreateTileConfig(App.Instance.Config, name, path, width, height)
+			Configuration.Tile.CreateTileConfig(App.Instance.Config, name, path, width, height, overriteTheme, theme ?? FluentThemeMode.Dark, transparencyLevel ?? WindowTransparencyLevel.Transparent, color ?? Util.TILE_DARK_COLOR)
 		);
 		window.Show();
 	}

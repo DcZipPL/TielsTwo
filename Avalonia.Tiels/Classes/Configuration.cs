@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.IO;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Media;
 using Avalonia.Themes.Fluent;
 using Tomlyn;
 using Tomlyn.Model;
@@ -194,7 +194,7 @@ public class Configuration
         {
             var appearanceReq = ReqModel().Appearance;
             if (appearanceReq == null) ErrorHandler.Warn("GlobalColor", "Couldn't load Appearance settings!");
-            return appearanceReq != null ? Util.ColorFromHex(appearanceReq.Color) : Color.Fuchsia;
+            return appearanceReq != null ? Color.Parse(appearanceReq.Color) : Color.FromRgb(255,0,255);
         }
         set
         {
@@ -295,7 +295,7 @@ public class Configuration
         /// <param name="sizeY">Height of Tile.</param>
         /// <returns>Guid of new Tile.</returns>
         /// <exception cref="Exception">Throws InvalidDataException if default configuration file don't have Size table.</exception>
-        public static Guid CreateTileConfig(Configuration configAccess, string name, string path, double sizeX, double sizeY)
+        public static Guid CreateTileConfig(Configuration configAccess, string name, string path, double sizeX, double sizeY, bool overrideTheme, FluentThemeMode theme, WindowTransparencyLevel transparencyLevel, Color color)
         {
             var id = Guid.NewGuid();
             
@@ -306,13 +306,21 @@ public class Configuration
             var model = Toml.ToModel<Models.TileModel>(defaultModel);
 
             if (model.Size == null)
-                throw ErrorHandler.ShowErrorWindow(new InvalidDataException("Tile config don't contain size or it is null!") , 0x0006);
+                throw ErrorHandler.ShowErrorWindow(new InvalidDataException("Tile config don't contain Size or it is null!") , 0x0006);
+            
+            if (model.Appearance == null)
+                throw ErrorHandler.ShowErrorWindow(new InvalidDataException("Tile config don't Appearance size or it is null!") , 0x0007);
 
             model.Id = id.ToString();
             model.Path = path;
             model.Name = name;
             model.Size.X = sizeX;
             model.Size.Y = sizeY;
+            model.Appearance.Override = overrideTheme;
+            model.Appearance.Color = Util.ColorToHex(color);
+            model.Appearance.Theme = theme.ToString().ToLower();
+            model.Appearance.Transparency = (int)transparencyLevel;
+            
             Directory.CreateDirectory(GetDefaultTilesDirectory());
             var toml = Toml.FromModel(model);
 
@@ -454,7 +462,7 @@ public class Configuration
         
         // TODO: Duplicate from above
         #region Request Appearance
-        public FluentThemeMode GlobalTheme
+        public FluentThemeMode Theme
         {
             get
             {
@@ -482,7 +490,7 @@ public class Configuration
             }
         }
 
-        public WindowTransparencyLevel GlobalTransparencyLevel
+        public WindowTransparencyLevel TransparencyLevel
         {
             get
             {
@@ -498,13 +506,13 @@ public class Configuration
             }
         }
 
-        public Color GlobalColor
+        public Color Color
         {
             get
             {
                 var appearanceReq = ReqModel().Appearance;
                 if (appearanceReq == null) ErrorHandler.Warn("GlobalColor", "Couldn't load Appearance settings!");
-                return appearanceReq != null ? Util.ColorFromHex(appearanceReq.Color) : Color.Fuchsia;
+                return appearanceReq != null ? Color.Parse(appearanceReq.Color) : Color.FromRgb(255,0,255);
             }
             set
             {

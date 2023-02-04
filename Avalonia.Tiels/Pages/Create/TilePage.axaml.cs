@@ -5,6 +5,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
 using Avalonia.Themes.Fluent;
 using Avalonia.Tiels.Classes;
 
@@ -37,7 +38,14 @@ public partial class TilePage : UserPage
 			throw new InvalidOperationException(
 				"Tried to initialize TileTypeBox.SelectedIndex when it isn't part of ITileCreationPage");
 
-		TransparencyModeBox.SelectionChanged += (sender, args) =>
+		ColorBtn.Color = App.Instance.Config.GlobalTheme == FluentThemeMode.Dark ? Util.TILE_DARK_COLOR : Util.TILE_LIGHT_COLOR;
+		ThemeBox.SelectionChanged += (_, _) =>
+		{
+			if (ColorBtn.Color == Util.TILE_DARK_COLOR || ColorBtn.Color == Util.TILE_LIGHT_COLOR)
+				ColorBtn.Color = (FluentThemeMode)ThemeBox.SelectedIndex == FluentThemeMode.Dark ? Util.TILE_DARK_COLOR: Util.TILE_LIGHT_COLOR;
+		};
+		
+		TransparencyModeBox.SelectionChanged += (_, _) =>
 		{
 			var selection = (string?)TransparencyModeBox.SelectedItem ?? WindowTransparencyLevel.None.ToString();
 			WarnUnsupportedOptionText.IsVisible = selection != WindowTransparencyLevel.None.ToString() &&
@@ -64,13 +72,19 @@ public partial class TilePage : UserPage
 	{
 		try
 		{
-			// TODO: Save appearance.
+			if (!UseGlobalThemeBox.IsChecked.HasValue)
+				throw ErrorHandler.ShowErrorWindow(new NullReferenceException("UseGlobalThemeBox.IsChecked is null!"),
+					0x0008);
 			TileManagement.CreateTile(
 				NameBox.Text,
 				PathBox.Text,
 				SizeXBox.Text != null ? double.Parse(SizeXBox.Text) : DEFAULT_WIDTH,
-				SizeYBox.Text != null ? double.Parse(SizeYBox.Text) : DEFAULT_HEIGHT
-				);
+				SizeYBox.Text != null ? double.Parse(SizeYBox.Text) : DEFAULT_HEIGHT,
+				!UseGlobalThemeBox.IsChecked.Value,
+				(FluentThemeMode)ThemeBox.SelectedIndex,
+				(WindowTransparencyLevel)TransparencyModeBox.SelectedIndex,
+				ColorBtn.Color
+			);
 		}
 		catch (FormatException ex)
 		{

@@ -37,7 +37,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
                     <Label Content="{x:Static p:Resources.Color}"/>
-                    <colorpicker:ColorButton Color="#88000000" Margin="0,3,10,0"/>
+                    <colorpicker:ColorButton x:Name="ColorBtn" Color="#88000000" Margin="0,3,10,0"/>
                 </StackPanel>
             
                 <StackPanel Grid.Column="1">

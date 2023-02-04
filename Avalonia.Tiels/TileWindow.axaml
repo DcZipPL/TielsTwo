@@ -33,12 +33,11 @@
             <Setter Property="FontSize" Value="18"/>
         </Style>
     </Window.Styles>
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="28"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid.Background><SolidColorBrush Color="#55000000"/></Grid.Background>
         <Grid x:Name="EntryContent"/>
         <Grid Grid.Row="1" x:Name="EditBar">
             <Grid.ColumnDefinitions>

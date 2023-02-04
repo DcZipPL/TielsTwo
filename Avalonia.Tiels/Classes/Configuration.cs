@@ -207,6 +207,17 @@ public class Configuration
 
     #region Request Settings
 
+    public float Snapping
+    {
+        get { return ReqModel().Settings!.Snapping; }
+        set
+        {
+            var model = ReqModel();
+            model.Settings!.Snapping = value;
+            SeedModel(model);
+        }
+    }
+    
     public string TilesPath
     {
         get { return ReqModel().Settings!.TilesPath ?? ""; }
@@ -258,6 +269,17 @@ public class Configuration
         {
             var model = ReqModel();
             model.Settings!.Experimental = value;
+            SeedModel(model);
+        }
+    }
+    
+    public bool HideTileButtons
+    {
+        get { return ReqModel().Settings!.HideTileButtons; }
+        set
+        {
+            var model = ReqModel();
+            model.Settings!.HideTileButtons = value;
             SeedModel(model);
         }
     }
@@ -602,6 +624,8 @@ public class Configuration
             public bool HideSettings { get; set; }
             public bool SpecialEffects { get; set; }
             public bool Experimental { get; set; }
+            public bool HideTileButtons { get; set; }
+            public float Snapping { get; set; } // Snap to grid
             
             TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
         }

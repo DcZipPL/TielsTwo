@@ -159,4 +159,10 @@
     <data name="TileSettingsLabel" xml:space="preserve">
         <value>Settings: Tile</value>
     </data>
+    <data name="Snapping" xml:space="preserve">
+        <value>Snapping to grid</value>
+    </data>
+    <data name="InvalidInput" xml:space="preserve">
+        <value>Invalid input!</value>
+    </data>
 </root>

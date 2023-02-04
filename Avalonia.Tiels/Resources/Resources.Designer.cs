@@ -213,6 +213,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid input!.
+        /// </summary>
+        public static string InvalidInput {
+            get {
+                return ResourceManager.GetString("InvalidInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application language.
         /// </summary>
         public static string LanguageSelection {
@@ -362,6 +371,15 @@ namespace Avalonia.Tiels.Resources {
         public static string Size {
             get {
                 return ResourceManager.GetString("Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Snapping to grid.
+        /// </summary>
+        public static string Snapping {
+            get {
+                return ResourceManager.GetString("Snapping", resourceCulture);
             }
         }
         

@@ -69,14 +69,14 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="6"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Row="0" Grid.Column="0" Background="#ffff0000" x:Name="ResizeAreaTopLeft" Cursor="TopLeftCorner"/>
-            <Grid Grid.Row="1" Grid.Column="0" Background="#ffffff00" x:Name="ResizeAreaMidLeft" Cursor="SizeWestEast"/>
-            <Grid Grid.Row="2" Grid.Column="0" Background="#ffff0000" x:Name="ResizeAreaBotLeft" Cursor="BottomRightCorner"/>
-            <Grid Grid.Row="0" Grid.Column="2" Background="#ffff0000" x:Name="ResizeAreaTopRight" Cursor="TopLeftCorner"/>
-            <Grid Grid.Row="1" Grid.Column="2" Background="#ffffff00" x:Name="ResizeAreaMidRight" Cursor="SizeWestEast" PointerPressed="ResizeDown" PointerReleased="ResizeUp" PointerMoved="ResizeMove"/>
-            <Grid Grid.Row="2" Grid.Column="2" Background="#ffff0000" x:Name="ResizeAreaBotRight" Cursor="BottomRightCorner"/>
-            <Grid Grid.Row="0" Grid.Column="1" Background="#ff0000ff" x:Name="ResizeAreaTopMiddle" Cursor="SizeNorthSouth"/>
-            <Grid Grid.Row="2" Grid.Column="1" Background="#ff0000ff" x:Name="ResizeAreaBotMiddle" Cursor="SizeNorthSouth"/>
+            <Grid Grid.Row="0" Grid.Column="0" Background="#ffff0000" x:Name="ResizeAreaUV" Cursor="TopLeftCorner" PointerPressed="ResizeDown" PointerReleased="ResizeUp" PointerMoved="ResizeMove"/>
+            <Grid Grid.Row="1" Grid.Column="0" Background="#ffffff00" x:Name="ResizeAreaU" Cursor="SizeWestEast" PointerPressed="ResizeDown" PointerReleased="ResizeUp" PointerMoved="ResizeMove"/>
+            <Grid Grid.Row="2" Grid.Column="0" Background="#ffff0000" x:Name="ResizeAreaUY" Cursor="BottomLeftCorner" PointerPressed="ResizeDown" PointerReleased="ResizeUp" PointerMoved="ResizeMove"/>
+            <Grid Grid.Row="0" Grid.Column="2" Background="#ffff0000" x:Name="ResizeAreaXV" Cursor="TopRightCorner" PointerPressed="ResizeDown" PointerReleased="ResizeUp" PointerMoved="ResizeMove"/>
+            <Grid Grid.Row="1" Grid.Column="2" Background="#ffffff00" x:Name="ResizeAreaX" Cursor="SizeWestEast" PointerPressed="ResizeDown" PointerReleased="ResizeUp" PointerMoved="ResizeMove"/>
+            <Grid Grid.Row="2" Grid.Column="2" Background="#ffff0000" x:Name="ResizeAreaXY" Cursor="BottomRightCorner" PointerPressed="ResizeDown" PointerReleased="ResizeUp" PointerMoved="ResizeMove"/>
+            <Grid Grid.Row="0" Grid.Column="1" Background="#ff0000ff" x:Name="ResizeAreaV" Cursor="SizeNorthSouth" PointerPressed="ResizeDown" PointerReleased="ResizeUp" PointerMoved="ResizeMove"/>
+            <Grid Grid.Row="2" Grid.Column="1" Background="#ff0000ff" x:Name="ResizeAreaY" Cursor="SizeNorthSouth" PointerPressed="ResizeDown" PointerReleased="ResizeUp" PointerMoved="ResizeMove"/>
         </Grid>
     </Grid>
 </Window>

@@ -26,6 +26,13 @@ public partial class GeneralPage : UserPage
 
 	private void ApplySettings()
 	{
+		// Apply snapping settings
+		if (App.Instance.Config.Snapping.ToString() != SnappingBox.Text)
+			if (float.TryParse(SnappingBox.Text, out float snapping))
+				App.Instance.Config.Snapping = snapping;
+			else
+				ChangeSettingsStatus(App.I18n.GetString("InvalidInput")!, true);
+		
 		// Check if tiles path didn't changed. If changed apply new location if valid to config and give status.
 		var newPath = string.IsNullOrEmpty(TilesDirectoryBox.Text)
 			? Configuration.GetDefaultTilesDirectory()
@@ -49,6 +56,7 @@ public partial class GeneralPage : UserPage
 		ApplyIfChanged(App.Instance.Config.AutostartHideSettings, b => App.Instance.Config.AutostartHideSettings = b, HideWindowCheckBox);
 		ApplyIfChanged(App.Instance.Config.SpecialEffects, b => App.Instance.Config.SpecialEffects = b, EffectsCheckBox);
 		ApplyIfChanged(App.Instance.Config.Experimental, b => App.Instance.Config.Experimental = b, ExperimentalCheckBox);
+		ApplyIfChanged(App.Instance.Config.HideTileButtons, b => App.Instance.Config.HideTileButtons = b, HideTileButtonsCheckBox);
 
 		// Save draft data before reinitialize
 		var draftTilesPath = TilesDirectoryBox.Text;
@@ -77,6 +85,8 @@ public partial class GeneralPage : UserPage
 
 	private void LoadSettingsValues()
 	{
+		SnappingBox.Text = App.Instance.Config.Snapping.ToString();
+		
 		TilesDirectoryBox.Text = App.Instance.Config.TilesPath;
 		TilesDirectoryBox.Watermark = Configuration.GetDefaultTilesDirectory();
 
@@ -89,6 +99,7 @@ public partial class GeneralPage : UserPage
 		HideWindowCheckBox.IsChecked = App.Instance.Config.AutostartHideSettings;
 		EffectsCheckBox.IsChecked = App.Instance.Config.SpecialEffects;
 		ExperimentalCheckBox.IsChecked = App.Instance.Config.Experimental;
+		HideTileButtonsCheckBox.IsChecked = App.Instance.Config.HideTileButtons;
 	}
 
 	private void TilePathTextBoxChanged(object? sender, KeyEventArgs e)

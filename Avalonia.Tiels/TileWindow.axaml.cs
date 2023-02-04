@@ -76,14 +76,41 @@ public partial class TileWindow : Window
 	#region Window Resize
 
 	private bool _isResizing;
+	private Vector2 _position;
 	
-	private void ResizeDown(object? sender, PointerPressedEventArgs e) => _isResizing = true;
-	private void ResizeUp(object? sender, PointerReleasedEventArgs e) => _isResizing = false;
+	private void ResizeDown(object? sender, PointerPressedEventArgs e)
+	{
+		_isResizing = true;
+		_position = new Vector2((float)this.Width, (float)this.Height);
+	}
+
+	private void ResizeUp(object? sender, PointerReleasedEventArgs e)
+	{
+		_isResizing = false;
+	}
 
 	private void ResizeMove(object? sender, PointerEventArgs e)
 	{
 		if (!_isResizing) return;
-		this.Width = e.GetPosition(this).X;
+		if (sender == null) return;
+		var gridName = ((Grid)sender).Name!;
+		var snapping = App.Instance.Config.Snapping;
+		
+		if (gridName.Contains('X'))
+			this.Width = MathF.Ceiling((float)e.GetPosition(this).X / snapping) * snapping;
+		if (gridName.Contains('Y'))
+			this.Height = MathF.Ceiling((float)e.GetPosition(this).Y / snapping) * snapping;
+		if (gridName.Contains('U'))
+		{
+			this.Width = MathF.Ceiling((float)e.GetPosition(this).X / snapping) * snapping + _position.X;
+			//this.Position = new PixelPoint(this.Position.X - (int)(MathF.Ceiling((float)e.GetPosition(this).X / snapping) * snapping), this.Position.Y);
+		}
+		if (gridName.Contains('V'))
+		{
+			//this.Position = new PixelPoint(this.Position.X, this.Position.Y + (int)(MathF.Ceiling((float)e.GetPosition(this).Y / snapping) * snapping));
+			this.Height = MathF.Ceiling((float)e.GetPosition(this).Y / snapping) * snapping + _position.Y;
+		}
+
 		System.Diagnostics.Debug.WriteLine($"[{DateTime.Now.Second}] X: {e.GetPosition(this).X} X: {e.GetPosition(this).Y}");
 	}
 

@@ -4,6 +4,8 @@ auto_start = true
 hide_settings = true # Hide settings when application autostarts
 special_effects = true
 experimental = false
+hide_tile_buttons = true
+snapping = 5
 
 [appearance]
 override = false # Override global values

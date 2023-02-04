@@ -159,4 +159,10 @@
     <data name="TileSettingsLabel" xml:space="preserve">
         <value>Ustawienia: Kafelki</value>
     </data>
+    <data name="Snapping" xml:space="preserve">
+        <value>Przyciąganie do siatki</value>
+    </data>
+    <data name="InvalidInput" xml:space="preserve">
+        <value>Nieprawidłowe dane wejściowe!</value>
+    </data>
 </root>

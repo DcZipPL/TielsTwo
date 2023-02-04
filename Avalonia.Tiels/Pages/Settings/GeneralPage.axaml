@@ -28,7 +28,10 @@
                                                 </Border>
                                         </WrapPanel></CheckBox>
                                         <CheckBox x:Name="ExperimentalCheckBox" Content="{x:Static p:Resources.ExperimentalFeatures}"/>
+                                        
                                         <TextBlock FontSize="16" Margin="0,10,0,10" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.TileSettingsLabel}"/>
+                                        <Label Content="{x:Static p:Resources.Snapping}"/>
+                                        <TextBox x:Name="SnappingBox" Margin="0,0,0,10" Width="160" HorizontalAlignment="Left"/>
                                         <CheckBox x:Name="HideTileButtonsCheckBox" Content="{x:Static p:Resources.HideTileButtons}"/>
                                 </StackPanel>
                                 <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">

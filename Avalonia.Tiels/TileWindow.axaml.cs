@@ -18,6 +18,7 @@ namespace Avalonia.Tiels;
 public partial class TileWindow : Window
 {
 	private bool _editMode = false;
+	private bool _isHidden = false;
 	public Guid ID { get; }
 	
 	public TileWindow()
@@ -31,7 +32,7 @@ public partial class TileWindow : Window
 	public TileWindow(Guid id) : this()
 	{
 		ID = id;
-
+		
 		MainGrid.Background = new SolidColorBrush(App.Instance.Config.Tiles[ID].IsOverriden
 			? App.Instance.Config.Tiles[ID].Color
 			: App.Instance.Config.GlobalColor);
@@ -58,6 +59,20 @@ public partial class TileWindow : Window
 		this.Position = new PixelPoint((int)location.X, (int)location.Y);
 
 		this.TileName.Text = App.Instance.Config.Tiles[ID].Name;
+
+		_isHidden = App.Instance.Config.Tiles[ID].Hidden;
+		if (_isHidden)
+		{
+			HideBtn.Content = Icons.ChevronDown;
+			EntryContent.IsVisible = false;
+			this.Height = 28;
+		}
+		else
+		{
+			HideBtn.Content = Icons.ChevronUp;
+			EntryContent.IsVisible = true;
+			//this.Height = size.Y;
+		}
 	}
 
 	public Color EditBarColor() => Color.Parse(App.Instance.Config.Tiles[ID].IsOverriden

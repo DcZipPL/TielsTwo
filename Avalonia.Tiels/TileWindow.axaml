@@ -6,7 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.Tiels.TileWindow"
         TransparencyLevelHint="Transparent"
-        Title="TileWindow" Opened="OnLoad" Background="{x:Null}" ShowInTaskbar="False"
+        Title="TileWindow" Opened="OnLoad" Background="{x:Null}" ShowInTaskbar="False" MinHeight="20" MinWidth="100"
         SystemDecorations="None">
     <Window.Styles>
         <Style Selector="TextBlock.Dark">
@@ -51,7 +51,7 @@
                     <ColumnDefinition Width="24"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" x:Name="HideBtn" Classes="EditBar Arrow" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚝</Button>
+                <Button Grid.Column="0" x:Name="HideBtn" Classes="EditBar Arrow" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚗</Button>
                 <Button Grid.Column="1" x:Name="OpenDirBtn" Classes="EditBar" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚞</Button>
                 <Button Grid.Column="2" x:Name="RotateBtn" Classes="EditBar" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚟</Button>
                 <Button Grid.Column="3" x:Name="RenameBtn" Click="ToggleEditMode" Classes="EditBar" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚠</Button>

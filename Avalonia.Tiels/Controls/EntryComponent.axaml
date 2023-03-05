@@ -5,12 +5,14 @@
              xmlns:controls="clr-namespace:Avalonia.Tiels.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia.Tiels.Controls.EntryComponent">
-    <Grid DataContext="{Binding RelativeSource={RelativeSource Self}}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/> <!-- Preview (Thumbnail) -->
-            <RowDefinition Height="18"/> <!-- Name of entry -->
-        </Grid.RowDefinitions>
-        <Image Grid.Row="0" Source="{Binding Preview, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>
-        <TextBlock Grid.Row="1" TextAlignment="Center" Text="{Binding EntryName, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>
-    </Grid>
+	<Button DataContext="{Binding RelativeSource={RelativeSource Self}}" HorizontalAlignment="Stretch" Background="Transparent" Click="EntryClicked">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/> <!-- Preview (Thumbnail) -->
+				<RowDefinition Height="18"/> <!-- Name of entry -->
+			</Grid.RowDefinitions>
+			<Image Grid.Row="0" Width="48" Height="48" HorizontalAlignment="Center" Source="{Binding Preview, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>
+			<TextBlock Grid.Row="1" VerticalAlignment="Bottom" TextAlignment="Center" Text="{Binding EntryName, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>
+		</Grid>
+	</Button>
 </UserControl>

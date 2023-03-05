@@ -15,7 +15,7 @@ namespace Avalonia.Tiels;
 
 public partial class TileWindow : Window
 {
-	public const float CELL_WIDTH = 80;
+	public const float CELL_WIDTH = 120;
 	public const float CELL_HEIGHT = 80;
 	
 	public record TileEntry(string Path, IImage Preview);
@@ -93,7 +93,6 @@ public partial class TileWindow : Window
 
 	public void ReorderEntries()
 	{
-		Debug.WriteLine("CALLED");
 		EntryContent.Children.Clear();
 		// TODO: Add ordering modes
 
@@ -103,6 +102,7 @@ public partial class TileWindow : Window
 		{
 			var entry = new EntryComponent
 			{
+				Path = e.Value.Path,
 				EntryName = e.Key,
 				Preview = e.Value.Preview
 			};

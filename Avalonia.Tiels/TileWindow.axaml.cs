@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Numerics;
 using System.Threading;
@@ -17,6 +19,12 @@ namespace Avalonia.Tiels;
 
 public partial class TileWindow : Window
 {
+	public const float CELL_WIDTH = 80;
+	public const float CELL_HEIGHT = 80;
+	
+	public record TileEntry(string Path, Image Preview);
+	public List<TileEntry> entries = new();
+
 	private bool _editMode = false;
 	private bool _isHidden = false;
 	public Guid ID { get; }
@@ -68,7 +76,7 @@ public partial class TileWindow : Window
 		
 		UpdateWindowHiddenState();
 	}
-
+	
 	private void UpdateWindowHiddenState()
 	{
 		var size = App.Instance.Config.Tiles[ID].Size;
@@ -85,6 +93,40 @@ public partial class TileWindow : Window
 			EntryContent.IsVisible = true;
 			this.Height = size.Y;
 		}
+	}
+
+	public void ReorderEntries()
+	{
+		Debug.WriteLine("CALLED");
+		EntryContent.Children.Clear();
+		// TODO: Add ordering modes
+
+		// Spawn entries
+		for (int i = 0; i < entries.Count; i++)
+		{
+			var entry = new EntryComponent
+			{
+				EntryName = Path.GetFileName(entries[i].Path),
+				Preview = entries[i].Preview
+			};
+			Grid.SetColumn(entry, this.GetCell(i).Item1);
+			Grid.SetRow(entry, this.GetCell(i).Item2);
+			this.EntryContent.Children.Add(entry);
+			
+			EntryContent.ColumnDefinitions.Add(new ColumnDefinition(CELL_WIDTH, GridUnitType.Pixel));
+			
+			if (EntryContent.Children.Count >= GetCellAmount().Item1)
+				EntryContent.RowDefinitions.Add(new RowDefinition(TileWindow.CELL_HEIGHT, GridUnitType.Pixel));
+		}
+	}
+
+	public (int, int) GetCellAmount() =>
+		((int)Math.Floor(this.Width / CELL_WIDTH), (int)Math.Floor(this.Height / CELL_HEIGHT));
+
+	public (int, int) GetCell(int index)
+	{
+		var cells = GetCellAmount();
+		return (index % cells.Item1, (int)Math.Floor((double)index / (double)cells.Item1));
 	}
 
 	public Color EditBarColor() => Color.Parse(App.Instance.Config.Tiles[ID].IsOverriden
@@ -110,6 +152,7 @@ public partial class TileWindow : Window
 		{
 			App.Instance.Config.Tiles[ID].Size = new Vector2((float)this.Width, (float)this.Height);
 			App.Instance.Config.Tiles[ID].Location = new Vector2((float)this.Position.X, (float)this.Position.Y);
+			ReorderEntries();
 		}
 		
 		_editMode = !_editMode;

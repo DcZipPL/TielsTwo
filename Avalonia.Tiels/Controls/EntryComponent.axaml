@@ -8,7 +8,7 @@
     <Grid DataContext="{Binding RelativeSource={RelativeSource Self}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/> <!-- Preview (Thumbnail) -->
-            <RowDefinition Height="10"/> <!-- Name of entry -->
+            <RowDefinition Height="18"/> <!-- Name of entry -->
         </Grid.RowDefinitions>
         <Image Grid.Row="0" Source="{Binding Preview, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>
         <TextBlock Grid.Row="1" TextAlignment="Center" Text="{Binding EntryName, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>

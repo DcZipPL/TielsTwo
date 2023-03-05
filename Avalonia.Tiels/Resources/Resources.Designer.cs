@@ -195,6 +195,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tile handle Height.
+        /// </summary>
+        public static string HandleSize {
+            get {
+                return ResourceManager.GetString("HandleSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hide this window after application startup.
         /// </summary>
         public static string HideAtStartup {

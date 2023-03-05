@@ -32,7 +32,9 @@ public partial class TileWindow : Window
 	public TileWindow(Guid id) : this()
 	{
 		ID = id;
-		
+
+		HandleSizeDefinition.RowDefinitions[1].Height = new GridLength(App.Instance.Config.HandleHeight);
+
 		MainGrid.Background = new SolidColorBrush(App.Instance.Config.Tiles[ID].IsOverriden
 			? App.Instance.Config.Tiles[ID].Color
 			: App.Instance.Config.GlobalColor);
@@ -52,26 +54,32 @@ public partial class TileWindow : Window
 			? App.Instance.Config.Tiles[ID].TransparencyLevel
 			: App.Instance.Config.GlobalTransparencyLevel;
 
-		var size = App.Instance.Config.Tiles[ID].Size;
-		this.Width = size.X; this.Height = size.Y;
-		
 		var location = App.Instance.Config.Tiles[ID].Location;
 		this.Position = new PixelPoint((int)location.X, (int)location.Y);
 
 		this.TileName.Text = App.Instance.Config.Tiles[ID].Name;
 
 		_isHidden = App.Instance.Config.Tiles[ID].Hidden;
+
+		UpdateWindowHiddenState();
+	}
+
+	public void UpdateWindowHiddenState()
+	{
+		var size = App.Instance.Config.Tiles[ID].Size;
+		this.Width = size.X; this.Height = size.Y;
+		
 		if (_isHidden)
 		{
 			HideBtn.Content = Icons.ChevronDown;
 			EntryContent.IsVisible = false;
-			this.Height = 28;
+			this.Height = App.Instance.Config.HandleHeight;
 		}
 		else
 		{
 			HideBtn.Content = Icons.ChevronUp;
 			EntryContent.IsVisible = true;
-			//this.Height = size.Y;
+			this.Height = size.Y;
 		}
 	}
 
@@ -142,6 +150,12 @@ public partial class TileWindow : Window
 		_editMode = !_editMode;
 		WindowHints.IsVisible = _editMode;
 		RenameBtn.Background = new SolidColorBrush(Color.Parse(_editMode ? "#25000000" : "#00000000"));
+	}
+	
+	private void ToggleHideMode(object? sender, RoutedEventArgs e)
+	{
+		_isHidden = !_isHidden;
+		UpdateWindowHiddenState();
 	}
 
 	private void MoveDown(object? sender, PointerPressedEventArgs e) => _isMoving = true;

@@ -195,6 +195,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wysokość uchwytu kafelka.
+        /// </summary>
+        public static string HandleSize {
+            get {
+                return ResourceManager.GetString("HandleSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ukryj okno ustawień po uruchomieniu.
         /// </summary>
         public static string HideAtStartup {

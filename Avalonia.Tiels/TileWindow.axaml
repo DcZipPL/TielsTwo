@@ -37,7 +37,7 @@
     
     <Grid x:Name="MainGrid">
         <!-- Content -->
-        <Grid>
+        <Grid x:Name="HandleSizeDefinition">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="28"></RowDefinition>
@@ -51,10 +51,10 @@
                     <ColumnDefinition Width="24"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" x:Name="HideBtn" Classes="EditBar Arrow" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚗</Button>
-                <Button Grid.Column="1" x:Name="OpenDirBtn" Classes="EditBar" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚞</Button>
-                <Button Grid.Column="2" x:Name="RotateBtn" Classes="EditBar" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚟</Button>
-                <Button Grid.Column="3" x:Name="RenameBtn" Click="ToggleEditMode" Classes="EditBar" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚠</Button>
+                <Button Grid.Column="0" x:Name="HideBtn" Click="ToggleHideMode" Classes="EditBar Arrow" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" VerticalContentAlignment="Center">󿚗</Button>
+                <Button Grid.Column="1" x:Name="OpenDirBtn" Classes="EditBar" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" VerticalContentAlignment="Center">󿚞</Button>
+                <Button Grid.Column="2" x:Name="RotateBtn" Classes="EditBar" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" VerticalContentAlignment="Center">󿚟</Button>
+                <Button Grid.Column="3" x:Name="RenameBtn" Click="ToggleEditMode" Classes="EditBar" VerticalContentAlignment="Center" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚠</Button>
             </Grid>
             <TextBlock Grid.Row="1" x:Name="TileName" Classes="EditBar" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">{Name}</TextBlock>
         </Grid>

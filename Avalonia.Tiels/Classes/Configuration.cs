@@ -206,6 +206,17 @@ public class Configuration
     #endregion
 
     #region Request Settings
+    
+    public float HandleHeight
+    {
+        get { return ReqModel().Settings!.HandleHeight; }
+        set
+        {
+            var model = ReqModel();
+            model.Settings!.HandleHeight = value;
+            SeedModel(model);
+        }
+    }
 
     public float Snapping
     {
@@ -626,6 +637,7 @@ public class Configuration
             public bool Experimental { get; set; }
             public bool HideTileButtons { get; set; }
             public float Snapping { get; set; } // Snap to grid
+            public float HandleHeight { get; set; }
             
             TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
         }

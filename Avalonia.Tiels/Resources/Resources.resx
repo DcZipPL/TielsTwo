@@ -168,4 +168,7 @@
     <data name="MoveWindow" xml:space="preserve">
         <value>Press and hold here to move Tile.</value>
     </data>
+    <data name="HandleSize" xml:space="preserve">
+        <value>Tile handle Height</value>
+    </data>
 </root>

@@ -1,13 +1,14 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
 using Image = System.Drawing.Image;
 
 namespace Avalonia.Tiels.Controls;
 
 public partial class EntryComponent : UserControl
 {
-	public Avalonia.Controls.Image Preview { get; set; }
+	public IImage Preview { get; set; }
 	public string EntryName { get; set; }
 	
 	public EntryComponent()

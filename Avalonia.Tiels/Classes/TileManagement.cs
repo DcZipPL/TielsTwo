@@ -52,38 +52,10 @@ public class TileManagement
 			// TODO: Get thumbnails from os
 			var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
 			var asset = assets.Open(new Uri("avares://Avalonia.Tiels/Assets/unknown.png"));
-
-			Dispatcher.UIThread.Post(() =>
-			{
-				var thumbnail = new Image();//Util.SetSvgImage("/Assets/Icons/out/alert-octagon.svg", new Image());
-				thumbnail.Source = new Bitmap(asset);
-				window.entries.Add(new TileWindow.TileEntry(systemEntry, thumbnail));
-			});
-
-			// TODO: Better threading if possible
-			/*Dispatcher.UIThread.Post(() =>
-			{
-				if (i >= window.GetCellAmount().Item1)
-					window.EntryContent.RowDefinitions.Add(new RowDefinition(TileWindow.CELL_HEIGHT, GridUnitType.Pixel));
-				
-				// TODO: Get thumbnails from os
-				var thumbnail = new Image();//Util.SetSvgImage("/Assets/Icons/out/alert-octagon.svg", new Image());
-				var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-				var asset = assets.Open(new Uri("avares://Avalonia.Tiels/Assets/unknown.png"));
-				thumbnail.Source = new Bitmap(asset);
-				
-				var entry = new EntryComponent
-				{
-					EntryName = Path.GetFileName(systemEntry),
-					Preview = thumbnail
-				};
-				Grid.SetColumn(entry, window.GetCell(i).Item1);
-				Grid.SetRow(entry, window.GetCell(i).Item2);
-				window.EntryContent.Children.Add(entry);
-				i++;
-			});*/
+			window.entries.Add(Path.GetFileName(systemEntry), new TileWindow.TileEntry(systemEntry, new Bitmap(asset)));
 		}
 		
+		// TODO: Better threading if possible
 		Dispatcher.UIThread.Post(() =>
 		{
 			window.ReorderEntries();

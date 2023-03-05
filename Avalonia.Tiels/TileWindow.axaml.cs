@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Numerics;
 using System.Threading;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Themes.Fluent;
-using Avalonia.Threading;
 using Avalonia.Tiels.Classes;
 using Avalonia.Tiels.Controls;
 
@@ -22,8 +18,8 @@ public partial class TileWindow : Window
 	public const float CELL_WIDTH = 80;
 	public const float CELL_HEIGHT = 80;
 	
-	public record TileEntry(string Path, Image Preview);
-	public List<TileEntry> entries = new();
+	public record TileEntry(string Path, IImage Preview);
+	public Dictionary<string, TileEntry> entries = new();
 
 	private bool _editMode = false;
 	private bool _isHidden = false;
@@ -102,12 +98,13 @@ public partial class TileWindow : Window
 		// TODO: Add ordering modes
 
 		// Spawn entries
-		for (int i = 0; i < entries.Count; i++)
+		int i = 0;
+		foreach (var e in entries)
 		{
 			var entry = new EntryComponent
 			{
-				EntryName = Path.GetFileName(entries[i].Path),
-				Preview = entries[i].Preview
+				EntryName = e.Key,
+				Preview = e.Value.Preview
 			};
 			Grid.SetColumn(entry, this.GetCell(i).Item1);
 			Grid.SetRow(entry, this.GetCell(i).Item2);
@@ -117,6 +114,8 @@ public partial class TileWindow : Window
 			
 			if (EntryContent.Children.Count >= GetCellAmount().Item1)
 				EntryContent.RowDefinitions.Add(new RowDefinition(TileWindow.CELL_HEIGHT, GridUnitType.Pixel));
+			
+			i++;
 		}
 	}
 

@@ -33,7 +33,9 @@ public partial class TileWindow : Window
 	{
 		ID = id;
 
-		HandleSizeDefinition.RowDefinitions[1].Height = new GridLength(App.Instance.Config.HandleHeight);
+		float handleHeight = App.Instance.Config.HandleHeight;
+		HandleSizeDefinition.RowDefinitions[1].Height = new GridLength(handleHeight);
+		MoveArea.Margin = new Thickness(0, 0, 0, handleHeight);
 
 		MainGrid.Background = new SolidColorBrush(App.Instance.Config.Tiles[ID].IsOverriden
 			? App.Instance.Config.Tiles[ID].Color
@@ -61,14 +63,16 @@ public partial class TileWindow : Window
 
 		_isHidden = App.Instance.Config.Tiles[ID].Hidden;
 
+		var size = App.Instance.Config.Tiles[ID].Size;
+		this.Width = size.X;
+		
 		UpdateWindowHiddenState();
 	}
 
-	public void UpdateWindowHiddenState()
+	private void UpdateWindowHiddenState()
 	{
 		var size = App.Instance.Config.Tiles[ID].Size;
-		this.Width = size.X; this.Height = size.Y;
-		
+
 		if (_isHidden)
 		{
 			HideBtn.Content = Icons.ChevronDown;
@@ -93,10 +97,33 @@ public partial class TileWindow : Window
 
 	private void OnLoad(object? sender, EventArgs e)
 	{
+		// Handle Tile content
 		var loadContentThread = new Thread(() => TileManagement.LoadTileContent(this, App.Instance.Config));
 		loadContentThread.Start();
 	}
-
+	
+	// Buttons
+	private void ToggleEditMode(object? sender, RoutedEventArgs e)
+	{
+		// Save changes
+		if (_editMode)
+		{
+			App.Instance.Config.Tiles[ID].Size = new Vector2((float)this.Width, (float)this.Height);
+			App.Instance.Config.Tiles[ID].Location = new Vector2((float)this.Position.X, (float)this.Position.Y);
+		}
+		
+		_editMode = !_editMode;
+		WindowHints.IsVisible = _editMode;
+		RenameBtn.Background = new SolidColorBrush(Color.Parse(_editMode ? "#25000000" : "#00000000"));
+	}
+	
+	private void ToggleHideMode(object? sender, RoutedEventArgs e)
+	{
+		_isHidden = !_isHidden;
+		App.Instance.Config.Tiles[ID].Hidden = _isHidden;
+		UpdateWindowHiddenState();
+	}
+	
 	// Window hints (Resize, move, etc.)
 	#region Window Resize
 
@@ -145,19 +172,7 @@ public partial class TileWindow : Window
 
 	#endregion
 
-	private void ToggleEditMode(object? sender, RoutedEventArgs e)
-	{
-		_editMode = !_editMode;
-		WindowHints.IsVisible = _editMode;
-		RenameBtn.Background = new SolidColorBrush(Color.Parse(_editMode ? "#25000000" : "#00000000"));
-	}
-	
-	private void ToggleHideMode(object? sender, RoutedEventArgs e)
-	{
-		_isHidden = !_isHidden;
-		UpdateWindowHiddenState();
-	}
-
+	#region Window Movement
 	private void MoveDown(object? sender, PointerPressedEventArgs e) => _isMoving = true;
 
 	private void MoveUp(object? sender, PointerReleasedEventArgs e)
@@ -179,4 +194,5 @@ public partial class TileWindow : Window
 			this.Position.Y + (int)(MathF.Ceiling(((float)e.GetPosition(this).Y - (int)_originMousePosition.Value.Y) / snapping) * snapping)
 		);
 	}
+	#endregion
 }

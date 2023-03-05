@@ -10,7 +10,7 @@
             <RowDefinition Height="*"/> <!-- Preview (Thumbnail) -->
             <RowDefinition Height="10"/> <!-- Name of entry -->
         </Grid.RowDefinitions>
-        <Image Source="{Binding Preview, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>
-        <TextBlock Grid.Row="1" Text="{Binding EntryName, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>
+        <Image Grid.Row="0" Source="{Binding Preview, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>
+        <TextBlock Grid.Row="1" TextAlignment="Center" Text="{Binding EntryName, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>
     </Grid>
 </UserControl>

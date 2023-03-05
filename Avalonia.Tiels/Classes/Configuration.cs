@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Numerics;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media;
@@ -453,24 +454,32 @@ public class Configuration
             }
         }
         
-        public Models.Vec2 Location
+        public Vector2 Location
         {
-            get { return (Models.Vec2)ReqModel().Location; }
+            get
+            {
+                var size = ReqModel().Location ?? new Models.Vec2();
+                return new Vector2((float)size.X, (float)size.Y);
+            }
             set
             {
                 var model = ReqModel();
-                model.Location = value;
+                model.Location = new Models.Vec2 {X = value.X, Y = value.Y};
                 SeedModel(model);
             }
         }
         
-        public Models.Vec2 Size
+        public Vector2 Size
         {
-            get { return (Models.Vec2)ReqModel().Size; }
+            get
+            {
+                var size = ReqModel().Size ?? new Models.Vec2();
+                return new Vector2((float)size.X, (float)size.Y);
+            }
             set
             {
                 var model = ReqModel();
-                model.Size = value;
+                model.Size = new Models.Vec2 {X = value.X, Y = value.Y};
                 SeedModel(model);
             }
         }

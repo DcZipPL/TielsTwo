@@ -6,7 +6,7 @@ special_effects = true
 experimental = false
 hide_tile_buttons = true
 snapping = 5
-handle_height = 38.0
+handle_height = 28.0
 
 [appearance]
 override = false # Override global values

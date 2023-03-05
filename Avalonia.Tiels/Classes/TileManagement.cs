@@ -2,6 +2,8 @@
 using System.IO;
 using Avalonia.Controls;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Avalonia.Themes.Fluent;
 using Avalonia.Threading;
 using Avalonia.Tiels.Controls;
@@ -48,7 +50,11 @@ public class TileManagement
 			Dispatcher.UIThread.Post(() =>
 			{
 				// TODO: Get thumbnails from os
-				var thumbnail = Util.SetSvgImage("/Assets/Icons/out/alert-octagon.svg", new Image());
+				var thumbnail = new Image();//Util.SetSvgImage("/Assets/Icons/out/alert-octagon.svg", new Image());
+				var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
+				var asset = assets.Open(new Uri("avares://Avalonia.Tiels/Assets/unknown.png"));
+				thumbnail.Source = new Bitmap(asset);
+				
 				var entry = new EntryComponent
 				{
 					EntryName = Path.GetFileName(systemEntry),

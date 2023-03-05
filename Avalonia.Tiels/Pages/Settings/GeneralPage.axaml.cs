@@ -33,6 +33,13 @@ public partial class GeneralPage : UserPage
 			else
 				ChangeSettingsStatus(App.I18n.GetString("InvalidInput")!, true);
 		
+		// Apply handle height settings
+		if (App.Instance.Config.HandleHeight.ToString() != HandleSizeBox.Text)
+			if (float.TryParse(HandleSizeBox.Text, out float snapping))
+				App.Instance.Config.HandleHeight = snapping;
+			else
+				ChangeSettingsStatus(App.I18n.GetString("InvalidInput")!, true);
+		
 		// Check if tiles path didn't changed. If changed apply new location if valid to config and give status.
 		var newPath = string.IsNullOrEmpty(TilesDirectoryBox.Text)
 			? Configuration.GetDefaultTilesDirectory()
@@ -86,6 +93,7 @@ public partial class GeneralPage : UserPage
 	private void LoadSettingsValues()
 	{
 		SnappingBox.Text = App.Instance.Config.Snapping.ToString();
+		HandleSizeBox.Text = App.Instance.Config.HandleHeight.ToString();
 		
 		TilesDirectoryBox.Text = App.Instance.Config.TilesPath;
 		TilesDirectoryBox.Watermark = Configuration.GetDefaultTilesDirectory();

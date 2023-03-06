@@ -95,7 +95,12 @@ public partial class TileWindow : Window
 	public void ReorderEntries()
 	{
 		EntryContent.Children.Clear();
+		EntryContent.ColumnDefinitions.Clear();
+		EntryContent.RowDefinitions.Clear();
 		// TODO: Add ordering modes
+
+		for (int j = 0; j < GetCellAmount().Item1; j++)
+			EntryContent.ColumnDefinitions.Add(new ColumnDefinition(CELL_WIDTH, GridUnitType.Pixel));
 
 		// Spawn entries
 		int i = 0;
@@ -113,10 +118,8 @@ public partial class TileWindow : Window
 			Grid.SetColumn(entry, this.GetCell(i).Item1);
 			Grid.SetRow(entry, this.GetCell(i).Item2);
 			this.EntryContent.Children.Add(entry);
-			
-			EntryContent.ColumnDefinitions.Add(new ColumnDefinition(CELL_WIDTH, GridUnitType.Pixel));
-			
-			if (EntryContent.Children.Count >= GetCellAmount().Item1)
+
+			if ((EntryContent.Children.Count - 1) % GetCellAmount().Item1 == 0)
 				EntryContent.RowDefinitions.Add(new RowDefinition(TileWindow.CELL_HEIGHT, GridUnitType.Pixel));
 			
 			i++;

@@ -49,6 +49,7 @@ public partial class TileWindow : Window
 			    ? App.Instance.Config.Tiles[ID].Theme == FluentThemeMode.Dark
 			    : App.Instance.Config.GlobalTheme == FluentThemeMode.Dark)
 		{
+			MoveAreaText.Classes.Add("Dark");
 			TileName.Classes.Add("Dark");
 			HideBtn.Classes.Add("Dark");
 			OpenDirBtn.Classes.Add("Dark");
@@ -104,7 +105,10 @@ public partial class TileWindow : Window
 			{
 				Path = e.Value.Path,
 				EntryName = e.Key,
-				Preview = e.Value.Preview
+				Preview = e.Value.Preview,
+				Theme = App.Instance.Config.Tiles[ID].IsOverriden
+					? App.Instance.Config.Tiles[ID].Theme
+					: App.Instance.Config.GlobalTheme
 			};
 			Grid.SetColumn(entry, this.GetCell(i).Item1);
 			Grid.SetRow(entry, this.GetCell(i).Item2);

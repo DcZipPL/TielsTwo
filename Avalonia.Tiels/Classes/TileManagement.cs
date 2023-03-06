@@ -51,7 +51,7 @@ public class TileManagement
 		{
 			// TODO: Get thumbnails from os
 			var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-			var asset = assets.Open(new Uri("avares://Avalonia.Tiels/Assets/unknown.png"));
+			var asset = assets.Open(new Uri("avares://Avalonia.Tiels/Assets/shell32_4.ico"));
 			window.entries.Add(Path.GetFileName(systemEntry), new TileWindow.TileEntry(systemEntry, new Bitmap(asset)));
 		}
 		

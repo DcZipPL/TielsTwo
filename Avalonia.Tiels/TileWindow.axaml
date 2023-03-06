@@ -43,8 +43,10 @@
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="28"></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid x:Name="EntryContent">
-            </Grid>
+            <ScrollViewer>
+                <Grid x:Name="EntryContent">
+                </Grid>
+            </ScrollViewer>
             <Grid Grid.Row="1" x:Name="EditBar">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="24"></ColumnDefinition>
@@ -81,7 +83,7 @@
             <Grid Grid.Row="0" Grid.Column="1" Background="Transparent" x:Name="ResizeAreaV" Cursor="SizeNorthSouth" PointerPressed="ResizeDown" PointerReleased="ResizeUp" PointerMoved="ResizeMove"/>
             <Grid Grid.Row="2" Grid.Column="1" Background="Transparent" x:Name="ResizeAreaY" Cursor="SizeNorthSouth" PointerPressed="ResizeDown" PointerReleased="ResizeUp" PointerMoved="ResizeMove"/>
             <Grid Grid.Row="1" Grid.Column="1" Background="#25000000" x:Name="MoveArea" Margin="0,0,0,28" Cursor="SizeAll" PointerPressed="MoveDown" PointerReleased="MoveUp" PointerMoved="Move">
-                <TextBlock Text="{x:Static p:Resources.MoveWindow}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="MoveAreaText" Text="{x:Static p:Resources.MoveWindow}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
         </Grid>
     </Grid>

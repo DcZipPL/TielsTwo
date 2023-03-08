@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia.Tiels.Pages.Settings.UpdatesPage">
-    <StackPanel>
+    <StackPanel Margin="10">
         <TextBlock>Manual updates only. Download new updates from</TextBlock>
         <TextBlock Foreground="#0000ff" TextDecorations="Underline">
             https://github.com/DcZipPL/TielsTwo

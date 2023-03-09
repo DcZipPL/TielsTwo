@@ -30,7 +30,7 @@ Linux / Windows:
 # project isn't finished in most part. I don't want to change it every time when I add more dependencies. Currently use python script instead.
 ```
 ## Q&A
-Q: What with Tiels repository
+Q: What about old Tiels repository?
 - A: Tiels I repository will be archived when this project will be stable.
 
 Q: Will I keep my files after update?

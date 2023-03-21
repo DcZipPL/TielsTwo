@@ -1,18 +1,37 @@
 import argparse
 import json
 import os
+import platform
 import re
 import shutil
 import sys
 import urllib.request
 import urllib.error
 from typing import final
+from subprocess import Popen
 
 ICONS_URL: final(str) = "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/"
 ICONS_PATH: final(str) = "./assets/icons-remote/"
 ICONS_LOCAL_PATH: final(str) = "./assets/icons/"
 
-verbose = False
+WRAPPER: final(str) = rf"""
+@echo off
+echo Configuring the system path to add FontForge...
+set FF=%~dp0
+set "PYTHONHOME=%FF%"
+
+if not defined FF_PATH_ADDED (
+set "PATH=%FF%;%FF%\bin;%PATH:"=%"
+set FF_PATH_ADDED=TRUE
+)
+
+for /F "tokens=* USEBACKQ" %%f IN (`dir /b "%FF%lib\python*"`) do (
+set "PYTHONPATH=%FF%lib\%%f"
+)
+
+cd {os.path.dirname(os.path.realpath(__file__))}
+ffpython {os.path.realpath(__file__)} fontforge
+"""
 
 
 def __to_camel_case(text: str):
@@ -77,7 +96,7 @@ def prepare_icons():
 		add_icons_to_cs(cs_const_lines)
 
 
-def generate_icons():
+def generate_icons(fontforge_path: str):
 	prepare_icons()
 
 	# Make icon font
@@ -85,8 +104,37 @@ def generate_icons():
 	try:
 		from assets import svg2font
 		svg2font.main("iconfont_metadata.json")
-	except:
-		pass
+	except ModuleNotFoundError as mex:
+		print(mex)
+		print("Fontforge python extension not found!")
+		try:
+			if platform.system() == "Windows":
+				if fontforge_path == "":
+					fontforge_path = input("If you don't have FontForge installed, please download it from "
+										   "https://fontforge.org/en-US/downloads/windows/ and install it.\n"
+										   "! If you have it installed then please enter the path to FontForge directory.\n"
+										   "! You can also set the path using --fontforge-path argument.\n"
+										   "! Path: ")
+				if not os.path.exists(f"{fontforge_path}/fontforge-python.bat"):
+					print("Creating workaround for fontforge python extension...")
+					with open(f"{fontforge_path}/fontforge-python.bat", "w", encoding='utf-8') as fontforge_wrapper_file:
+						fontforge_wrapper_file.write(WRAPPER)
+				else:
+					p = Popen("fontforge-python.bat", cwd=fontforge_path)
+					stdout, stderr = p.communicate()
+
+			elif platform.system() == "Linux":
+				print("Please install fontforge python extension using `sudo apt install fontforge python-fontforge`")
+				exit(1)
+			elif platform.system() == "Darwin":  # macOS
+				print("Please install fontforge python extension using `brew install fontforge`")
+				exit(1)
+			else:
+				print("Unknown OS! Install fontforge python extension manually.")
+				exit(1)
+		except OSError as ex:
+			print(ex)
+			exit(ex.errno)
 
 
 def autogen_icons_to_files(char_index: int, icon_name: str, cs_lines_to_expand: str):
@@ -127,17 +175,15 @@ if __name__ == "__main__":
 		description='Build script for Tiels written in Python')
 
 	parser.add_argument('action', choices=['debug', 'release', 'icons', 'fontforge'])  # positional argument
-	parser.add_argument('-v', '--verbose',
-						action='store_true')  # on/off flag
+	parser.add_argument('--fontforge-path', default="")  # optional argumentf flag
 
 	args = parser.parse_args()
-	verbose = args.verbose
 
 	is_installed("cargo")
 	is_installed("dotnet")
 
 	if args.action == 'icons':
-		generate_icons()
+		generate_icons(args.fontforge_path)
 	elif args.action == 'fontforge':
 		from assets import svg2font
 		svg2font.main("assets/iconfont_metadata.json")

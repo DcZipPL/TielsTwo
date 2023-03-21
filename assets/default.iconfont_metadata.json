@@ -5,7 +5,7 @@
     "em": 1000,
     "family": "lucidelite"
   },
-  "input": "icons",
+  "input": "icons-remote",
   "output": [
     "../Avalonia.Tiels/Assets/lucidelite.ttf"
   ],

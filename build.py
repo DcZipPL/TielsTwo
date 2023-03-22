@@ -29,8 +29,8 @@ for /F "tokens=* USEBACKQ" %%f IN (`dir /b "%FF%lib\python*"`) do (
 set "PYTHONPATH=%FF%lib\%%f"
 )
 
-cd {os.path.dirname(os.path.realpath(__file__))}
-ffpython {os.path.realpath(__file__)} fontforge
+cd "{os.path.dirname(os.path.realpath(__file__))}"
+ffpython "{os.path.realpath(__file__)}" fontforge
 """
 
 
@@ -119,9 +119,6 @@ def generate_icons(fontforge_path: str):
 					print("Creating workaround for fontforge python extension...")
 					with open(f"{fontforge_path}/fontforge-python.bat", "w", encoding='utf-8') as fontforge_wrapper_file:
 						fontforge_wrapper_file.write(WRAPPER)
-				else:
-					p = Popen("fontforge-python.bat", cwd=fontforge_path)
-					stdout, stderr = p.communicate()
 
 			elif platform.system() == "Linux":
 				print("Please install fontforge python extension using `sudo apt install fontforge python-fontforge`")
@@ -132,6 +129,9 @@ def generate_icons(fontforge_path: str):
 			else:
 				print("Unknown OS! Install fontforge python extension manually.")
 				exit(1)
+
+			p = Popen(f"{fontforge_path}/fontforge-python.bat")
+			stdout, stderr = p.communicate()
 		except OSError as ex:
 			print(ex)
 			exit(ex.errno)

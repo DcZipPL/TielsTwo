@@ -174,7 +174,7 @@ if __name__ == "__main__":
 		prog='Tiels build script',
 		description='Build script for Tiels written in Python')
 
-	parser.add_argument('action', choices=['debug', 'release', 'icons', 'fontforge'])  # positional argument
+	parser.add_argument('action', choices=['icons', 'fontforge'])  # positional argument
 	parser.add_argument('--fontforge-path', default="")  # optional argumentf flag
 
 	args = parser.parse_args()

@@ -5,8 +5,8 @@
              xmlns:controls="clr-namespace:Avalonia.Tiels.Controls"
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="150"
              x:Class="Avalonia.Tiels.Controls.SidebarCategory">
-    <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource BaseBorderColor}">
-        <TextBlock Margin="0,5,0,0" Foreground="{StaticResource BaseTitleColor}" TextAlignment="Center" 
+    <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource BaseCategoryBorderColor}">
+        <TextBlock Margin="0,5,0,5" Foreground="{StaticResource BaseCategoryColor}" TextAlignment="Center" 
                    Text="{Binding Title, RelativeSource={RelativeSource AncestorType={x:Type controls:SidebarCategory}}}"/>
     </Border>
 </UserControl>

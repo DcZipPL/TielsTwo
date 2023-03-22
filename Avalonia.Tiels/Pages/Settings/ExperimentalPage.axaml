@@ -3,10 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Avalonia.Tiels.Pages.Settings.UpdatesPage">
-    <StackPanel Margin="10">
-        <TextBlock>Manual updates only. Download new updates from</TextBlock>
-        <Button Classes="link" Click="OpenDownloadPage">https://github.com/DcZipPL/TielsTwo</Button>
-    </StackPanel>
-    
+             x:Class="Avalonia.Tiels.Pages.Settings.ExperimentalPage">
+	<Grid>
+		<StackPanel>
+			<TextBlock>Experimental Features</TextBlock>
+			<TextBlock>These features are not yet fully tested or compatible with all platforms.</TextBlock>
+		</StackPanel>
+	</Grid>
 </UserControl>

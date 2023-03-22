@@ -38,6 +38,7 @@ namespace Avalonia.Tiels
 				SB_ST.WithPage(ThumbnailSettingsPage),
 				SB_SU.WithPage(UpdatesSettingsPage),
 				SB_SS.WithPage(SnappingSettingsPage),
+				SB_SE.WithPage(ExperimentalSettingsPage),
 				SB_MT.WithPage(null),
 				SB_MFI.WithPage(null),
 				SB_MN.WithPage(null)

@@ -8,7 +8,7 @@
         xmlns:pagesSettings="clr-namespace:Avalonia.Tiels.Pages.Settings"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.Tiels.SettingsWindow"
-        Width="1000" Height="550"
+        Width="1000" Height="550" TransparencyLevelHint="AcrylicBlur" Background="#AEFFFFFF"
         Title="Tiels" Icon="/Assets/tiels_color.ico">
         <Grid>
                 <Grid.ColumnDefinitions>
@@ -42,13 +42,14 @@
                 <Border Grid.Column="1"
                         BorderThickness="0,0.6,0.6,0.6" BorderBrush="{StaticResource BaseBorderColor}"
                         IsVisible="True">
-                        <Border.Background><SolidColorBrush Color="#0A000000"></SolidColorBrush></Border.Background>
+                        <Border.Background><SolidColorBrush Color="#FFF5F5F5"></SolidColorBrush></Border.Background>
                         <Grid x:Name="Frame">
                                 <pagesSettings:GeneralPage x:Name="GeneralSettingsPage" IsVisible="False"/>
                                 <pagesSettings:AppearancePage x:Name="AppearanceSettingsPage" IsVisible="False"/>
                                 <pagesSettings:SnappingPage x:Name="SnappingSettingsPage" IsVisible="False"/>
                                 <pagesSettings:ThumbnailsPage x:Name="ThumbnailSettingsPage" IsVisible="False"/>
                                 <pagesSettings:UpdatesPage x:Name="UpdatesSettingsPage" IsVisible="False"/>
+                                <pagesSettings:ExperimentalPage x:Name="ExperimentalSettingsPage" IsVisible="False"/>
                                 <pagesCreate:TilePage x:Name="TileCreatePage" IsVisible="False"/>
                                 <pagesCreate:TilePage x:Name="DirectoryPortalPage" IsVisible="False"/>
                                 <pagesCreate:TilePage x:Name="FloatingImagePage" IsVisible="False"/>

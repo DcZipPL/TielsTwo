@@ -32,11 +32,23 @@ Installed tooling:
 
 ### Building
 #### Build script (Requires Python)
-Linux / Windows:
+Linux:
 ```shell
 git clone git@github.com:DcZipPL/TielsTwo.git
-./build.py
-# The python script is easiest way to do it. But on windows... I will find better way!
+./build.py icons
+cd ./Tiels
+cargo build --release
+cd ../Avalonia.Tiels
+dotnet build
+```
+Windows:
+```shell
+git clone git@github.com:DcZipPL/TielsTwo.git
+./build.py icons --fontforge-path PATH_TO_FONTFORGE
+cd ./Tiels
+cargo build --release
+cd ../Avalonia.Tiels
+dotnet build
 ```
 All compiled binaries should be in `out` directory.
 #### Manual (Python not required)

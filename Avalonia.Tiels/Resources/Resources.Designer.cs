@@ -186,6 +186,33 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disable minimum height.
+        /// </summary>
+        public static string ExDisableWin32MinimumHeight {
+            get {
+                return ResourceManager.GetString("ExDisableWin32MinimumHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Thumbnails Category.
+        /// </summary>
+        public static string ExEnableThumbnailsCategory {
+            get {
+                return ResourceManager.GetString("ExEnableThumbnailsCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Win32 Hooks.
+        /// </summary>
+        public static string ExEnableWin32Hooks {
+            get {
+                return ResourceManager.GetString("ExEnableWin32Hooks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Experimental features.
         /// </summary>
         public static string ExperimentalFeatures {
@@ -195,7 +222,7 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tile handle Height.
+        ///   Looks up a localized string similar to Tile handle height.
         /// </summary>
         public static string HandleSize {
             get {

@@ -42,7 +42,7 @@
                 <Border Grid.Column="1"
                         BorderThickness="0,0.6,0.6,0.6" BorderBrush="{StaticResource BaseBorderColor}"
                         IsVisible="True">
-                        <Border.Background><SolidColorBrush Color="#FFF5F5F5"></SolidColorBrush></Border.Background>
+                        <Border.Background><SolidColorBrush Color="#FFF8F8F8"></SolidColorBrush></Border.Background>
                         <Grid x:Name="Frame">
                                 <pagesSettings:GeneralPage x:Name="GeneralSettingsPage" IsVisible="False"/>
                                 <pagesSettings:AppearancePage x:Name="AppearanceSettingsPage" IsVisible="False"/>

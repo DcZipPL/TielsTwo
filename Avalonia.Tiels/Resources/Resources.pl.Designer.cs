@@ -186,6 +186,33 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wyłącz minimalną wysokość.
+        /// </summary>
+        public static string ExDisableWin32MinimumHeight {
+            get {
+                return ResourceManager.GetString("ExDisableWin32MinimumHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Włącz Kategorie Miniaturek.
+        /// </summary>
+        public static string ExEnableThumbnailsCategory {
+            get {
+                return ResourceManager.GetString("ExEnableThumbnailsCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Włącz Uchwyty do Win32.
+        /// </summary>
+        public static string ExEnableWin32Hooks {
+            get {
+                return ResourceManager.GetString("ExEnableWin32Hooks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Funkcje eksperymentalne.
         /// </summary>
         public static string ExperimentalFeatures {

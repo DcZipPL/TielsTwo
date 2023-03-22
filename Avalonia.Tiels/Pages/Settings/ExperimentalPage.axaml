@@ -2,12 +2,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:p="clr-namespace:Avalonia.Tiels.Resources"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia.Tiels.Pages.Settings.ExperimentalPage">
 	<Grid>
-		<StackPanel>
+		<StackPanel Margin="10">
 			<TextBlock>Experimental Features</TextBlock>
 			<TextBlock>These features are not yet fully tested or compatible with all platforms.</TextBlock>
+			<CheckBox x:Name="ExEnableThumbnailsCategoryCheckBox" Content="{x:Static p:Resources.ExEnableThumbnailsCategory}"/>
+			<CheckBox x:Name="ExEnableWin32HooksCheckBox" Content="{x:Static p:Resources.ExEnableWin32Hooks}"/>
+			<CheckBox Margin="28,0,0,0" x:Name="ExDisableWin32MinimumHeightCheckBox" Content="{x:Static p:Resources.ExDisableWin32MinimumHeight}"/>
 		</StackPanel>
 	</Grid>
 </UserControl>

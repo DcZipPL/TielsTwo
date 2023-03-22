@@ -177,4 +177,13 @@
     <data name="SettingsSnapping" xml:space="preserve">
         <value>Marginesy i Przyciąganie</value>
     </data>
+    <data name="ExEnableThumbnailsCategory" xml:space="preserve">
+        <value>Włącz Kategorie Miniaturek</value>
+    </data>
+    <data name="ExEnableWin32Hooks" xml:space="preserve">
+        <value>Włącz Uchwyty do Win32</value>
+    </data>
+    <data name="ExDisableWin32MinimumHeight" xml:space="preserve">
+        <value>Wyłącz minimalną wysokość</value>
+    </data>
 </root>

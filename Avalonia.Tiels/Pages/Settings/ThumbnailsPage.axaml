@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia.Tiels.Pages.Settings.ThumbnailsPage">
-    <StackPanel>
-        <TextBlock>No thumbnails settings</TextBlock>
-    </StackPanel>
+	<Grid>
+		<StackPanel Margin="10">
+			<TextBlock>No thumbnails settings</TextBlock>
+		</StackPanel>
+	</Grid>
     
 </UserControl>

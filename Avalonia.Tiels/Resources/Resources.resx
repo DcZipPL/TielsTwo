@@ -169,12 +169,21 @@
         <value>Press and hold here to move Tile.</value>
     </data>
     <data name="HandleSize" xml:space="preserve">
-        <value>Tile handle Height</value>
+        <value>Tile handle height</value>
     </data>
     <data name="SettingsSnapping" xml:space="preserve">
         <value>Snapping &amp; Margins</value>
     </data>
     <data name="SettingsExperimental" xml:space="preserve">
         <value>Experimental</value>
+    </data>
+    <data name="ExEnableThumbnailsCategory" xml:space="preserve">
+        <value>Enable Thumbnails Category</value>
+    </data>
+    <data name="ExEnableWin32Hooks" xml:space="preserve">
+        <value>Enable Win32 Hooks</value>
+    </data>
+    <data name="ExDisableWin32MinimumHeight" xml:space="preserve">
+        <value>Disable minimum height</value>
     </data>
 </root>

@@ -223,6 +223,6 @@ src/Browser/Avalonia.Browser/wwwroot
 out/
 Tiels/target/
 pyenv/
-build/icons/
-build/iconfont_metadata.json
+assets/icons-remote/
+assets/iconfont_metadata.json
 Avalonia.Tiels/Assets/lucidelite.ttf

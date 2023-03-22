@@ -30,7 +30,7 @@ namespace Avalonia.Tiels
 			_sidebarButtons = new List<SidebarButton>
 			{
 				SB_CT.WithPage(TileCreatePage),
-				SB_CDP.WithPage(DirectoryPortalPage),
+				SB_CDP.WithPage(DirectoryPortalPage.SetPageAsDirectoryPortal()),
 				SB_CFI.WithPage(FloatingImagePage),
 				SB_CN.WithPage(NotesPage),
 				SB_SG.WithPage(GeneralSettingsPage),

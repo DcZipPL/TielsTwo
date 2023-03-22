@@ -23,6 +23,8 @@ public class TileManagement
 	/// <param name="height">Height of Tile.</param>
 	public static void CreateTile(string name, string path, double width, double height, bool overriteTheme, FluentThemeMode? theme, WindowTransparencyLevel? transparencyLevel, Color? color)
 	{
+		if (!Directory.Exists(path))
+			Directory.CreateDirectory(path);
 		var window = new TileWindow(
 			Configuration.Tile.CreateTileConfig(App.Instance.Config, name, path, width, height, overriteTheme, theme ?? FluentThemeMode.Dark, transparencyLevel ?? WindowTransparencyLevel.Transparent, color ?? Util.TILE_DARK_COLOR)
 		);

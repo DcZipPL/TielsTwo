@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Avalonia;
@@ -13,8 +14,17 @@ namespace Avalonia.Tiels.Pages.Create;
 
 public partial class TilePage : UserPage
 {
+	private TileType _type = TileType.Tile;
+	
 	private const double DEFAULT_WIDTH = 250;
 	private const double DEFAULT_HEIGHT = 100;
+	
+	public TilePage SetPageAsDirectoryPortal()
+	{
+		_type = TileType.DirectoryPortal;
+		TilePathPanel.IsVisible = true;
+		return this;
+	}
 	
 	public TilePage()
 	{
@@ -30,13 +40,6 @@ public partial class TilePage : UserPage
 
 		UseGlobalThemeBox.Checked += (sender, args) => CustomAppearanceGrid.IsEnabled = false;
 		UseGlobalThemeBox.Unchecked += (sender, args) => CustomAppearanceGrid.IsEnabled = true;
-		
-		TileTypeBox.Items = Enum.GetNames(typeof(TileType)).Select(name => Regex.Replace(name, "(\\B[A-Z])", " $1"));
-		if (this is ITileCreationPage)
-			TileTypeBox.SelectedIndex = (int)((ITileCreationPage)this).CreationType;
-		else
-			throw new InvalidOperationException(
-				"Tried to initialize TileTypeBox.SelectedIndex when it isn't part of ITileCreationPage");
 
 		ColorBtn.Color = App.Instance.Config.GlobalTheme == FluentThemeMode.Dark ? Util.TILE_DARK_COLOR : Util.TILE_LIGHT_COLOR;
 		ThemeBox.SelectionChanged += (_, _) =>
@@ -54,20 +57,9 @@ public partial class TilePage : UserPage
 			WarnOtherProgramsText.IsVisible = selection == WindowTransparencyLevel.Mica.ToString();
 		};
 
-		SetPathPanelVisibility();
-		TileTypeBox.SelectionChanged += (_, _) => SetPathPanelVisibility();
-
 		PathBox.Text = Configuration.GetDefaultTilesDirectory();
 	}
 
-	private void SetPathPanelVisibility()
-	{
-		var selection = (string?)TileTypeBox.SelectedItem ?? TileType.Tile.ToString();
-			
-		// Add spaces with regex to match selection.
-		TilePathPanel.IsVisible = selection == Regex.Replace(TileType.DirectoryPortal.ToString(), "(\\B[A-Z])", " $1");
-	}
-	
 	private void CreateTile()
 	{
 		try
@@ -77,7 +69,7 @@ public partial class TilePage : UserPage
 					0x0008);
 			TileManagement.CreateTile(
 				NameBox.Text,
-				PathBox.Text,
+				_type == TileType.DirectoryPortal ? PathBox.Text : Path.Combine(App.Instance.Config.TilesPath, NameBox.Text),
 				SizeXBox.Text != null ? double.Parse(SizeXBox.Text) : DEFAULT_WIDTH,
 				SizeYBox.Text != null ? double.Parse(SizeYBox.Text) : DEFAULT_HEIGHT,
 				!UseGlobalThemeBox.IsChecked.Value,

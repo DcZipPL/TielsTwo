@@ -49,10 +49,10 @@
                                 <pagesSettings:SnappingPage x:Name="SnappingSettingsPage" IsVisible="False"/>
                                 <pagesSettings:ThumbnailsPage x:Name="ThumbnailSettingsPage" IsVisible="False"/>
                                 <pagesSettings:UpdatesPage x:Name="UpdatesSettingsPage" IsVisible="False"/>
-                                <pagesCreate:QuickTilePage x:Name="TileCreatePage" IsVisible="False"/>
-                                <pagesCreate:DirectoryPortalPage x:Name="DirectoryPortalPage" IsVisible="False"/>
-                                <pagesCreate:DirectoryPortalPage x:Name="FloatingImagePage" IsVisible="False"/>
-                                <pagesCreate:DirectoryPortalPage x:Name="NotesPage" IsVisible="False"/>
+                                <pagesCreate:TilePage x:Name="TileCreatePage" IsVisible="False"/>
+                                <pagesCreate:TilePage x:Name="DirectoryPortalPage" IsVisible="False"/>
+                                <pagesCreate:TilePage x:Name="FloatingImagePage" IsVisible="False"/>
+                                <pagesCreate:TilePage x:Name="NotesPage" IsVisible="False"/>
                         </Grid>
                 </Border>
         </Grid>

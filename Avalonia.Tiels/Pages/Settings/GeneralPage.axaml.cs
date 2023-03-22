@@ -12,12 +12,8 @@ using Avalonia.Tiels.Classes;
 
 namespace Avalonia.Tiels.Pages.Settings;
 
-public partial class GeneralPage : UserPage
+public partial class GeneralPage : SettingsPage
 {
-	private (string, string?) status = (Icons.Check, App.I18n.GetString("NoChanges"));
-
-	internal SettingsWindow Root;
-
 	public GeneralPage()
 	{
 		InitializeComponent();
@@ -26,20 +22,6 @@ public partial class GeneralPage : UserPage
 
 	private void ApplySettings()
 	{
-		// Apply snapping settings
-		if (App.Instance.Config.Snapping.ToString() != SnappingBox.Text)
-			if (float.TryParse(SnappingBox.Text, out float snapping))
-				App.Instance.Config.Snapping = snapping;
-			else
-				ChangeSettingsStatus(App.I18n.GetString("InvalidInput")!, true);
-		
-		// Apply handle height settings
-		if (App.Instance.Config.HandleHeight.ToString() != HandleSizeBox.Text)
-			if (float.TryParse(HandleSizeBox.Text, out float snapping))
-				App.Instance.Config.HandleHeight = snapping;
-			else
-				ChangeSettingsStatus(App.I18n.GetString("InvalidInput")!, true);
-		
 		// Check if tiles path didn't changed. If changed apply new location if valid to config and give status.
 		var newPath = string.IsNullOrEmpty(TilesDirectoryBox.Text)
 			? Configuration.GetDefaultTilesDirectory()
@@ -61,9 +43,7 @@ public partial class GeneralPage : UserPage
 		// Apply selections to config
 		ApplyIfChanged(App.Instance.Config.Autostart, b => App.Instance.Config.Autostart = b, AutostartCheckBox);
 		ApplyIfChanged(App.Instance.Config.AutostartHideSettings, b => App.Instance.Config.AutostartHideSettings = b, HideWindowCheckBox);
-		ApplyIfChanged(App.Instance.Config.SpecialEffects, b => App.Instance.Config.SpecialEffects = b, EffectsCheckBox);
 		ApplyIfChanged(App.Instance.Config.Experimental, b => App.Instance.Config.Experimental = b, ExperimentalCheckBox);
-		ApplyIfChanged(App.Instance.Config.HideTileButtons, b => App.Instance.Config.HideTileButtons = b, HideTileButtonsCheckBox);
 
 		// Save draft data before reinitialize
 		var draftTilesPath = TilesDirectoryBox.Text;
@@ -81,20 +61,12 @@ public partial class GeneralPage : UserPage
 		StatusText.Text = status.Item2;
 	}
 
-	private void ChangeSettingsStatus(string message, bool invalid)
-	{
-		status = (invalid ? Icons.X : Icons.Check, message);
-	}
-
 	private void RollbackSettings()
 	{
 	}
 
 	private void LoadSettingsValues()
 	{
-		SnappingBox.Text = App.Instance.Config.Snapping.ToString();
-		HandleSizeBox.Text = App.Instance.Config.HandleHeight.ToString();
-		
 		TilesDirectoryBox.Text = App.Instance.Config.TilesPath;
 		TilesDirectoryBox.Watermark = Configuration.GetDefaultTilesDirectory();
 
@@ -105,9 +77,7 @@ public partial class GeneralPage : UserPage
 
 		AutostartCheckBox.IsChecked = App.Instance.Config.Autostart;
 		HideWindowCheckBox.IsChecked = App.Instance.Config.AutostartHideSettings;
-		EffectsCheckBox.IsChecked = App.Instance.Config.SpecialEffects;
 		ExperimentalCheckBox.IsChecked = App.Instance.Config.Experimental;
-		HideTileButtonsCheckBox.IsChecked = App.Instance.Config.HideTileButtons;
 	}
 
 	private void TilePathTextBoxChanged(object? sender, KeyEventArgs e)
@@ -123,12 +93,6 @@ public partial class GeneralPage : UserPage
 			TilesDirectoryBox.BorderBrush = new SolidColorBrush(0xFF2A2A2A);
 			TilesDirectoryBox.Foreground = new SolidColorBrush(0xFF000000);
 		}
-	}
-
-	private void ApplyIfChanged(bool getter, Action<bool> setter, CheckBox checkBox)
-	{
-		if (getter != checkBox.IsChecked && checkBox.IsChecked != null)
-			setter(checkBox.IsChecked!.Value);
 	}
 
 	private void LanguageChanged(object? sender, SelectionChangedEventArgs e)

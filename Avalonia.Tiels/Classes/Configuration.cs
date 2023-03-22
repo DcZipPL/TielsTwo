@@ -262,18 +262,7 @@ public class Configuration
             SeedModel(model);
         }
     }
-    
-    public bool SpecialEffects
-    {
-        get { return ReqModel().Settings!.SpecialEffects; }
-        set
-        {
-            var model = ReqModel();
-            model.Settings!.SpecialEffects = value;
-            SeedModel(model);
-        }
-    }
-    
+
     public bool Experimental
     {
         get { return ReqModel().Settings!.Experimental; }

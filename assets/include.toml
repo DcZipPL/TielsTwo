@@ -18,7 +18,9 @@ icons = [
     "edit-2",
     "chevron-up",
     "sticky-note",
-    "file-image"
+    "file-image",
+    "flask-conical",
+    "layout-grid"
 ]
 
 local_icons = [

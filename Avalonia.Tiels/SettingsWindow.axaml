@@ -27,8 +27,10 @@
                                 <controls:SidebarCategory Title="{x:Static p:Resources.SettingsLabel}"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsGeneral}" x:Name="SB_SG"           Icon="󿚓" IsToggled="True"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsAppearance}" x:Name="SB_SA"        Icon="󿚐"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsSnapping}" x:Name="SB_SS"           Icon="󿚥"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsThumbnail}" x:Name="SB_ST"        Icon="󿚣"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsUpdates}" x:Name="SB_SU"           Icon="󿚖"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsExperimental}" x:Name="SB_SE"           Icon="󿚤"/>
                                 
                                 <controls:SidebarCategory Title="{x:Static p:Resources.ManagementLabel}"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.ManagementTiles}" x:Name="SB_MT"           Icon="󿚗"/>
@@ -44,6 +46,7 @@
                         <Grid x:Name="Frame">
                                 <pagesSettings:GeneralPage x:Name="GeneralSettingsPage" IsVisible="False"/>
                                 <pagesSettings:AppearancePage x:Name="AppearanceSettingsPage" IsVisible="False"/>
+                                <pagesSettings:SnappingPage x:Name="SnappingSettingsPage" IsVisible="False"/>
                                 <pagesSettings:ThumbnailsPage x:Name="ThumbnailSettingsPage" IsVisible="False"/>
                                 <pagesSettings:UpdatesPage x:Name="UpdatesSettingsPage" IsVisible="False"/>
                                 <pagesCreate:QuickTilePage x:Name="TileCreatePage" IsVisible="False"/>

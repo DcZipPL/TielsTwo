@@ -348,6 +348,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Eksperymentalne.
+        /// </summary>
+        public static string SettingsExperimental {
+            get {
+                return ResourceManager.GetString("SettingsExperimental", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ogólne.
         /// </summary>
         public static string SettingsGeneral {
@@ -362,6 +371,15 @@ namespace Avalonia.Tiels.Resources {
         public static string SettingsLabel {
             get {
                 return ResourceManager.GetString("SettingsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Marginesy i Przyciąganie.
+        /// </summary>
+        public static string SettingsSnapping {
+            get {
+                return ResourceManager.GetString("SettingsSnapping", resourceCulture);
             }
         }
         
@@ -402,6 +420,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ustawienia.
+        /// </summary>
+        public static string SnappingLabel {
+            get {
+                return ResourceManager.GetString("SnappingLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Efekty interfejsu użytkownika.
         /// </summary>
         public static string SpecialEffects {
@@ -434,15 +461,6 @@ namespace Avalonia.Tiels.Resources {
         public static string TilePath {
             get {
                 return ResourceManager.GetString("TilePath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ustawienia: Kafelki.
-        /// </summary>
-        public static string TileSettingsLabel {
-            get {
-                return ResourceManager.GetString("TileSettingsLabel", resourceCulture);
             }
         }
         

@@ -156,8 +156,8 @@
     <data name="HideTileButtons" xml:space="preserve">
         <value>Ukryj automatycznie przyciski na kafelkach</value>
     </data>
-    <data name="TileSettingsLabel" xml:space="preserve">
-        <value>Ustawienia: Kafelki</value>
+    <data name="SnappingLabel" xml:space="preserve">
+        <value>Ustawienia</value>
     </data>
     <data name="Snapping" xml:space="preserve">
         <value>Przyciąganie do siatki</value>
@@ -170,5 +170,11 @@
     </data>
     <data name="HandleSize" xml:space="preserve">
         <value>Wysokość uchwytu kafelka</value>
+    </data>
+    <data name="SettingsExperimental" xml:space="preserve">
+        <value>Eksperymentalne</value>
+    </data>
+    <data name="SettingsSnapping" xml:space="preserve">
+        <value>Marginesy i Przyciąganie</value>
     </data>
 </root>

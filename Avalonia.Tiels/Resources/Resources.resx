@@ -156,8 +156,8 @@
     <data name="HideTileButtons" xml:space="preserve">
         <value>Auto hide buttons on Tile</value>
     </data>
-    <data name="TileSettingsLabel" xml:space="preserve">
-        <value>Settings: Tile</value>
+    <data name="SnappingLabel" xml:space="preserve">
+        <value>Settings</value>
     </data>
     <data name="Snapping" xml:space="preserve">
         <value>Snapping to grid</value>
@@ -170,5 +170,11 @@
     </data>
     <data name="HandleSize" xml:space="preserve">
         <value>Tile handle Height</value>
+    </data>
+    <data name="SettingsSnapping" xml:space="preserve">
+        <value>Snapping &amp; Margins</value>
+    </data>
+    <data name="SettingsExperimental" xml:space="preserve">
+        <value>Experimental</value>
     </data>
 </root>

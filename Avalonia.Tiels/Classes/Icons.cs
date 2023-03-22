@@ -38,5 +38,7 @@ public class Icons
 	public static readonly Icons ChevronUp = (Icons) "󿚡";
 	public static readonly Icons StickyNote = (Icons) "󿚢";
 	public static readonly Icons FileImage = (Icons) "󿚣";
+	public static readonly Icons FlaskConical = (Icons) "󿚤";
+	public static readonly Icons LayoutGrid = (Icons) "󿚥";
 	//!a
 }

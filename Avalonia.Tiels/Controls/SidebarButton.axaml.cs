@@ -11,6 +11,7 @@ public partial class SidebarButton : UserControl
 	public bool IsToggled { get; set; }
 	public string Text { get; set; }
 	public string Icon { get; set; }
+	public string Glyph => Icon;
 	public UserPage? Page { get; set; }
 	
 	public SidebarButton WithPage(UserPage? page)

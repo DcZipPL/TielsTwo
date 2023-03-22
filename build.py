@@ -146,9 +146,9 @@ def autogen_icons_to_files(char_index: int, icon_name: str, cs_lines_to_expand: 
 		metadata_file.write(json.dumps(loaded_metadata))
 
 	# Add icon to C# class
-	cs_lines_to_expand += f"""\n\tpublic static readonly string {
+	cs_lines_to_expand += f"""\n\tpublic static readonly Icons {
 	__to_camel_case(icon_name).replace("2", "Alt")
-	} = \"{chr(char_index)}\";"""
+	} = (Icons) \"{chr(char_index)}\";"""
 	return cs_lines_to_expand
 
 

@@ -32,7 +32,7 @@ public class TileManagement
 	}
 
 	/// <summary>
-	/// Loads Tile from config with corresponding Guid. 
+	/// Loads Tile from config with corresponding Guid.
 	/// </summary>
 	/// <param name="id">Guid of Tile.</param>
 	public static void LoadTile(Guid id)
@@ -42,7 +42,7 @@ public class TileManagement
 	}
 	
 	/// <summary>
-	/// Loads Tile directories and files and shows them on UI thead. 
+	/// Loads Tile directories and files and shows them on UI thead.
 	/// </summary>
 	/// <param name="window">Tile window.</param>
 	/// <param name="configuration">Configuration Access.</param>
@@ -52,9 +52,11 @@ public class TileManagement
 		foreach (var systemEntry in Directory.EnumerateFileSystemEntries(configuration.Tiles[window.ID].Path))
 		{
 			// TODO: Get thumbnails from os
-			var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-			var asset = assets.Open(new Uri("avares://Avalonia.Tiels/Assets/shell32_4.ico"));
-			window.entries.Add(Path.GetFileName(systemEntry), new TileWindow.TileEntry(systemEntry, new Bitmap(asset)));
+			System.Drawing.Image thumbnail = Platform.GetThumbnailImage(systemEntry, 512, 512);
+			//var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
+			//var asset = assets.Open(new Uri("avares://Avalonia.Tiels/Assets/shell32_4.ico"));
+			//new Bitmap(asset)
+			window.entries.Add(Path.GetFileName(systemEntry), new TileWindow.TileEntry(systemEntry, Platform.GetThumbnailBitmap(thumbnail, systemEntry + ".png")));
 		}
 		
 		// TODO: Better threading if possible

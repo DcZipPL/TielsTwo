@@ -7,7 +7,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Themes.Fluent;
 using Avalonia.Threading;
-using Avalonia.Tiels.Controls;
+using Avalonia.Tiels.Classes.Platform;
 
 namespace Avalonia.Tiels.Classes;
 
@@ -51,12 +51,11 @@ public class TileManagement
 		var i = 0;
 		foreach (var systemEntry in Directory.EnumerateFileSystemEntries(configuration.Tiles[window.ID].Path))
 		{
-			// TODO: Get thumbnails from os
-			System.Drawing.Image thumbnail = Platform.GetThumbnailImage(systemEntry, 512, 512);
+			var thumbnail = ThumbnailCsi.GetThumbnailImage(systemEntry, 256, 256, ThumbnailSize.Jumbo);
 			//var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
 			//var asset = assets.Open(new Uri("avares://Avalonia.Tiels/Assets/shell32_4.ico"));
 			//new Bitmap(asset)
-			window.entries.Add(Path.GetFileName(systemEntry), new TileWindow.TileEntry(systemEntry, Platform.GetThumbnailBitmap(thumbnail, systemEntry + ".png")));
+			window.entries.Add(Path.GetFileName(systemEntry), new TileWindow.TileEntry(systemEntry, thumbnail));
 		}
 		
 		// TODO: Better threading if possible

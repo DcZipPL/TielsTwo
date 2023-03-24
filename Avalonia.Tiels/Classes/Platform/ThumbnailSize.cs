@@ -2,9 +2,8 @@
 
 public enum ThumbnailSize
 {
-	Small,
-	Medium,
-	Large,
-	Jumbo,
-	XL
+	Small = 0x1,       // SHIL_SMALL
+	Large = 0x0,       // SHIL_LARGE
+	ExtraLarge = 0x2,  // SHIL_EXTRALARGE
+	Jumbo = 0x4,       // SHIL_JUMBO
 }

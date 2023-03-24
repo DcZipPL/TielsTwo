@@ -4,7 +4,7 @@ namespace Avalonia.Tiels.Classes.Platform.Linux;
 
 public class ThumbnailNsi : ThumbnailCsi
 {
-	protected override Bitmap GetThumbnailBitmap(string path, int width, int height)
+	protected override Bitmap GetThumbnailBitmap(string path, ThumbnailSize size)
 	{
 		throw new System.NotImplementedException();
 	}

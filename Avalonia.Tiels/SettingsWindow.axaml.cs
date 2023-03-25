@@ -1,17 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Input;
-using Avalonia.Interactivity;
-using Avalonia.Logging;
-using Avalonia.Media;
 using Avalonia.Tiels.Controls;
 using Avalonia.Tiels.Pages;
-using Avalonia.Tiels.Pages.Create;
 
 namespace Avalonia.Tiels
 {
@@ -43,6 +34,10 @@ namespace Avalonia.Tiels
 				SB_MFI.WithPage(null),
 				SB_MN.WithPage(null)
 			};
+			
+			SB_SE.IsVisible = App.Instance.Config.Experimental;
+			SB_ST.IsVisible = App.Instance.Config.Experimental;
+			SB_ST.IsEnabled = App.Instance.Config.ThumbnailsSettingsEnabled;
 			
 			// Load default page
 			IPage.ChangeVisibility(GeneralSettingsPage, true);

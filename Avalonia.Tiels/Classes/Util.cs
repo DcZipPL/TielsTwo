@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using Avalonia.Media;
 using Avalonia.Svg;
 
-namespace Avalonia.Tiels;
+namespace Avalonia.Tiels.Classes;
 
 public static class Util
 {

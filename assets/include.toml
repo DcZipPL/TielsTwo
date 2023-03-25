@@ -20,9 +20,14 @@ icons = [
     "sticky-note",
     "file-image",
     "flask-conical",
-    "layout-grid"
+    "layout-grid",
+    "external-link",
 ]
 
 local_icons = [
     "window-plus"
+]
+
+copy = [
+    "external-link"
 ]

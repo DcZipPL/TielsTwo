@@ -1,4 +1,4 @@
-﻿namespace Avalonia.Tiels;
+﻿namespace Avalonia.Tiels.Classes;
 
 /// <summary>
 /// Type of Tile.

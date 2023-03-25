@@ -274,6 +274,17 @@ public class Configuration
         }
     }
     
+    public bool ThumbnailsSettingsEnabled
+    {
+        get { return ReqModel().Settings!.ThumbnailsSettingsEnabled; }
+        set
+        {
+            var model = ReqModel();
+            model.Settings!.ThumbnailsSettingsEnabled = value;
+            SeedModel(model);
+        }
+    }
+    
     public bool HideTileButtons
     {
         get { return ReqModel().Settings!.HideTileButtons; }
@@ -631,7 +642,7 @@ public class Configuration
             public string? TilesPath { get; set; }
             public bool AutoStart { get; set; }
             public bool HideSettings { get; set; }
-            public bool SpecialEffects { get; set; }
+            public bool ThumbnailsSettingsEnabled { get; set; }
             public bool Experimental { get; set; }
             public bool HideTileButtons { get; set; }
             public float Snapping { get; set; } // Snap to grid

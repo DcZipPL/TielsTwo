@@ -92,6 +92,9 @@ def prepare_icons():
 				ii += 1
 			except urllib.error.HTTPError:
 				print(f"Couldn't download {icon}.svg")
+		# Copy icons
+		for local_icon in toml_data.get("copy"):
+			shutil.copy(f"{ICONS_PATH}{local_icon}.svg", f"./Avalonia.Tiels/Assets/Icons/{local_icon}.svg")
 		print("Writing all icons to C# file...")
 		add_icons_to_cs(cs_const_lines)
 

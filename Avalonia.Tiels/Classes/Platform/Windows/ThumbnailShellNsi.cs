@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace Avalonia.Tiels.Classes.Platform.Windows;
 
-public class ThumbnailShellNsi
+[SuppressMessage("ReSharper", "InconsistentNaming")]
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+[SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Global")]
+[SuppressMessage("ReSharper", "IdentifierTypo")]
+internal static class ThumbnailShellNsi
 {
 	[Flags]
-    public enum SHGFI : uint
+    internal enum SHGFI : uint
     {
         /// <summary>get icon</summary>
         Icon = 0x000000100,
@@ -47,69 +52,68 @@ public class ThumbnailShellNsi
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct SHFILEINFO
+    internal struct SHFILEINFO
     {
-        public const int NAMESIZE = 80;
-        public IntPtr hIcon;
-        public int iIcon;
-        public uint dwAttributes;
+        internal const int NAMESIZE = 80;
+        internal IntPtr hIcon;
+        internal int iIcon;
+        internal uint dwAttributes;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-        public string szDisplayName;
+        internal string szDisplayName;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
-        public string szTypeName;
+        internal string szTypeName;
     };
 
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct RECT
+    internal struct RECT
     {
-        public int left, top, right, bottom;
+        internal int left, top, right, bottom;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct POINT
+    internal struct POINT
     {
-        int x;
-        int y;
+        internal int x;
+        internal int y;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct IMAGELISTDRAWPARAMS
+    internal struct IMAGELISTDRAWPARAMS
     {
-        public int cbSize;
-        public IntPtr himl;
-        public int i;
-        public IntPtr hdcDst;
-        public int x;
-        public int y;
-        public int cx;
-        public int cy;
-        public int xBitmap;    // x offest from the upperleft of bitmap
-        public int yBitmap;    // y offset from the upperleft of bitmap
-        public int rgbBk;
-        public int rgbFg;
-        public int fStyle;
-        public int dwRop;
-        public int fState;
-        public int Frame;
-        public int crEffect;
+        internal int cbSize;
+        internal IntPtr himl;
+        internal int i;
+        internal IntPtr hdcDst;
+        internal int x;
+        internal int y;
+        internal int cx;
+        internal int cy;
+        internal int xBitmap;    // x offest from the upperleft of bitmap
+        internal int yBitmap;    // y offset from the upperleft of bitmap
+        internal int rgbBk;
+        internal int rgbFg;
+        internal int fStyle;
+        internal int dwRop;
+        internal int fState;
+        internal int Frame;
+        internal int crEffect;
     }
-
-    #region IMAGEINFO IImageList
+    
     [StructLayout(LayoutKind.Sequential)]
-    public struct IMAGEINFO
+    internal struct IMAGEINFO
     {
-        public IntPtr hbmImage;
-        public IntPtr hbmMask;
-        public int Unused1;
-        public int Unused2;
-        public RECT rcImage;
+        internal IntPtr hbmImage;
+        internal IntPtr hbmMask;
+        internal int Unused1;
+        internal int Unused2;
+        internal RECT rcImage;
     }
     
     [ComImport()]
     [Guid("46EB5926-582E-4017-9FDF-E8998DAA0950")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface IImageList
+    internal interface IImageList
     {
         [PreserveSig]
         int Add(
@@ -265,18 +269,17 @@ public class ThumbnailShellNsi
         int iOverlay,
         ref int piIndex);
     };
-    #endregion
 
-    public const string IID_IImageList = "46EB5926-582E-4017-9FDF-E8998DAA0950";
-    public const string IID_IImageList2 = "192B9D83-50FC-457B-90A0-2B82A8B5DAE1";
+    internal const string IID_IImageList = "46EB5926-582E-4017-9FDF-E8998DAA0950";
+    internal const string IID_IImageList2 = "192B9D83-50FC-457B-90A0-2B82A8B5DAE1";
     
-    public static class Shell32
+    internal static class Shell32
     {
-        public const int SHIL_SYSSMALL = 0x3;
-        public const int SHIL_LAST = 0x4;
+        internal const int SHIL_SYSSMALL = 0x3;
+        internal const int SHIL_LAST = 0x4;
 
-        public const int ILD_TRANSPARENT = 0x00000001;
-        public const int ILD_IMAGE = 0x00000020;
+        internal const int ILD_TRANSPARENT = 0x00000001;
+        internal const int ILD_IMAGE = 0x00000020;
 
         [DllImport("shell32.dll", EntryPoint = "#727")]
         internal static extern int SHGetImageList(int iImageList, ref Guid riid, ref IImageList ppv);

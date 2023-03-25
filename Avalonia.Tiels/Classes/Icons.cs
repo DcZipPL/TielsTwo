@@ -40,5 +40,6 @@ public class Icons
 	public static readonly Icons FileImage = (Icons) "󿚣";
 	public static readonly Icons FlaskConical = (Icons) "󿚤";
 	public static readonly Icons LayoutGrid = (Icons) "󿚥";
+	public static readonly Icons ExternalLink = (Icons) "󿚦";
 	//!a
 }

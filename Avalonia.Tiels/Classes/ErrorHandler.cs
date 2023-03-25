@@ -1,9 +1,7 @@
 ﻿using System;
-using System.IO;
 using System.Text;
-using Avalonia.Controls.ApplicationLifetimes;
 
-namespace Avalonia.Tiels;
+namespace Avalonia.Tiels.Classes;
 
 public class ErrorHandler
 {

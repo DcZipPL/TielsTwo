@@ -2,7 +2,7 @@
 tiles_path = "not_initialized"
 auto_start = true
 hide_settings = true # Hide settings when application autostarts
-special_effects = true
+thumbnails_settings_enabled = true
 experimental = false
 hide_tile_buttons = true
 snapping = 5

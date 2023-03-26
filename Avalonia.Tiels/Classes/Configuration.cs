@@ -13,7 +13,7 @@ using Tomlyn.Model;
 
 namespace Avalonia.Tiels.Classes;
 
-public class Configuration
+public partial class Configuration
 {
     private readonly object _readWriteLock = new object();
     private readonly object _thumbnailLock = new object();
@@ -207,7 +207,7 @@ public class Configuration
     #endregion
 
     #region Request Settings
-    
+
     public float HandleHeight
     {
         get { return ReqModel().Settings!.HandleHeight; }
@@ -218,18 +218,9 @@ public class Configuration
             SeedModel(model);
         }
     }
-
-    public float Snapping
-    {
-        get { return ReqModel().Settings!.Snapping; }
-        set
-        {
-            var model = ReqModel();
-            model.Settings!.Snapping = value;
-            SeedModel(model);
-        }
-    }
     
+    [ConfigEntry] private float __Snapping;
+
     public string TilesPath
     {
         get { return ReqModel().Settings!.TilesPath ?? ""; }
@@ -596,6 +587,7 @@ public class Configuration
     {
         lock (_readWriteLock)
         {
+            // TODO: Add try catch
             var defaultModel = File.ReadAllText(Path.Combine(GetConfigDirectory(), "global.toml"));
             var model = Toml.ToModel<Models.GlobalModel>(defaultModel);
             if (model.Appearance == null || model.Settings == null)
@@ -682,3 +674,6 @@ public class Configuration
     #pragma warning restore CS8618
     #endregion
 }
+
+[AttributeUsage(AttributeTargets.Field)]
+public class ConfigEntryAttribute : Attribute {}

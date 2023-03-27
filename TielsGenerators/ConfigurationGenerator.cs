@@ -126,21 +126,6 @@ public class ConfigurationGenerator : ISourceGenerator
 	}
 }
 
-public static class SyntaxNodeExtensions
-{
-	public static T GetParent<T>(this SyntaxNode node) where T : SyntaxNode
-	{
-		var parent = node.Parent;
-		while (true)
-		{
-			if (parent == null) throw new Exception("No parent found");
-			
-			if (parent is T t) return t;
-			parent = parent.Parent;
-		}
-	}
-}
-
 public class MainSyntaxReceiver : ISyntaxReceiver
 {
 	public ConfigEntryAggregate ConfigEntries { get; } = new();
@@ -148,41 +133,5 @@ public class MainSyntaxReceiver : ISyntaxReceiver
 	public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
 	{
 		ConfigEntries.OnVisitSyntaxNode(syntaxNode);
-	}
-}
-
-public class ConfigEntryAggregate : ISyntaxReceiver
-{
-	public List<Capture> Captures { get; } = new();
-
-	public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
-	{
-		if (syntaxNode is not AttributeSyntax { Name: IdentifierNameSyntax{Identifier.Text: "ConfigEntry"} } attr) return;
-
-		var fields = attr.GetParent<FieldDeclarationSyntax>();
-		var ns = attr.GetParent<FileScopedNamespaceDeclarationSyntax>();
-
-		List<ClassDeclarationSyntax> clazz = new List<ClassDeclarationSyntax>();
-		GetAllClasses(attr, null, ref clazz);
-
-		foreach (var field in fields.Declaration.Variables)
-		{
-			var key = field.Identifier.Text;
-			Captures.Add(new(key, fields, clazz, ns));
-		}
-	}
-
-	public record Capture(string Key, FieldDeclarationSyntax Fields, List<ClassDeclarationSyntax> Classes, FileScopedNamespaceDeclarationSyntax Namespace);
-
-	public ClassDeclarationSyntax GetAllClasses(SyntaxNode origin, ClassDeclarationSyntax? clazz, ref List<ClassDeclarationSyntax> classes) {
-		ClassDeclarationSyntax parent;
-		try {
-			if (clazz == null) parent = origin.GetParent<ClassDeclarationSyntax>();
-			else parent = clazz.GetParent<ClassDeclarationSyntax>();
-			classes.Add(GetAllClasses(origin, parent, ref classes));
-			return clazz ?? origin.GetParent<ClassDeclarationSyntax>();
-		} catch (Exception) {
-			return clazz ?? throw new Exception("No class found");
-		}
 	}
 }

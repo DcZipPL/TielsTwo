@@ -19,15 +19,15 @@ public class ConfigurationGenerator : ISourceGenerator
 		var receiver = (MainSyntaxReceiver)context.SyntaxReceiver;
 		foreach (var capture in receiver.ConfigEntries.Captures)
 		{
+			var key = capture.Key.Replace("__", "");
 			var output = capture.Namespace.WithMembers(new(
 					capture.Class
 						.WithMembers(new(
-							CreateReqConfigProperty(capture.Key.Replace("__", ""), capture.Fields))
+							CreateReqConfigProperty(key, capture.Fields))
 						)
 					)
 				).NormalizeWhitespace();
-			File.WriteAllText("C:\\Users\\robob\\RiderProjects\\Avalonia.Tiels\\test.txt", output.GetText(Encoding.UTF8).ToString());
-			context.AddSource($"{capture.Class.Identifier.Text}.g.cs", output.GetText(Encoding.UTF8));
+			context.AddSource($"{capture.Class.Identifier.Text}_{key}.g.cs", output.GetText(Encoding.UTF8));
 		}
 	}
 

@@ -208,18 +208,10 @@ public partial class Configuration
 
     #region Request Settings
 
-    public float HandleHeight
-    {
-        get { return ReqModel().Settings!.HandleHeight; }
-        set
-        {
-            var model = ReqModel();
-            model.Settings!.HandleHeight = value;
-            SeedModel(model);
-        }
-    }
-    
+    // TODO: Add more null checks
+
     [ConfigEntry] private float __Snapping;
+    [ConfigEntry] private float __HandleHeight;
 
     public string TilesPath
     {
@@ -232,60 +224,11 @@ public partial class Configuration
         }
     }
     
-    public bool Autostart
-    {
-        get{ return ReqModel().Settings!.AutoStart; }
-        set
-        {
-            var model = ReqModel();
-            model.Settings!.AutoStart = value;
-            SeedModel(model);
-        }
-    }
-
-    public bool AutostartHideSettings
-    {
-        get{ return ReqModel().Settings!.HideSettings; }
-        set
-        {
-            var model = ReqModel();
-            model.Settings!.HideSettings = value;
-            SeedModel(model);
-        }
-    }
-
-    public bool Experimental
-    {
-        get { return ReqModel().Settings!.Experimental; }
-        set
-        {
-            var model = ReqModel();
-            model.Settings!.Experimental = value;
-            SeedModel(model);
-        }
-    }
-    
-    public bool ThumbnailsSettingsEnabled
-    {
-        get { return ReqModel().Settings!.ThumbnailsSettingsEnabled; }
-        set
-        {
-            var model = ReqModel();
-            model.Settings!.ThumbnailsSettingsEnabled = value;
-            SeedModel(model);
-        }
-    }
-    
-    public bool HideTileButtons
-    {
-        get { return ReqModel().Settings!.HideTileButtons; }
-        set
-        {
-            var model = ReqModel();
-            model.Settings!.HideTileButtons = value;
-            SeedModel(model);
-        }
-    }
+    [ConfigEntry] private bool __Autostart;
+    [ConfigEntry] private bool __AutostartHideSettings;
+    [ConfigEntry] private bool __Experimental;
+    [ConfigEntry] private bool __ThumbnailsSettingsEnabled;
+    [ConfigEntry] private bool __HideTileButtons;
 
     #endregion
     
@@ -311,7 +254,7 @@ public partial class Configuration
         }
 
         /// <summary>
-        /// Creates configuration files and caches for Tile. 
+        /// Creates configuration files and caches for Tile.
         /// </summary>
         /// <param name="configAccess">Access to configuration.</param>
         /// <param name="name">Name of new Tile.</param>
@@ -632,8 +575,8 @@ public partial class Configuration
         public class Settings : ITomlMetadataProvider
         {
             public string? TilesPath { get; set; }
-            public bool AutoStart { get; set; }
-            public bool HideSettings { get; set; }
+            public bool Autostart { get; set; }
+            public bool AutostartHideSettings { get; set; }
             public bool ThumbnailsSettingsEnabled { get; set; }
             public bool Experimental { get; set; }
             public bool HideTileButtons { get; set; }

@@ -34,7 +34,6 @@ public class ConfigurationGenerator : ISourceGenerator
 	{
 		if (clazz == null) clazz = classes[i]
 									.WithCloseBraceToken(Token(SyntaxKind.CloseBraceToken));
-		File.WriteAllText(@$"C:\Users\Kordian Kisielinski\Desktop\Repo\TielsTwo\test-{key}-{clazz.Identifier.Text}-{i}-{classes.Count - 1}.txt", clazz.ToString());
 		if (classes.Count - 1 > i)
 		{
 			return clazz.WithMembers(

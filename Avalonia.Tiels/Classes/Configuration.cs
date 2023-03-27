@@ -233,7 +233,7 @@ public partial class Configuration
     #endregion
     
     #region Tile Management
-    public sealed class Tile
+    public sealed partial class Tile
     {
         // ReSharper disable InconsistentNaming
         internal string _thumbnailDbPath;
@@ -365,17 +365,8 @@ public partial class Configuration
                 SeedModel(model);
             }
         }
-        
-        public bool Hidden
-        {
-            get { return ReqModel().Hidden; }
-            set
-            {
-                var model = ReqModel();
-                model.Hidden = value;
-                SeedModel(model);
-            }
-        }
+
+        [ConfigEntry] private bool __Hidden;
         
         public BarAlignment EditBarAlignment
         {
@@ -423,17 +414,16 @@ public partial class Configuration
             get
             {
                 // TODO: Test this
-                var appearanceReq = ReqModel().Appearance;
-                return appearanceReq != null && (bool)appearanceReq.Override;
+                return ReqModel().Appearance!.Override;
             }
             set
             {
                 var model = ReqModel();
-                model.Appearance.Override = value;
+                model.Appearance!.Override = value;
                 SeedModel(model);
             }
         }
-                
+        
         #endregion
         
         // TODO: Duplicate from above
@@ -442,26 +432,13 @@ public partial class Configuration
         {
             get
             {
-                var appearanceReq = ReqModel().Appearance;
-                if (appearanceReq == null)
-                {
-                    ErrorHandler.Warn("GlobalTheme", "Couldn't load Appearance settings!");
-                    return FluentThemeMode.Light;
-                }
-                else
-                {
-                    var result = Enum.TryParse(appearanceReq.Theme, true, out FluentThemeMode theme);
-                    if (result == false)
-                    {
-                        ErrorHandler.Warn("GlobalTheme", "Couldn't parse theme from config!");
-                    }
-                    return theme;
-                }
+                var result = Enum.TryParse(ReqModel().Appearance!.Theme, true, out FluentThemeMode theme);
+                ErrorHandler.ShowErrorWindow(new Exception($"Couldn't parse {nameof(theme)} from config!"), 0x001F);
+                return result ? theme : FluentThemeMode.Light;
             }
             set
             {
                 var model = ReqModel();
-                model.Appearance.Theme = value.ToString().ToLower();
                 SeedModel(model);
             }
         }
@@ -471,13 +448,12 @@ public partial class Configuration
             get
             {
                 var appearanceReq = ReqModel().Appearance;
-                if (appearanceReq == null) ErrorHandler.Warn("GlobalTransparencyLevel", "Couldn't load Appearance settings!");
                 return appearanceReq != null ? (WindowTransparencyLevel)appearanceReq.Transparency : WindowTransparencyLevel.None;
             }
             set
             {
                 var model = ReqModel();
-                model.Appearance.Transparency = (int)value;
+                model.Appearance!.Transparency = (int)value;
                 SeedModel(model);
             }
         }
@@ -486,9 +462,9 @@ public partial class Configuration
         {
             get
             {
-                var appearanceReq = ReqModel().Appearance;
-                if (appearanceReq == null) ErrorHandler.Warn("GlobalColor", "Couldn't load Appearance settings!");
-                return appearanceReq != null ? Color.Parse(appearanceReq.Color) : Color.FromRgb(255,0,255);
+                var result = Color.TryParse(ReqModel().Appearance!.Color, out var color);
+                ErrorHandler.ShowErrorWindow(new Exception($"Couldn't parse {nameof(color)} from config!"), 0x001F);
+                return result ? color : Color.FromArgb(0, 0, 0, 0);
             }
             set
             {
@@ -506,8 +482,9 @@ public partial class Configuration
             {
                 var defaultModel = File.ReadAllText(_configPath);
                 var model = Toml.ToModel<Models.TileModel>(defaultModel);
-                if (model.Appearance == null || model.Size == null || model.Location == null)
-                    throw new NoNullAllowedException(App.I18n.GetString("MissingSettingsAppearanceTableError"));
+                if (model.Appearance == null) model.Appearance = new Models.Appearance();
+                if (model.Size == null) model.Size = new Models.Vec2();
+                if (model.Location == null) model.Location = new Models.Vec2();
                 return model;
             }
         }
@@ -533,8 +510,8 @@ public partial class Configuration
             // TODO: Add try catch
             var defaultModel = File.ReadAllText(Path.Combine(GetConfigDirectory(), "global.toml"));
             var model = Toml.ToModel<Models.GlobalModel>(defaultModel);
-            if (model.Appearance == null || model.Settings == null)
-                throw new NoNullAllowedException(App.I18n.GetString("MissingSettingsAppearanceTableError"));
+            if (model.Appearance == null) model.Appearance = new Models.Appearance();
+            if (model.Settings == null) model.Settings = new Models.Settings();
             return model;
         }
     }
@@ -619,4 +596,6 @@ public partial class Configuration
 }
 
 [AttributeUsage(AttributeTargets.Field)]
-public class ConfigEntryAttribute : Attribute {}
+public class ConfigEntryAttribute : Attribute {
+    public bool Default { get; set; }
+}

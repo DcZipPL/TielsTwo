@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -20,15 +21,32 @@ public class ConfigurationGenerator : ISourceGenerator
 		foreach (var capture in receiver.ConfigEntries.Captures)
 		{
 			var key = capture.Key.Replace("__", "");
+			
 			var output = capture.Namespace.WithMembers(new(
-					capture.Class
-						.WithMembers(new(
-							CreateReqConfigProperty(key, capture.Fields))
-						)
-					)
-				).NormalizeWhitespace();
-			context.AddSource($"{capture.Class.Identifier.Text}_{key}.g.cs", output.GetText(Encoding.UTF8));
+						RecurseClassDeclarations(null, capture.Classes, capture.Fields, key, 0)))
+						.NormalizeWhitespace();
+
+			context.AddSource($"{capture.Classes[0].Identifier.Text}_{key}.g.cs", output.GetText(Encoding.UTF8));
 		}
+	}
+
+	public ClassDeclarationSyntax RecurseClassDeclarations(ClassDeclarationSyntax? clazz, List<ClassDeclarationSyntax> classes, FieldDeclarationSyntax fieldDeclaration, string key, int i)
+	{
+		if (clazz == null) clazz = classes[i]
+									.WithCloseBraceToken(Token(SyntaxKind.CloseBraceToken));
+		File.WriteAllText(@$"C:\Users\Kordian Kisielinski\Desktop\Repo\TielsTwo\test-{key}-{clazz.Identifier.Text}-{i}-{classes.Count - 1}.txt", clazz.ToString());
+		if (classes.Count - 1 > i)
+		{
+			return clazz.WithMembers(
+				new(RecurseClassDeclarations(classes[++i]
+					.WithCloseBraceToken(Token(SyntaxKind.CloseBraceToken).WithLeadingTrivia().WithTrailingTrivia()),
+					classes, fieldDeclaration, key, i))
+			);
+		}
+		else
+			return clazz.WithMembers(
+				new(CreateReqConfigProperty(key, fieldDeclaration))
+			).WithLeadingTrivia().WithTrailingTrivia();
 	}
 
 	public PropertyDeclarationSyntax CreateReqConfigProperty(string ConfigName, FieldDeclarationSyntax fields)
@@ -39,16 +57,7 @@ public class ConfigurationGenerator : ISourceGenerator
 			.WithModifiers(
 				TokenList(
 					Token(
-						TriviaList(
-							Trivia(
-								RegionDirectiveTrivia(
-										true)
-									.WithEndOfDirectiveToken(
-										Token(
-											TriviaList(
-												PreprocessingMessage("Loaders")),
-											SyntaxKind.EndOfDirectiveToken,
-											TriviaList())))),
+						TriviaList(),
 						SyntaxKind.PublicKeyword,
 						TriviaList())))
 			.WithAccessorList(
@@ -152,8 +161,10 @@ public class ConfigEntryAggregate : ISyntaxReceiver
 		if (syntaxNode is not AttributeSyntax { Name: IdentifierNameSyntax{Identifier.Text: "ConfigEntry"} } attr) return;
 
 		var fields = attr.GetParent<FieldDeclarationSyntax>();
-		var clazz = attr.GetParent<ClassDeclarationSyntax>();
 		var ns = attr.GetParent<FileScopedNamespaceDeclarationSyntax>();
+
+		List<ClassDeclarationSyntax> clazz = new List<ClassDeclarationSyntax>();
+		GetAllClasses(attr, null, ref clazz);
 
 		foreach (var field in fields.Declaration.Variables)
 		{
@@ -162,5 +173,17 @@ public class ConfigEntryAggregate : ISyntaxReceiver
 		}
 	}
 
-	public record Capture(string Key, FieldDeclarationSyntax Fields, ClassDeclarationSyntax Class, FileScopedNamespaceDeclarationSyntax Namespace);
+	public record Capture(string Key, FieldDeclarationSyntax Fields, List<ClassDeclarationSyntax> Classes, FileScopedNamespaceDeclarationSyntax Namespace);
+
+	public ClassDeclarationSyntax GetAllClasses(SyntaxNode origin, ClassDeclarationSyntax? clazz, ref List<ClassDeclarationSyntax> classes) {
+		ClassDeclarationSyntax parent;
+		try {
+			if (clazz == null) parent = origin.GetParent<ClassDeclarationSyntax>();
+			else parent = clazz.GetParent<ClassDeclarationSyntax>();
+			classes.Add(GetAllClasses(origin, parent, ref classes));
+			return clazz ?? origin.GetParent<ClassDeclarationSyntax>();
+		} catch (Exception) {
+			return clazz ?? throw new Exception("No class found");
+		}
+	}
 }

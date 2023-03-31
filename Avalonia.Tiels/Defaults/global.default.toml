@@ -1,7 +1,7 @@
 [settings]
 tiles_path = "not_initialized"
-autostart = true
-autostart_hide_settings = true # Hide settings when application autostarts
+auto_start = true
+auto_start_hide_settings = true # Hide settings when application autostarts
 thumbnails_settings_enabled = true
 experimental = false
 hide_tile_buttons = true

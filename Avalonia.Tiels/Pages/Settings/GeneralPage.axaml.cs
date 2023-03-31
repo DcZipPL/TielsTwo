@@ -41,8 +41,8 @@ public partial class GeneralPage : SettingsPage
 			ChangeSettingsStatus(App.I18n.GetString("NoChanges")!, false);
 
 		// Apply selections to config
-		ApplyIfChanged(App.Instance.Config.Autostart, b => App.Instance.Config.Autostart = b, AutostartCheckBox);
-		ApplyIfChanged(App.Instance.Config.AutostartHideSettings, b => App.Instance.Config.AutostartHideSettings = b, HideWindowCheckBox);
+		ApplyIfChanged(App.Instance.Config.AutoStart, b => App.Instance.Config.AutoStart = b, AutostartCheckBox);
+		ApplyIfChanged(App.Instance.Config.AutoStartHideSettings, b => App.Instance.Config.AutoStartHideSettings = b, HideWindowCheckBox);
 		ApplyIfChanged(App.Instance.Config.Experimental, b => App.Instance.Config.Experimental = b, ExperimentalCheckBox);
 
 		// Save draft data before reinitialize
@@ -75,8 +75,8 @@ public partial class GeneralPage : SettingsPage
 			.FirstOrDefault(item => Equals(item, CultureInfo.CurrentUICulture),
 				((IEnumerable<CultureInfo>)LanguageBox.Items).ToList()[0]);
 
-		AutostartCheckBox.IsChecked = App.Instance.Config.Autostart;
-		HideWindowCheckBox.IsChecked = App.Instance.Config.AutostartHideSettings;
+		AutostartCheckBox.IsChecked = App.Instance.Config.AutoStart;
+		HideWindowCheckBox.IsChecked = App.Instance.Config.AutoStartHideSettings;
 		ExperimentalCheckBox.IsChecked = App.Instance.Config.Experimental;
 	}
 

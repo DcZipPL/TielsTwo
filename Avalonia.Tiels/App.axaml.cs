@@ -46,7 +46,7 @@ namespace Avalonia.Tiels
 					TileManagement.LoadTile(tile.Key);
 			}
 			
-			if (!Config.AutostartHideSettings || Configuration.IsFirstStartup())
+			if (!Config.AutoStartHideSettings || Configuration.IsFirstStartup())
 			{
 				ActiveSettingsWindow = new SettingsWindow();
 				ActiveSettingsWindow.Show();

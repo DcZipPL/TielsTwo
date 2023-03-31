@@ -224,8 +224,8 @@ public partial class Configuration
         }
     }
     
-    [ConfigEntry] private bool __Autostart;
-    [ConfigEntry] private bool __AutostartHideSettings;
+    [ConfigEntry] private bool __AutoStart;
+    [ConfigEntry] private bool __AutoStartHideSettings;
     [ConfigEntry] private bool __Experimental;
     [ConfigEntry] private bool __ThumbnailsSettingsEnabled;
     [ConfigEntry] private bool __HideTileButtons;
@@ -365,8 +365,19 @@ public partial class Configuration
                 SeedModel(model);
             }
         }
+        
+        public bool Hidden
+        {
+            get { return ReqModel().Hidden; }
+            set
+            {
+                var model = ReqModel();
+                model.Hidden = value;
+                SeedModel(model);
+            }
+        }
 
-        [ConfigEntry] private bool __Hidden;
+        // [ConfigEntry] private bool __Hidden;
         
         public BarAlignment EditBarAlignment
         {
@@ -552,8 +563,8 @@ public partial class Configuration
         public class Settings : ITomlMetadataProvider
         {
             public string? TilesPath { get; set; }
-            public bool Autostart { get; set; }
-            public bool AutostartHideSettings { get; set; }
+            public bool AutoStart { get; set; }
+            public bool AutoStartHideSettings { get; set; }
             public bool ThumbnailsSettingsEnabled { get; set; }
             public bool Experimental { get; set; }
             public bool HideTileButtons { get; set; }

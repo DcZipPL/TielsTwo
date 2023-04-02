@@ -174,9 +174,6 @@
     <data name="SettingsExperimental" xml:space="preserve">
         <value>Eksperymentalne</value>
     </data>
-    <data name="SettingsSnapping" xml:space="preserve">
-        <value>Marginesy i Przyciąganie</value>
-    </data>
     <data name="ExEnableThumbnailsCategory" xml:space="preserve">
         <value>Włącz Kategorie Miniaturek</value>
     </data>
@@ -185,5 +182,8 @@
     </data>
     <data name="ExDisableWin32MinimumHeight" xml:space="preserve">
         <value>Wyłącz minimalną wysokość</value>
+    </data>
+    <data name="TileListLabel" xml:space="preserve">
+        <value>Zarządzaj</value>
     </data>
 </root>

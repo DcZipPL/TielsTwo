@@ -22,6 +22,9 @@ icons = [
     "flask-conical",
     "layout-grid",
     "external-link",
+    "more-vertical",
+    "trash",
+    "trash-2",
 ]
 
 local_icons = [

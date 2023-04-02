@@ -402,15 +402,6 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Marginesy i Przyciąganie.
-        /// </summary>
-        public static string SettingsSnapping {
-            get {
-                return ResourceManager.GetString("SettingsSnapping", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Miniaturki.
         /// </summary>
         public static string SettingsThumbnail {
@@ -479,6 +470,15 @@ namespace Avalonia.Tiels.Resources {
         public static string ThemeModeTooltip {
             get {
                 return ResourceManager.GetString("ThemeModeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zarządzaj.
+        /// </summary>
+        public static string TileListLabel {
+            get {
+                return ResourceManager.GetString("TileListLabel", resourceCulture);
             }
         }
         

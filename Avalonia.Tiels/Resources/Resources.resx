@@ -171,9 +171,6 @@
     <data name="HandleSize" xml:space="preserve">
         <value>Tile handle height</value>
     </data>
-    <data name="SettingsSnapping" xml:space="preserve">
-        <value>Snapping &amp; Margins</value>
-    </data>
     <data name="SettingsExperimental" xml:space="preserve">
         <value>Experimental</value>
     </data>
@@ -185,5 +182,8 @@
     </data>
     <data name="ExDisableWin32MinimumHeight" xml:space="preserve">
         <value>Disable minimum height</value>
+    </data>
+    <data name="TileListLabel" xml:space="preserve">
+        <value>Manage</value>
     </data>
 </root>

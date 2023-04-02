@@ -4,7 +4,7 @@ using Avalonia.Tiels.Classes;
 
 namespace Avalonia.Tiels.Pages.Settings;
 
-public class SettingsPage : UserPage
+public abstract class SettingsPage : UserPage
 {
 	protected (string, string?) status = (Icons.Check, App.I18n.GetString("NoChanges"));
 

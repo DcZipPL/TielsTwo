@@ -210,25 +210,20 @@ public partial class Configuration
 
     // TODO: Add more null checks
 
+    // ReSharper disable InconsistentNaming
+    #pragma warning disable CS0414 CS0169
+    
     [ConfigEntry] private float __Snapping;
     [ConfigEntry] private float __HandleHeight;
-
-    public string TilesPath
-    {
-        get { return ReqModel().Settings!.TilesPath ?? ""; }
-        set
-        {
-            var model = ReqModel();
-            model.Settings!.TilesPath = value;
-            SeedModel(model);
-        }
-    }
-    
+    [ConfigEntry] private string __TilesPath = "";
     [ConfigEntry] private bool __AutoStart;
     [ConfigEntry] private bool __AutoStartHideSettings;
     [ConfigEntry] private bool __Experimental;
     [ConfigEntry] private bool __ThumbnailsSettingsEnabled;
     [ConfigEntry] private bool __HideTileButtons;
+    
+    #pragma warning restore CS0414 CS0169
+    // ReSharper restore InconsistentNaming
 
     #endregion
     
@@ -377,8 +372,6 @@ public partial class Configuration
             }
         }
 
-        // [ConfigEntry] private bool __Hidden;
-        
         public BarAlignment EditBarAlignment
         {
             get { return (BarAlignment)ReqModel().EditBarAlignment; }

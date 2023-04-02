@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -23,14 +22,14 @@ public class ConfigurationGenerator : ISourceGenerator
 			var key = capture.Key.Replace("__", "");
 			
 			var output = capture.Namespace.WithMembers(new(
-						RecurseClassDeclarations(null, capture.Classes, capture.Fields, key, 0)))
+						RecurseClassDeclarations(null, capture.Classes, capture.Fields, capture.Default, key, 0)))
 						.NormalizeWhitespace();
 
 			context.AddSource($"{capture.Classes[0].Identifier.Text}_{key}.g.cs", output.GetText(Encoding.UTF8));
 		}
 	}
 
-	public ClassDeclarationSyntax RecurseClassDeclarations(ClassDeclarationSyntax? clazz, List<ClassDeclarationSyntax> classes, FieldDeclarationSyntax fieldDeclaration, string key, int i)
+	private ClassDeclarationSyntax RecurseClassDeclarations(ClassDeclarationSyntax? clazz, List<ClassDeclarationSyntax> classes, FieldDeclarationSyntax? fieldDeclaration, EqualsValueClauseSyntax fieldDefault, string key, int i)
 	{
 		if (clazz == null) clazz = classes[i]
 									.WithCloseBraceToken(Token(SyntaxKind.CloseBraceToken));
@@ -39,20 +38,20 @@ public class ConfigurationGenerator : ISourceGenerator
 			return clazz.WithMembers(
 				new(RecurseClassDeclarations(classes[++i]
 					.WithCloseBraceToken(Token(SyntaxKind.CloseBraceToken).WithLeadingTrivia().WithTrailingTrivia()),
-					classes, fieldDeclaration, key, i))
+					classes, fieldDeclaration, fieldDefault, key, i))
 			);
 		}
 		else
 			return clazz.WithMembers(
-				new(CreateReqConfigProperty(key, fieldDeclaration))
+				new(CreateReqConfigProperty(key, fieldDeclaration, fieldDefault))
 			).WithLeadingTrivia().WithTrailingTrivia();
 	}
 
-	public PropertyDeclarationSyntax CreateReqConfigProperty(string ConfigName, FieldDeclarationSyntax fields)
+	public PropertyDeclarationSyntax CreateReqConfigProperty(string configName, FieldDeclarationSyntax fields, EqualsValueClauseSyntax? fieldDefault)
 	{
 		return PropertyDeclaration(
 				fields.Declaration.Type,
-				Identifier(ConfigName))
+				Identifier(configName))
 			.WithModifiers(
 				TokenList(
 					Token(
@@ -70,16 +69,26 @@ public class ConfigurationGenerator : ISourceGenerator
 									Block(
 										SingletonList<StatementSyntax>(
 											ReturnStatement(
-												MemberAccessExpression(
-													SyntaxKind.SimpleMemberAccessExpression,
-													PostfixUnaryExpression(
-														SyntaxKind.SuppressNullableWarningExpression,
+												fieldDefault == null
+													? MemberAccessExpression(
+														SyntaxKind.SimpleMemberAccessExpression,
 														MemberAccessExpression(
 															SyntaxKind.SimpleMemberAccessExpression,
 															InvocationExpression(
 																IdentifierName("ReqModel")),
-															IdentifierName("Settings"))),
-													IdentifierName(ConfigName)))))),
+															IdentifierName("Settings")),
+														IdentifierName(configName))
+													: BinaryExpression(
+														SyntaxKind.CoalesceExpression,
+														MemberAccessExpression(
+															SyntaxKind.SimpleMemberAccessExpression,
+															MemberAccessExpression(
+																SyntaxKind.SimpleMemberAccessExpression,
+																InvocationExpression(
+																	IdentifierName("ReqModel")),
+																IdentifierName("Settings")),
+															IdentifierName(configName)),
+														fieldDefault.Value))))),
 							AccessorDeclaration(
 									SyntaxKind.SetAccessorDeclaration)
 								.WithBody(
@@ -112,7 +121,7 @@ public class ConfigurationGenerator : ISourceGenerator
 															SyntaxKind.SimpleMemberAccessExpression,
 															IdentifierName("model"),
 															IdentifierName("Settings"))),
-													IdentifierName(ConfigName)),
+													IdentifierName(configName)),
 												IdentifierName("value"))),
 										ExpressionStatement(
 											InvocationExpression(

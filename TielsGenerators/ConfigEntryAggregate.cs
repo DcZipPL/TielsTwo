@@ -13,18 +13,19 @@ public class ConfigEntryAggregate : ISyntaxReceiver
 
 		var fields = attr.GetParent<FieldDeclarationSyntax>();
 		var ns = attr.GetParent<FileScopedNamespaceDeclarationSyntax>();
-
+		
 		List<ClassDeclarationSyntax> clazz = new List<ClassDeclarationSyntax>();
 		GetAllClasses(attr, null, ref clazz);
 
 		foreach (var field in fields.Declaration.Variables)
 		{
 			var key = field.Identifier.Text;
-			Captures.Add(new(key, fields, clazz, ns));
+			var @default = field.Initializer;
+			Captures.Add(new(key, fields, clazz, ns, @default));
 		}
 	}
 
-	public record Capture(string Key, FieldDeclarationSyntax Fields, List<ClassDeclarationSyntax> Classes, FileScopedNamespaceDeclarationSyntax Namespace);
+	public record Capture(string Key, FieldDeclarationSyntax Fields, List<ClassDeclarationSyntax> Classes, FileScopedNamespaceDeclarationSyntax Namespace, EqualsValueClauseSyntax? Default);
 
 	public ClassDeclarationSyntax GetAllClasses(SyntaxNode origin, ClassDeclarationSyntax? clazz, ref List<ClassDeclarationSyntax> classes) {
 		ClassDeclarationSyntax parent;
@@ -37,4 +38,9 @@ public class ConfigEntryAggregate : ISyntaxReceiver
 			return clazz ?? throw new Exception("No class found");
 		}
 	}
+}
+
+public class NoDefaultException : Exception
+{
+ 	public NoDefaultException(string message) : base(message) { }
 }

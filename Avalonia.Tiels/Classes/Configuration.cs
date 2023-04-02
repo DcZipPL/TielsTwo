@@ -211,18 +211,20 @@ public partial class Configuration
     // TODO: Add more null checks
 
     // ReSharper disable InconsistentNaming
-    #pragma warning disable CS0414 CS0169
+    #pragma warning disable CS0414
+    #pragma warning disable CS0169
     
-    [ConfigEntry] private float __Snapping;
-    [ConfigEntry] private float __HandleHeight;
-    [ConfigEntry] private string __TilesPath = "";
-    [ConfigEntry] private bool __AutoStart;
-    [ConfigEntry] private bool __AutoStartHideSettings;
-    [ConfigEntry] private bool __Experimental;
-    [ConfigEntry] private bool __ThumbnailsSettingsEnabled;
-    [ConfigEntry] private bool __HideTileButtons;
+    [ConfigEntry(Group = "Settings")] private float __Snapping;
+    [ConfigEntry(Group = "Settings")] private float __HandleHeight;
+    [ConfigEntry(Group = "Settings")] private string __TilesPath = "";
+    [ConfigEntry(Group = "Settings")] private bool __AutoStart;
+    [ConfigEntry(Group = "Settings")] private bool __AutoStartHideSettings;
+    [ConfigEntry(Group = "Settings")] private bool __Experimental;
+    [ConfigEntry(Group = "Settings")] private bool __ThumbnailsSettingsEnabled;
+    [ConfigEntry(Group = "Settings")] private bool __HideTileButtons;
     
-    #pragma warning restore CS0414 CS0169
+    #pragma warning restore CS0414
+    #pragma warning restore CS0169
     // ReSharper restore InconsistentNaming
 
     #endregion
@@ -443,6 +445,7 @@ public partial class Configuration
             set
             {
                 var model = ReqModel();
+                model.Appearance!.Theme = Enum.GetName(value).ToLower(); // TODO: not sure if this is correct
                 SeedModel(model);
             }
         }
@@ -601,5 +604,10 @@ public partial class Configuration
 
 [AttributeUsage(AttributeTargets.Field)]
 public class ConfigEntryAttribute : Attribute {
-    public bool Default { get; set; }
+    public ConfigEntryAttribute()
+    {
+        Group = "";
+    }
+
+    public string Group { get; set; }
 }

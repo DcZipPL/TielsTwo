@@ -24,7 +24,7 @@ public class ConfigurationGenerator : ISourceGenerator
 			
 			// Create the output
 			var output = capture.Namespace.WithMembers(new(
-						RecurseClassDeclarations(null, capture.Classes, capture.Fields, capture.Default, key, 0)))
+						RecurseClassDeclarations(null, capture.Classes, capture.Fields, capture.Default, key, capture.Group, 0)))
 						.NormalizeWhitespace();
 
 			// Add the output to the compilation
@@ -34,9 +34,10 @@ public class ConfigurationGenerator : ISourceGenerator
 
 	private ClassDeclarationSyntax RecurseClassDeclarations(ClassDeclarationSyntax? clazz,
 		List<ClassDeclarationSyntax> classes,
-		FieldDeclarationSyntax? fieldDeclaration,
-		EqualsValueClauseSyntax fieldDefault,
+		FieldDeclarationSyntax fieldDeclaration,
+		EqualsValueClauseSyntax? fieldDefault,
 		string key,
+		string? group,
 		int i)
 	{
 		// If the class is null. This is bottom level class
@@ -49,17 +50,17 @@ public class ConfigurationGenerator : ISourceGenerator
 			return clazz.WithMembers(
 				new(RecurseClassDeclarations(classes[++i]
 					.WithCloseBraceToken(Token(SyntaxKind.CloseBraceToken).WithLeadingTrivia().WithTrailingTrivia()), // Cleanup the trailing trivia and leading trivia
-					classes, fieldDeclaration, fieldDefault, key, i))
+					classes, fieldDeclaration, fieldDefault, key, group, i))
 			);
 		}
 		
 		// Finish recursion
 		return clazz.WithMembers(
-			new(CreateReqConfigProperty(key, fieldDeclaration, fieldDefault)) // Create the property in top level class
+			new(CreateReqConfigProperty(key, group, fieldDeclaration, fieldDefault)) // Create the property in top level class
 		).WithLeadingTrivia().WithTrailingTrivia(); // Also, cleanup the trailing trivia and leading trivia
 	}
 
-	public PropertyDeclarationSyntax CreateReqConfigProperty(string configName, FieldDeclarationSyntax fields, EqualsValueClauseSyntax? fieldDefault)
+	public PropertyDeclarationSyntax CreateReqConfigProperty(string configName, string? group, FieldDeclarationSyntax fields, EqualsValueClauseSyntax? fieldDefault)
 	{
 		return PropertyDeclaration(
 				fields.Declaration.Type,
@@ -84,21 +85,27 @@ public class ConfigurationGenerator : ISourceGenerator
 												fieldDefault == null
 													? MemberAccessExpression(
 														SyntaxKind.SimpleMemberAccessExpression,
-														MemberAccessExpression(
-															SyntaxKind.SimpleMemberAccessExpression,
-															InvocationExpression(
-																IdentifierName("ReqModel")),
-															IdentifierName("Settings")),
+														group == null
+															? InvocationExpression(
+																IdentifierName("ReqModel"))
+															: MemberAccessExpression(
+																SyntaxKind.SimpleMemberAccessExpression,
+																InvocationExpression(
+																	IdentifierName("ReqModel")),
+																IdentifierName(group)),
 														IdentifierName(configName))
 													: BinaryExpression(
 														SyntaxKind.CoalesceExpression,
 														MemberAccessExpression(
 															SyntaxKind.SimpleMemberAccessExpression,
-															MemberAccessExpression(
-																SyntaxKind.SimpleMemberAccessExpression,
-																InvocationExpression(
-																	IdentifierName("ReqModel")),
-																IdentifierName("Settings")),
+															group == null
+																? InvocationExpression(
+																	IdentifierName("ReqModel"))
+																: MemberAccessExpression(
+																	SyntaxKind.SimpleMemberAccessExpression,
+																	InvocationExpression(
+																		IdentifierName("ReqModel")),
+																	IdentifierName(group)),
 															IdentifierName(configName)),
 														fieldDefault.Value))))),
 							AccessorDeclaration(

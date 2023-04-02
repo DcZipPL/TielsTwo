@@ -155,20 +155,18 @@ public partial class Configuration
                 ErrorHandler.Warn("GlobalTheme", "Couldn't load Appearance settings!");
                 return FluentThemeMode.Light;
             }
-            else
+
+            var result = Enum.TryParse(appearanceReq.Theme, true, out FluentThemeMode theme);
+            if (result == false)
             {
-                var result = Enum.TryParse(appearanceReq.Theme, true, out FluentThemeMode theme);
-                if (result == false)
-                {
-                    ErrorHandler.Warn("GlobalTheme", "Couldn't parse theme from config!");
-                }
-                return theme;
+                ErrorHandler.Warn("GlobalTheme", "Couldn't parse theme from config!");
             }
+            return theme;
         }
         set
         {
             var model = ReqModel();
-            model.Appearance.Theme = value.ToString().ToLower();
+            model.Appearance!.Theme = value.ToString().ToLower();
             SeedModel(model);
         }
     }
@@ -184,7 +182,7 @@ public partial class Configuration
         set
         {
             var model = ReqModel();
-            model.Appearance.Transparency = (int)value;
+            model.Appearance!.Transparency = (int)value;
             SeedModel(model);
         }
     }
@@ -200,7 +198,7 @@ public partial class Configuration
         set
         {
             var model = ReqModel();
-            model.Appearance.Color = Util.ColorToHex(value);
+            model.Appearance!.Color = Util.ColorToHex(value);
             SeedModel(model);
         }
     }
@@ -258,24 +256,45 @@ public partial class Configuration
         /// <param name="path">Path to the Tile content.</param>
         /// <param name="sizeX">Width of Tile.</param>
         /// <param name="sizeY">Height of Tile.</param>
+        /// <param name="overrideTheme">Override global theme.</param>
+        /// <param name="theme">Theme of Tile.</param>
+        /// <param name="transparencyLevel">Transparency level of Tile.</param>
+        /// <param name="color">Color of Tile.</param>
         /// <returns>Guid of new Tile.</returns>
-        /// <exception cref="Exception">Throws InvalidDataException if default configuration file don't have Size table.</exception>
         public static Guid CreateTileConfig(Configuration configAccess, string name, string path, double sizeX, double sizeY, bool overrideTheme, FluentThemeMode theme, WindowTransparencyLevel transparencyLevel, Color color)
         {
             var id = Guid.NewGuid();
             
             // TODO: Do bin
-            var tileConf = System.IO.Path.Combine(Environment.CurrentDirectory, "Defaults/tile.default.toml");
             
-            var defaultModel = File.ReadAllText(tileConf);
-            var model = Toml.ToModel<Models.TileModel>(defaultModel);
+            // Load default config
+            var model = new Models.TileModel();
+            try
+            {
+                var defaultTileConfPath =
+                    System.IO.Path.Combine(Environment.CurrentDirectory, "Defaults/tile.default.toml");
+                var defaultModel = File.ReadAllText(defaultTileConfPath);
+                model = Toml.ToModel<Models.TileModel>(defaultModel);
+            }
+            catch (Exception e)
+            {
+                ErrorHandler.Warn(nameof(CreateTileConfig), e.ToString());
+            }
 
+            // Check if default config is valid
             if (model.Size == null)
-                throw ErrorHandler.ShowErrorWindow(new InvalidDataException("Tile config don't contain Size or it is null!") , 0x0006);
-            
-            if (model.Appearance == null)
-                throw ErrorHandler.ShowErrorWindow(new InvalidDataException("Tile config don't Appearance size or it is null!") , 0x0007);
+            {
+                model.Size = new Configuration.Models.Vec2();
+                ErrorHandler.Warn(nameof(CreateTileConfig), "Default Tile config don't contain Size or it is null!");
+            }
 
+            if (model.Appearance == null)
+            {
+                model.Appearance = new Configuration.Models.Appearance();
+                ErrorHandler.Warn(nameof(CreateTileConfig), "Default Tile config don't Appearance size or it is null!");
+            }
+
+            // Assign values
             model.Id = id.ToString();
             model.Path = path;
             model.Name = name;
@@ -445,7 +464,7 @@ public partial class Configuration
             set
             {
                 var model = ReqModel();
-                model.Appearance.Color = Util.ColorToHex(value);
+                model.Appearance!.Color = Util.ColorToHex(value);
                 SeedModel(model);
             }
         }
@@ -456,12 +475,19 @@ public partial class Configuration
         {
             lock (_tileConfigLock)
             {
-                var defaultModel = File.ReadAllText(_configPath);
-                var model = Toml.ToModel<Models.TileModel>(defaultModel);
-                model.Appearance ??= new Models.Appearance();
-                model.Size ??= new Models.Vec2();
-                model.Location ??= new Models.Vec2();
-                return model;
+                try
+                {
+                    var plainModel = File.ReadAllText(_configPath);
+                    var model = Toml.ToModel<Models.TileModel>(plainModel);
+                    model.Appearance ??= new Models.Appearance();
+                    model.Size ??= new Models.Vec2();
+                    model.Location ??= new Models.Vec2();
+                    return model;
+                } catch (Exception e)
+                {
+                    ErrorHandler.ShowErrorWindow(e, 0x0021);
+                    return new Models.TileModel();
+                }
             }
         }
 
@@ -483,12 +509,18 @@ public partial class Configuration
     {
         lock (_readWriteLock)
         {
-            // TODO: Add try catch
-            var defaultModel = File.ReadAllText(Path.Combine(GetConfigDirectory(), "global.toml"));
-            var model = Toml.ToModel<Models.GlobalModel>(defaultModel);
-            model.Appearance ??= new Models.Appearance();
-            model.Settings ??= new Models.Settings();
-            return model;
+            try
+            {
+                var defaultModel = File.ReadAllText(Path.Combine(GetConfigDirectory(), "global.toml"));
+                var model = Toml.ToModel<Models.GlobalModel>(defaultModel);
+                model.Appearance ??= new Models.Appearance();
+                model.Settings ??= new Models.Settings();
+                return model;
+            } catch (Exception e)
+            {
+                ErrorHandler.ShowErrorWindow(e, 0x0022);
+                return new Models.GlobalModel();
+            }
         }
     }
 
@@ -517,6 +549,14 @@ public partial class Configuration
     {
         public class Appearance : ITomlMetadataProvider
         {
+            public Appearance()
+            {
+                Override = false;
+                Theme = "dark";
+                Color = "#55000000";
+                Transparency = 1;
+            }
+            
             public bool Override { get; set; }
             public string? Theme { get; set; } // FluentThemeMode (lowercase)
             public string? Color { get; set; }
@@ -527,6 +567,17 @@ public partial class Configuration
     
         public class Settings : ITomlMetadataProvider
         {
+            public Settings()
+            {
+                AutoStart = true;
+                AutoStartHideSettings = true;
+                ThumbnailsSettingsEnabled = false;
+                Experimental = false;
+                HideTileButtons = false;
+                Snapping = 5.0f;
+                HandleHeight = 28.0f;
+            }
+            
             public string? TilesPath { get; set; }
             public bool AutoStart { get; set; }
             public bool AutoStartHideSettings { get; set; }
@@ -549,6 +600,12 @@ public partial class Configuration
 
         public class TileModel : ITomlMetadataProvider
         {
+            public TileModel()
+            {
+                Hidden = false;
+                EditBarAlignment = 0;
+            }
+            
             public string? Id { get; set; }
             public string? Name { get; set; }
             public string? Path { get; set; }

@@ -15,21 +15,27 @@
 			<Button Grid.Column="1" Click="ApplyButtonClicked" x:Name="ApplyButton" Margin="5,0,0,0" Content="{x:Static p:Resources.Apply}"/>
 			<Button Grid.Column="0" Click="DefaultButtonClicked" x:Name="DefaultButton" Content="{x:Static p:Resources.Default}"/>
 		</Grid>
-			<StackPanel Margin="10">
-				<TextBlock FontSize="16" Margin="0,0,0,10" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.SettingsLabel}"/>
-				<Label Content="{x:Static p:Resources.DefaultTilesDirectory}"/>
-				<TextBox x:Name="TilesDirectoryBox" Margin="0,0,0,10" KeyUp="TilePathTextBoxChanged"/>
-				<Label Content="{x:Static p:Resources.LanguageSelection}"/>
-				<ComboBox x:Name="LanguageBox" Margin="0,0,0,10" HorizontalAlignment="Stretch" SelectionChanged="LanguageChanged">
-					<ComboBox.ItemTemplate>
-						<DataTemplate>
-							<TextBlock Text="{Binding DisplayName}"/>
-						</DataTemplate>
-					</ComboBox.ItemTemplate>
-				</ComboBox>
-				<CheckBox x:Name="AutostartCheckBox" Content="{x:Static p:Resources.AutostartEnabled}"/>
-				<CheckBox x:Name="HideWindowCheckBox" Content="{x:Static p:Resources.HideAtStartup}"/>
-				<CheckBox x:Name="ExperimentalCheckBox" Content="{x:Static p:Resources.ExperimentalFeatures}"/>
+			<StackPanel Margin="10" Spacing="10">
+				<TextBlock FontSize="16" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.SettingsLabel}"/>
+				<StackPanel>
+					<Label Content="{x:Static p:Resources.DefaultTilesDirectory}"/>
+					<TextBox x:Name="TilesDirectoryBox" KeyUp="TilePathTextBoxChanged"/>
+				</StackPanel>
+				<StackPanel>
+					<Label Content="{x:Static p:Resources.LanguageSelection}"/>
+					<ComboBox x:Name="LanguageBox" HorizontalAlignment="Stretch" SelectionChanged="LanguageChanged">
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding DisplayName}"/>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+				</StackPanel>
+				<StackPanel>
+					<CheckBox x:Name="AutostartCheckBox" Content="{x:Static p:Resources.AutostartEnabled}"/>
+					<CheckBox x:Name="HideWindowCheckBox" Content="{x:Static p:Resources.HideAtStartup}"/>
+					<CheckBox x:Name="ExperimentalCheckBox" Content="{x:Static p:Resources.ExperimentalFeatures}"/>
+				</StackPanel>
 			</StackPanel>
 		
 		<WrapPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="15">

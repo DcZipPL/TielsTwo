@@ -16,35 +16,47 @@ public class ConfigurationGenerator : ISourceGenerator
 
 	public void Execute(GeneratorExecutionContext context)
 	{
-		var receiver = (MainSyntaxReceiver)context.SyntaxReceiver;
+		var receiver = (MainSyntaxReceiver)context.SyntaxReceiver; // Get captured syntax nodes
 		foreach (var capture in receiver.ConfigEntries.Captures)
 		{
+			// Cleanup the key
 			var key = capture.Key.Replace("__", "");
 			
+			// Create the output
 			var output = capture.Namespace.WithMembers(new(
 						RecurseClassDeclarations(null, capture.Classes, capture.Fields, capture.Default, key, 0)))
 						.NormalizeWhitespace();
 
+			// Add the output to the compilation
 			context.AddSource($"{capture.Classes[0].Identifier.Text}_{key}.g.cs", output.GetText(Encoding.UTF8));
 		}
 	}
 
-	private ClassDeclarationSyntax RecurseClassDeclarations(ClassDeclarationSyntax? clazz, List<ClassDeclarationSyntax> classes, FieldDeclarationSyntax? fieldDeclaration, EqualsValueClauseSyntax fieldDefault, string key, int i)
+	private ClassDeclarationSyntax RecurseClassDeclarations(ClassDeclarationSyntax? clazz,
+		List<ClassDeclarationSyntax> classes,
+		FieldDeclarationSyntax? fieldDeclaration,
+		EqualsValueClauseSyntax fieldDefault,
+		string key,
+		int i)
 	{
-		if (clazz == null) clazz = classes[i]
-									.WithCloseBraceToken(Token(SyntaxKind.CloseBraceToken));
+		// If the class is null. This is bottom level class
+		clazz ??= classes[i]
+			.WithCloseBraceToken(Token(SyntaxKind.CloseBraceToken));
+		
+		// If we're not at the top level, recurse through the classes
 		if (classes.Count - 1 > i)
 		{
 			return clazz.WithMembers(
 				new(RecurseClassDeclarations(classes[++i]
-					.WithCloseBraceToken(Token(SyntaxKind.CloseBraceToken).WithLeadingTrivia().WithTrailingTrivia()),
+					.WithCloseBraceToken(Token(SyntaxKind.CloseBraceToken).WithLeadingTrivia().WithTrailingTrivia()), // Cleanup the trailing trivia and leading trivia
 					classes, fieldDeclaration, fieldDefault, key, i))
 			);
 		}
-		else
-			return clazz.WithMembers(
-				new(CreateReqConfigProperty(key, fieldDeclaration, fieldDefault))
-			).WithLeadingTrivia().WithTrailingTrivia();
+		
+		// Finish recursion
+		return clazz.WithMembers(
+			new(CreateReqConfigProperty(key, fieldDeclaration, fieldDefault)) // Create the property in top level class
+		).WithLeadingTrivia().WithTrailingTrivia(); // Also, cleanup the trailing trivia and leading trivia
 	}
 
 	public PropertyDeclarationSyntax CreateReqConfigProperty(string configName, FieldDeclarationSyntax fields, EqualsValueClauseSyntax? fieldDefault)

@@ -28,7 +28,9 @@ public class ConfigurationGenerator : ISourceGenerator
 						.NormalizeWhitespace();
 
 			// Add the output to the compilation
-			context.AddSource($"{capture.Classes[0].Identifier.Text}_{key}.g.cs", output.GetText(Encoding.UTF8));
+			var generatedFileName =
+				capture.Classes.Aggregate("", (current, clazz) => current + (clazz.Identifier.Text + "_"));
+			context.AddSource($"{generatedFileName}{key}.g.cs", output.GetText(Encoding.UTF8));
 		}
 	}
 
@@ -134,12 +136,12 @@ public class ConfigurationGenerator : ISourceGenerator
 												SyntaxKind.SimpleAssignmentExpression,
 												MemberAccessExpression(
 													SyntaxKind.SimpleMemberAccessExpression,
-													PostfixUnaryExpression(
-														SyntaxKind.SuppressNullableWarningExpression,
-														MemberAccessExpression(
+													group == null
+														? IdentifierName("model")
+														: MemberAccessExpression(
 															SyntaxKind.SimpleMemberAccessExpression,
 															IdentifierName("model"),
-															IdentifierName("Settings"))),
+															IdentifierName(group)),
 													IdentifierName(configName)),
 												IdentifierName("value"))),
 										ExpressionStatement(

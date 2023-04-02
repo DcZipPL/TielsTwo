@@ -330,49 +330,18 @@ public partial class Configuration
 
         #region Request
         
-        public string Id
-        {
-            get { return ReqModel().Id ?? ""; }
-            set
-            {
-                var model = ReqModel();
-                model.Id = value;
-                SeedModel(model);
-            }
-        }
+        // ReSharper disable InconsistentNaming
+        #pragma warning disable CS0414
+        #pragma warning disable CS0169
         
-        public string Name
-        {
-            get { return ReqModel().Name ?? ""; }
-            set
-            {
-                var model = ReqModel();
-                model.Name = value;
-                SeedModel(model);
-            }
-        }
-        
-        public string Path
-        {
-            get { return ReqModel().Path ?? ""; }
-            set
-            {
-                var model = ReqModel();
-                model.Path = value;
-                SeedModel(model);
-            }
-        }
-        
-        public bool Hidden
-        {
-            get { return ReqModel().Hidden; }
-            set
-            {
-                var model = ReqModel();
-                model.Hidden = value;
-                SeedModel(model);
-            }
-        }
+        [ConfigEntry] private string __Id = "";
+        [ConfigEntry] private string __Name = "";
+        [ConfigEntry] private string __Path = "";
+        [ConfigEntry] private bool __Hidden;
+
+        #pragma warning restore CS0414
+        #pragma warning restore CS0169
+        // ReSharper restore InconsistentNaming
 
         public BarAlignment EditBarAlignment
         {
@@ -489,9 +458,9 @@ public partial class Configuration
             {
                 var defaultModel = File.ReadAllText(_configPath);
                 var model = Toml.ToModel<Models.TileModel>(defaultModel);
-                if (model.Appearance == null) model.Appearance = new Models.Appearance();
-                if (model.Size == null) model.Size = new Models.Vec2();
-                if (model.Location == null) model.Location = new Models.Vec2();
+                model.Appearance ??= new Models.Appearance();
+                model.Size ??= new Models.Vec2();
+                model.Location ??= new Models.Vec2();
                 return model;
             }
         }
@@ -517,8 +486,8 @@ public partial class Configuration
             // TODO: Add try catch
             var defaultModel = File.ReadAllText(Path.Combine(GetConfigDirectory(), "global.toml"));
             var model = Toml.ToModel<Models.GlobalModel>(defaultModel);
-            if (model.Appearance == null) model.Appearance = new Models.Appearance();
-            if (model.Settings == null) model.Settings = new Models.Settings();
+            model.Appearance ??= new Models.Appearance();
+            model.Settings ??= new Models.Settings();
             return model;
         }
     }

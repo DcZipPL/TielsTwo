@@ -34,7 +34,7 @@ public class BlurBox : Control
         AffectsRender<BlurBox>(MaterialProperty);
     }
     
-    private static SKShader s_acrylicNoiseShader;
+    private static SKShader? s_acrylicNoiseShader;
     class BlurBehindRenderOperation : ICustomDrawOperation
     {
         private readonly ImmutableExperimentalAcrylicMaterial _material;
@@ -46,14 +46,10 @@ public class BlurBox : Control
             _bounds = bounds;
         }
         
-        public void Dispose()
-        {
-            
-        }
+        public void Dispose() { }
 
         public bool HitTest(Point p) => _bounds.Contains(p);
 
-        
         static SKColorFilter CreateAlphaColorFilter(double opacity)
         {
             if (opacity > 1)
@@ -76,7 +72,6 @@ public class BlurBox : Control
             
             if(!skia.SkCanvas.TotalMatrix.TryInvert(out var currentInvertedTransform))
                 return;
-            
             
             using var backgroundSnapshot = skia.SkSurface.Snapshot();
             using var backdropShader = SKShader.CreateImage(backgroundSnapshot, SKShaderTileMode.Clamp,
@@ -104,8 +99,6 @@ public class BlurBox : Control
                 //return;
             using var acrylliPaint = new SKPaint();
             acrylliPaint.IsAntialias = true;
-            
-            double opacity = 1;
 
             const double noiseOpacity = 0.0225;
 
@@ -139,7 +132,6 @@ public class BlurBox : Control
             return other is BlurBehindRenderOperation op && op._bounds == _bounds && op._material.Equals(_material);
         }
     }
-    
     
     public override void Render(DrawingContext context)
     {

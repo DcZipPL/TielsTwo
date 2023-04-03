@@ -80,7 +80,7 @@ public partial class TilePage : UserPage
 		}
 		catch (FormatException ex)
 		{
-			// TODO: Add error status message
+			ErrorHandler.Warn("CreateTile", ex.ToString());
 		}
 	}
 

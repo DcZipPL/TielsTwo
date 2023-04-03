@@ -231,8 +231,8 @@ public partial class Configuration
     public sealed partial class Tile
     {
         // ReSharper disable InconsistentNaming
-        internal string _thumbnailDbPath;
-        internal string _configPath;
+        internal string _thumbnailDbPath = "";
+        internal string _configPath = "";
         private readonly object _tileConfigLock = new object();
         // ReSharper restore InconsistentNaming
 
@@ -323,8 +323,8 @@ public partial class Configuration
         public void SaveThumbnail(string path, string thumbnailPath)
         {
             int header = System.Text.Encoding.ASCII.GetByteCount("BPT");
-            const uint maxBufferSize = sizeof(uint);
-            const uint bufferSize = sizeof(uint) * maxBufferSize;
+            //const uint maxBufferSize = sizeof(uint);
+            //const uint bufferSize = sizeof(uint) * maxBufferSize;
         
             byte[] bytes = File.ReadAllBytes(path);
         
@@ -549,43 +549,24 @@ public partial class Configuration
     {
         public class Appearance : ITomlMetadataProvider
         {
-            public Appearance()
-            {
-                Override = false;
-                Theme = "dark";
-                Color = "#55000000";
-                Transparency = 1;
-            }
-            
-            public bool Override { get; set; }
-            public string? Theme { get; set; } // FluentThemeMode (lowercase)
-            public string? Color { get; set; }
-            public int Transparency { get; set; } // WindowTransparencyLevel
+            public bool Override { get; set; } = false;
+            public string? Theme { get; set; } = "dark"; // FluentThemeMode (lowercase)
+            public string? Color { get; set; } = "#55000000";
+            public int Transparency { get; set; } = 1; // WindowTransparencyLevel
             
             TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
         }
     
         public class Settings : ITomlMetadataProvider
         {
-            public Settings()
-            {
-                AutoStart = true;
-                AutoStartHideSettings = true;
-                ThumbnailsSettingsEnabled = false;
-                Experimental = false;
-                HideTileButtons = false;
-                Snapping = 5.0f;
-                HandleHeight = 28.0f;
-            }
-            
             public string? TilesPath { get; set; }
-            public bool AutoStart { get; set; }
-            public bool AutoStartHideSettings { get; set; }
-            public bool ThumbnailsSettingsEnabled { get; set; }
-            public bool Experimental { get; set; }
-            public bool HideTileButtons { get; set; }
-            public float Snapping { get; set; } // Snap to grid
-            public float HandleHeight { get; set; }
+            public bool AutoStart { get; set; } = true;
+            public bool AutoStartHideSettings { get; set; } = true;
+            public bool ThumbnailsSettingsEnabled { get; set; } = false;
+            public bool Experimental { get; set; } = false;
+            public bool HideTileButtons { get; set; } = false;
+            public float Snapping { get; set; } = 5.0f; // Snap to grid
+            public float HandleHeight { get; set; } = 28.0f; // Height of the handle
             
             TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
         }
@@ -600,19 +581,13 @@ public partial class Configuration
 
         public class TileModel : ITomlMetadataProvider
         {
-            public TileModel()
-            {
-                Hidden = false;
-                EditBarAlignment = 0;
-            }
-            
-            public string? Id { get; set; }
+            public string? Id { get; set; } = Guid.Empty.ToString();
             public string? Name { get; set; }
             public string? Path { get; set; }
-            public bool Hidden { get; set; }
-            public int EditBarAlignment { get; set; } // BarAlignment
-            public Vec2? Size { get; set; }
-            public Vec2? Location { get; set; }
+            public bool Hidden { get; set; } = false;
+            public int EditBarAlignment { get; set; } = 0; // BarAlignment
+            public Vec2? Size { get; set; } = new Vec2 { X = 200, Y = 100 };
+            public Vec2? Location { get; set; } = new Vec2 { X = 100, Y = 100 };
             public Appearance? Appearance { get; set; }
             
             TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }

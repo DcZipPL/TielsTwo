@@ -26,7 +26,7 @@ public class ThumbnailNsi : ThumbnailCsi
 		SHFILEINFO sfi = new SHFILEINFO();
 		Shell32.SHGetFileInfo(pszFile,
 			0,
-			ref sfi, 
+			ref sfi,
 			(uint)System.Runtime.InteropServices.Marshal.SizeOf(sfi),
 			(uint)(SHGFI.SysIconIndex | SHGFI.LargeIcon | SHGFI.UseFileAttributes));
 		return sfi.iIcon;

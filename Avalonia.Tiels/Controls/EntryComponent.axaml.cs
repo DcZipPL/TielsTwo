@@ -12,9 +12,9 @@ namespace Avalonia.Tiels.Controls;
 
 public partial class EntryComponent : UserControl
 {
-	public IImage Preview { get; set; }
-	public string EntryName { get; set; }
-	public string Path { get; set; }
+	public IImage? Preview { get; set; }
+	public string EntryName { get; set; } = "";
+	public string Path { get; set; } = "";
 	public FluentThemeMode Theme { get; set; }
 	
 	public EntryComponent()

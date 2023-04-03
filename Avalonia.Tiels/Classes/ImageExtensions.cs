@@ -8,8 +8,6 @@ public static class ImageExtensions
 {
 	public static Bitmap ConvertToAvaloniaBitmap(this Image bitmap)
 	{
-		if (bitmap == null)
-			return null;
 		System.Drawing.Bitmap bitmapTmp = new System.Drawing.Bitmap(bitmap);
 		var bitmapdata = bitmapTmp.LockBits(new Rectangle(0, 0, bitmapTmp.Width, bitmapTmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 		Bitmap bitmap1 = new Bitmap(Avalonia.Platform.PixelFormat.Bgra8888, Avalonia.Platform.AlphaFormat.Premul,

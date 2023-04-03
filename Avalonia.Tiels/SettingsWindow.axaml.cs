@@ -8,8 +8,6 @@ namespace Avalonia.Tiels
 {
 	public partial class SettingsWindow : Window
 	{
-		private List<SidebarButton> _sidebarButtons;
-
 		public SettingsWindow()
 		{
 			LoadWindow();
@@ -17,8 +15,7 @@ namespace Avalonia.Tiels
 
 		private void LoadSidebar()
 		{
-			// TODO: Less hardcoding pls
-			_sidebarButtons = new List<SidebarButton>
+			List<SidebarButton> sidebarButtons = new List<SidebarButton>
 			{
 				SB_CT.WithPage(TileCreatePage),
 				SB_CDP.WithPage(DirectoryPortalPage.SetPageAsDirectoryPortal()),
@@ -41,7 +38,7 @@ namespace Avalonia.Tiels
 			// Load default page
 			IPage.ChangeVisibility(GeneralSettingsPage, true);
 			
-			foreach (var sidebarButton in _sidebarButtons)
+			foreach (var sidebarButton in sidebarButtons)
 			{
 				sidebarButton.Top.Click += (rawSender, args) =>
 				{
@@ -49,7 +46,7 @@ namespace Avalonia.Tiels
 					var sender = (ToggleButton)rawSender!;
 					if (sender.IsChecked.HasValue && sender.IsChecked.Value)
 					{
-						foreach (var sidebarButton in _sidebarButtons)
+						foreach (var sidebarButton in sidebarButtons)
 						{
 							if (sidebarButton.Top.Equals(sender))
 							{

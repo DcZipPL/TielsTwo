@@ -37,7 +37,7 @@ public partial class Configuration
                     
                     Tiles[guid]._configPath = filePath;
 
-                } else { ErrorHandler.ShowErrorWindow(new InvalidDataException("Name of file: " + filePath + "has invalid Guid."), 0x0004); }
+                } else { ErrorHandler.Error(new InvalidDataException("Name of file: " + filePath + "has invalid Guid."), nameof(Configuration) + "&0"); }
             }
             if (Path.GetExtension(filePath) == ".bin") // thumbnail
             {
@@ -47,7 +47,7 @@ public partial class Configuration
                         Tiles.Add(guid, new Tile());
                     
                     Tiles[guid]._thumbnailDbPath = filePath;
-                } else { ErrorHandler.ShowErrorWindow(new InvalidDataException("Name of file: \"" + filePath + "\" has invalid Guid."), 0x0005); }
+                } else { ErrorHandler.Error(new InvalidDataException("Name of file: \"" + filePath + "\" has invalid Guid."), nameof(Configuration) + "&1"); }
             }
         }
     }
@@ -94,12 +94,12 @@ public partial class Configuration
         }
         catch (UnauthorizedAccessException uae)
         {
-            throw ErrorHandler.ShowErrorWindow(uae, 0x0001);
+            throw ErrorHandler.Error(uae, nameof(Configuration) + "&2");
             // TODO: Open as administrator / sudo
         }
         catch (Exception e)
         {
-            throw ErrorHandler.ShowErrorWindow(e, 0x0002);
+            throw ErrorHandler.Error(e, nameof(Configuration) + "&3");
         }
 
         return Load(closer);
@@ -427,7 +427,7 @@ public partial class Configuration
             get
             {
                 var result = Enum.TryParse(ReqModel().Appearance!.Theme, true, out FluentThemeMode theme);
-                ErrorHandler.ShowErrorWindow(new Exception($"Couldn't parse {nameof(theme)} from config!"), 0x001F);
+                ErrorHandler.Error(new Exception($"Couldn't parse {nameof(theme)} from config!"), nameof(Configuration.Tile) + "->" + nameof(Theme));
                 return result ? theme : FluentThemeMode.Light;
             }
             set
@@ -458,7 +458,7 @@ public partial class Configuration
             get
             {
                 var result = Color.TryParse(ReqModel().Appearance!.Color, out var color);
-                ErrorHandler.ShowErrorWindow(new Exception($"Couldn't parse {nameof(color)} from config!"), 0x001F);
+                ErrorHandler.Warn(nameof(Configuration.Tile) + "->" + nameof(Color), $"Couldn't parse {nameof(color)} from config!");
                 return result ? color : Color.FromArgb(0, 0, 0, 0);
             }
             set
@@ -485,7 +485,7 @@ public partial class Configuration
                     return model;
                 } catch (Exception e)
                 {
-                    ErrorHandler.ShowErrorWindow(e, 0x0021);
+                    ErrorHandler.Warn(nameof(Configuration.Tile) + "->" + nameof(ReqModel), e.ToString());
                     return new Models.TileModel();
                 }
             }
@@ -518,7 +518,7 @@ public partial class Configuration
                 return model;
             } catch (Exception e)
             {
-                ErrorHandler.ShowErrorWindow(e, 0x0022);
+                ErrorHandler.Warn(nameof(Configuration) + "->" + nameof(ReqModel), e.ToString());
                 return new Models.GlobalModel();
             }
         }

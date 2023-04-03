@@ -16,8 +16,7 @@ public abstract class ThumbnailCsi
 		}
 		catch (Exception e)
 		{
-			ErrorHandler.ShowErrorWindow(e, 0x000F);
-			throw;
+			throw ErrorHandler.Error(e, nameof(ThumbnailCsi));
 		}
 
 		throw new PlatformNotSupportedException();

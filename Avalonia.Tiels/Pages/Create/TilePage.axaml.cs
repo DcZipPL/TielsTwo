@@ -65,8 +65,8 @@ public partial class TilePage : UserPage
 		try
 		{
 			if (!UseGlobalThemeBox.IsChecked.HasValue)
-				throw ErrorHandler.ShowErrorWindow(new NullReferenceException("UseGlobalThemeBox.IsChecked is null!"),
-					0x0008);
+				throw ErrorHandler.Error(new NullReferenceException("UseGlobalThemeBox.IsChecked is null!"),
+					nameof(TilePage));
 			TileManagement.CreateTile(
 				NameBox.Text,
 				_type == TileType.DirectoryPortal ? PathBox.Text : Path.Combine(App.Instance.Config.TilesPath, NameBox.Text),

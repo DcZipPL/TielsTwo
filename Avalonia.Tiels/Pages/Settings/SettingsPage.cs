@@ -20,4 +20,7 @@ public abstract class SettingsPage : UserPage
 	{
 		status = (invalid ? Icons.X : Icons.Check, message);
 	}
+
+	protected abstract void ApplySettings();
+	protected abstract void RollbackSettings();
 }

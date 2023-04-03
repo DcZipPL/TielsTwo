@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using Avalonia.Themes.Fluent;
@@ -12,7 +13,7 @@ using Avalonia.Threading;
 
 namespace Avalonia.Tiels.Pages.Settings;
 
-public partial class AppearancePage : UserPage
+public partial class AppearancePage : SettingsPage
 {
 	public AppearancePage()
 	{
@@ -43,4 +44,19 @@ public partial class AppearancePage : UserPage
 			ColorWheel.IsRGBVisible = ColorWheel.Bounds.Width > 890;
 		}
 	}
+
+	protected override void ApplySettings()
+	{
+		
+	}
+
+	protected override void RollbackSettings()
+	{
+		
+	}
+	
+	#region Boilerplate
+	private void ApplyButtonClicked(object? sender, RoutedEventArgs e) => ApplySettings();
+	private void DefaultButtonClicked(object? sender, RoutedEventArgs e) => RollbackSettings();
+	#endregion
 }

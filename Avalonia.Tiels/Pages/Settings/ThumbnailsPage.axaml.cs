@@ -1,12 +1,28 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 
 namespace Avalonia.Tiels.Pages.Settings;
 
-public partial class ThumbnailsPage : UserPage
+public partial class ThumbnailsPage : SettingsPage
 {
 	public ThumbnailsPage()
 	{
 		InitializeComponent();
 	}
+
+	protected override void ApplySettings()
+	{
+		throw new System.NotImplementedException();
+	}
+
+	protected override void RollbackSettings()
+	{
+		throw new System.NotImplementedException();
+	}
+	
+	#region Boilerplate
+	private void ApplyButtonClicked(object? sender, RoutedEventArgs e) => ApplySettings();
+	private void DefaultButtonClicked(object? sender, RoutedEventArgs e) => RollbackSettings();
+	#endregion
 }

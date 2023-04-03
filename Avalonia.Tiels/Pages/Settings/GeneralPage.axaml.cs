@@ -20,7 +20,7 @@ public partial class GeneralPage : SettingsPage
 		LoadSettingsValues();
 	}
 
-	private void ApplySettings()
+	protected override void ApplySettings()
 	{
 		// Check if tiles path didn't changed. If changed apply new location if valid to config and give status.
 		var newPath = string.IsNullOrEmpty(TilesDirectoryBox.Text)
@@ -61,7 +61,7 @@ public partial class GeneralPage : SettingsPage
 		StatusText.Text = status.Item2;
 	}
 
-	private void RollbackSettings()
+	protected override void RollbackSettings()
 	{
 	}
 

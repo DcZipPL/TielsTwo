@@ -13,11 +13,11 @@ public partial class SnappingPage : SettingsPage
 		LoadSettingsValues();
 	}
 
-	private void RollbackSettings()
+	protected override void RollbackSettings()
 	{
 	}
 	
-	private void ApplySettings()
+	protected override void ApplySettings()
 	{
 		// Apply snapping settings
 		if (App.Instance.Config.Snapping.ToString() != SnappingBox.Text)

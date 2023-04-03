@@ -48,7 +48,6 @@ public class TileManagement
 	/// <param name="configuration">Configuration Access.</param>
 	public static void LoadTileContent(TileWindow window, Configuration configuration)
 	{
-		var i = 0;
 		foreach (var systemEntry in Directory.EnumerateFileSystemEntries(configuration.Tiles[window.ID].Path))
 		{
 			var thumbnail = ThumbnailCsi.GetThumbnailImage(systemEntry, ThumbnailSize.Jumbo);

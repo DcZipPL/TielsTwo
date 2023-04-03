@@ -97,16 +97,11 @@ public partial class GeneralPage : SettingsPage
 
 	private void LanguageChanged(object? sender, SelectionChangedEventArgs e)
 	{
-		try
-		{
-			var ci = (CultureInfo)LanguageBox.SelectedItem;
-			CultureInfo.CurrentCulture = ci;
-			CultureInfo.CurrentUICulture = ci;
-		}
-		catch (Exception ex)
-		{
-			throw ErrorHandler.ShowErrorWindow(ex, 0x0003);
-		}
+		var selected = LanguageBox.SelectedItem;
+		if (selected == null) throw ErrorHandler.ShowErrorWindow(new NullReferenceException("No language selected"), 0x0003);
+		var ci = (CultureInfo)selected;
+		CultureInfo.CurrentCulture = ci;
+		CultureInfo.CurrentUICulture = ci;
 	}
 
 	#region Boilerplate

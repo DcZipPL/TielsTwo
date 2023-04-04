@@ -44,6 +44,9 @@ public partial class GeneralPage : SettingsPage
 		ApplyIfChanged(App.Instance.Config.AutoStart, b => App.Instance.Config.AutoStart = b, AutostartCheckBox);
 		ApplyIfChanged(App.Instance.Config.AutoStartHideSettings, b => App.Instance.Config.AutoStartHideSettings = b, HideWindowCheckBox);
 		ApplyIfChanged(App.Instance.Config.Experimental, b => App.Instance.Config.Experimental = b, ExperimentalCheckBox);
+		
+		// Apply language change
+		App.Instance.Config.Language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 
 		// Save draft data before reinitialize
 		var draftTilesPath = TilesDirectoryBox.Text;

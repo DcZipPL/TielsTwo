@@ -215,6 +215,7 @@ public partial class Configuration
     [ConfigEntry(Group = "Settings")] private float __Snapping;
     [ConfigEntry(Group = "Settings")] private float __HandleHeight;
     [ConfigEntry(Group = "Settings")] private string __TilesPath = "";
+    [ConfigEntry(Group = "Settings")] private string __Language = "";
     [ConfigEntry(Group = "Settings")] private bool __AutoStart;
     [ConfigEntry(Group = "Settings")] private bool __AutoStartHideSettings;
     [ConfigEntry(Group = "Settings")] private bool __Experimental;
@@ -560,6 +561,7 @@ public partial class Configuration
         public class Settings : ITomlMetadataProvider
         {
             public string? TilesPath { get; set; }
+            public string? Language { get; set; }
             public bool AutoStart { get; set; } = true;
             public bool AutoStartHideSettings { get; set; } = true;
             public bool ThumbnailsSettingsEnabled { get; set; } = false;

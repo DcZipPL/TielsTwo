@@ -1,5 +1,6 @@
 [settings]
 tiles_path = "not_initialized"
+language = "en"
 auto_start = true
 auto_start_hide_settings = true # Hide settings when application autostarts
 thumbnails_settings_enabled = true

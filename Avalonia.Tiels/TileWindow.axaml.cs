@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Numerics;
 using System.Threading;
 using Avalonia.Controls;
@@ -113,7 +114,10 @@ public partial class TileWindow : Window
 				Preview = e.Value.Preview,
 				Theme = App.Instance.Config.Tiles[ID].IsOverriden
 					? App.Instance.Config.Tiles[ID].Theme
-					: App.Instance.Config.GlobalTheme
+					: App.Instance.Config.GlobalTheme,
+				Attribute = Path.GetExtension(e.Value.Path) == ".url" || Path.GetExtension(e.Value.Path) == ".lnk"
+					? FileAttribute.Link
+					: FileAttribute.Normal
 			};
 			Grid.SetColumn(entry, this.GetCell(i).Item1);
 			Grid.SetRow(entry, this.GetCell(i).Item2);

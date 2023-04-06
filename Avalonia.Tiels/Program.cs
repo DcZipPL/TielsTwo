@@ -1,7 +1,9 @@
 ﻿using Avalonia;
 using System;
+using System.IO;
 using Avalonia.Controls;
 using Avalonia.Tiels.Classes;
+using Serilog;
 
 namespace Avalonia.Tiels
 {
@@ -13,14 +15,26 @@ namespace Avalonia.Tiels
 		[STAThread]
 		public static void Main(string[] args)
 		{
+			// Initialize Serilog
+			Log.Logger = new LoggerConfiguration()
+				.MinimumLevel.Debug()
+				.WriteTo.Console()
+				.WriteTo.File("./logs/adt.log", rollingInterval: RollingInterval.Day)
+				.CreateLogger();
+			
 			try
 			{
+				if (!Directory.Exists("./logs"))
+					Directory.CreateDirectory("./logs");
+				
+				// Start application
 				BuildAvaloniaApp()
 					.StartWithClassicDesktopLifetime(args, ShutdownMode.OnExplicitShutdown);
+				
 			} catch (Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine("Application panic! FATAL: " + e);
-				ErrorHandler.Fatal(e, "[panic!]");
+				// Panic! Log the error and exit.
+				LoggingHandler.Fatal(e, "[panic!]");
 			}
 		}
 

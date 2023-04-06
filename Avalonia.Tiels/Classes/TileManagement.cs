@@ -8,6 +8,7 @@ using Avalonia.Platform;
 using Avalonia.Themes.Fluent;
 using Avalonia.Threading;
 using Avalonia.Tiels.Classes.Platform;
+using Serilog;
 
 namespace Avalonia.Tiels.Classes;
 
@@ -29,6 +30,7 @@ public class TileManagement
 			Configuration.Tile.CreateTileConfig(App.Instance.Config, name, path, width, height, overriteTheme, theme ?? FluentThemeMode.Dark, transparencyLevel ?? WindowTransparencyLevel.Transparent, color ?? Util.TILE_DARK_COLOR)
 		);
 		window.Show();
+		Log.Debug($"Created new Tile with name {name} and path {path}.");
 	}
 
 	/// <summary>
@@ -37,6 +39,7 @@ public class TileManagement
 	/// <param name="id">Guid of Tile.</param>
 	public static void LoadTile(Guid id)
 	{
+		Log.Debug($"Loading Tile with ID: {id}.");
 		var window = new TileWindow(id);
 		window.Show();
 	}

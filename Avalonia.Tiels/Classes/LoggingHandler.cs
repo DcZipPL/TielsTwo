@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Text;
+using Serilog;
 
 namespace Avalonia.Tiels.Classes;
 
-public class ErrorHandler
+public static class LoggingHandler
 {
 	public const string ERROR_MODE = "error";
 
@@ -26,19 +27,20 @@ public class ErrorHandler
 
 	public static Exception Fatal(Exception ex, string source)
 	{
-		System.Diagnostics.Debug.WriteLine("FATAL: " + ex);
-		return ShowErrorWindow(source, ex, Level.FATAL);
+		var err = ShowErrorWindow(source, ex, Level.FATAL);
+		Log.Fatal($"(@{source}) Application panic!\nFATAL: {ex}");
+		return err;
 	}
 	
 	public static Exception Error(Exception ex, string source)
 	{
-		System.Diagnostics.Debug.WriteLine("Error: " + ex);
+		Log.Error($"@{source} > {ex}");
 		return ShowErrorWindow(source, ex, Level.ERROR);
 	}
 	
 	public static void Warn(string source, string message)
 	{
-		System.Diagnostics.Debug.WriteLine("WARN: " + message);
+		Log.Warning($"@{source} > {message}");
 	}
 	
 	public enum Level

@@ -65,7 +65,7 @@ public partial class TilePage : UserPage
 		try
 		{
 			if (!UseGlobalThemeBox.IsChecked.HasValue)
-				throw ErrorHandler.Error(new NullReferenceException("UseGlobalThemeBox.IsChecked is null!"),
+				throw LoggingHandler.Error(new NullReferenceException("UseGlobalThemeBox.IsChecked is null!"),
 					nameof(TilePage));
 			TileManagement.CreateTile(
 				NameBox.Text,
@@ -80,7 +80,7 @@ public partial class TilePage : UserPage
 		}
 		catch (FormatException ex)
 		{
-			ErrorHandler.Warn("CreateTile", ex.ToString());
+			LoggingHandler.Warn("CreateTile", ex.ToString());
 		}
 	}
 

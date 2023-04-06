@@ -101,7 +101,7 @@ public partial class GeneralPage : SettingsPage
 	private void LanguageChanged(object? sender, SelectionChangedEventArgs e)
 	{
 		var selected = LanguageBox.SelectedItem;
-		if (selected == null) throw ErrorHandler.Error(new NullReferenceException("No language selected"), nameof(GeneralPage));
+		if (selected == null) throw LoggingHandler.Error(new NullReferenceException("No language selected"), nameof(GeneralPage));
 		var ci = (CultureInfo)selected;
 		CultureInfo.CurrentCulture = ci;
 		CultureInfo.CurrentUICulture = ci;

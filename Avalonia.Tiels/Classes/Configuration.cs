@@ -37,7 +37,7 @@ public partial class Configuration
                     
                     Tiles[guid]._configPath = filePath;
 
-                } else { ErrorHandler.Error(new InvalidDataException("Name of file: " + filePath + "has invalid Guid."), nameof(Configuration) + "&0"); }
+                } else { LoggingHandler.Error(new InvalidDataException("Name of file: " + filePath + "has invalid Guid."), nameof(Configuration) + "&0"); }
             }
             if (Path.GetExtension(filePath) == ".bin") // thumbnail
             {
@@ -47,7 +47,7 @@ public partial class Configuration
                         Tiles.Add(guid, new Tile());
                     
                     Tiles[guid]._thumbnailDbPath = filePath;
-                } else { ErrorHandler.Error(new InvalidDataException("Name of file: \"" + filePath + "\" has invalid Guid."), nameof(Configuration) + "&1"); }
+                } else { LoggingHandler.Error(new InvalidDataException("Name of file: \"" + filePath + "\" has invalid Guid."), nameof(Configuration) + "&1"); }
             }
         }
     }
@@ -70,14 +70,14 @@ public partial class Configuration
             var defaultConf = Path.Combine(Environment.CurrentDirectory, "Defaults/global.default.toml");
             if (!File.Exists(defaultConf))
             {
-                throw new FileNotFoundException(App.I18n.GetString("DefaultConfigMissingError"), defaultConf);
+                throw LoggingHandler.Error(new FileNotFoundException(App.I18n.GetString("DefaultConfigMissingError"), defaultConf), "Configuration::Init");
             }
             
             // Check if Tile config exist
             var tileConf = Path.Combine(Environment.CurrentDirectory, "Defaults/tile.default.toml");
             if (!File.Exists(defaultConf))
             {
-                throw new FileNotFoundException(App.I18n.GetString("DefaultConfigMissingError"), tileConf);
+                throw LoggingHandler.Error(new FileNotFoundException(App.I18n.GetString("DefaultConfigMissingError"), tileConf), "Configuration::Init");
             }
 
             var defaultModel = File.ReadAllText(defaultConf);
@@ -90,16 +90,16 @@ public partial class Configuration
 
                 File.WriteAllText(Path.Combine(GetConfigDirectory(), "global.toml"), toml);
             }
-            else throw new NoNullAllowedException(App.I18n.GetString("MissingConfigError"));
+            else throw LoggingHandler.Error(new NoNullAllowedException(App.I18n.GetString("MissingConfigError")), "Configuration::Init");
         }
         catch (UnauthorizedAccessException uae)
         {
-            throw ErrorHandler.Error(uae, nameof(Configuration) + "&2");
+            throw LoggingHandler.Error(uae, nameof(Configuration) + "&2");
             // TODO: Open as administrator / sudo
         }
         catch (Exception e)
         {
-            throw ErrorHandler.Error(e, nameof(Configuration) + "&3");
+            throw LoggingHandler.Error(e, nameof(Configuration) + "&3");
         }
 
         return Load(closer);
@@ -139,7 +139,7 @@ public partial class Configuration
     
     public static bool IsFirstStartup()
     {
-        return !Directory.Exists(GetConfigDirectory()) || !File.Exists(Path.Combine(GetConfigDirectory(), "global.toml"));
+        return !(Directory.Exists(GetConfigDirectory()) || File.Exists(Path.Combine(GetConfigDirectory(), "global.toml")));
     }
 
     #endregion
@@ -152,14 +152,14 @@ public partial class Configuration
             var appearanceReq = ReqModel().Appearance;
             if (appearanceReq == null)
             {
-                ErrorHandler.Warn("GlobalTheme", "Couldn't load Appearance settings!");
+                LoggingHandler.Warn("GlobalTheme", "Couldn't load Appearance settings! Fallback to Light theme.");
                 return FluentThemeMode.Light;
             }
 
             var result = Enum.TryParse(appearanceReq.Theme, true, out FluentThemeMode theme);
             if (result == false)
             {
-                ErrorHandler.Warn("GlobalTheme", "Couldn't parse theme from config!");
+                LoggingHandler.Warn("GlobalTheme", "Couldn't parse theme from config! Fallback to Light theme.");
             }
             return theme;
         }
@@ -176,7 +176,7 @@ public partial class Configuration
         get
         {
             var appearanceReq = ReqModel().Appearance;
-            if (appearanceReq == null) ErrorHandler.Warn("GlobalTransparencyLevel", "Couldn't load Appearance settings!");
+            if (appearanceReq == null) LoggingHandler.Warn("GlobalTransparencyLevel", "Couldn't load Appearance settings!");
             return appearanceReq != null ? (WindowTransparencyLevel)appearanceReq.Transparency : WindowTransparencyLevel.None;
         }
         set
@@ -192,7 +192,7 @@ public partial class Configuration
         get
         {
             var appearanceReq = ReqModel().Appearance;
-            if (appearanceReq == null) ErrorHandler.Warn("GlobalColor", "Couldn't load Appearance settings!");
+            if (appearanceReq == null) LoggingHandler.Warn("GlobalColor", "Couldn't load Appearance settings! Fallback to #FF00FF.");
             return appearanceReq != null ? Color.Parse(appearanceReq.Color) : Color.FromRgb(255,0,255);
         }
         set
@@ -279,20 +279,20 @@ public partial class Configuration
             }
             catch (Exception e)
             {
-                ErrorHandler.Warn(nameof(CreateTileConfig), e.ToString());
+                LoggingHandler.Warn(nameof(CreateTileConfig), e.ToString());
             }
 
             // Check if default config is valid
             if (model.Size == null)
             {
                 model.Size = new Configuration.Models.Vec2();
-                ErrorHandler.Warn(nameof(CreateTileConfig), "Default Tile config don't contain Size or it is null!");
+                LoggingHandler.Warn(nameof(CreateTileConfig), "Default Tile config don't contain Size or it is null!");
             }
 
             if (model.Appearance == null)
             {
                 model.Appearance = new Configuration.Models.Appearance();
-                ErrorHandler.Warn(nameof(CreateTileConfig), "Default Tile config don't Appearance size or it is null!");
+                LoggingHandler.Warn(nameof(CreateTileConfig), "Default Tile config don't Appearance size or it is null!");
             }
 
             // Assign values
@@ -428,7 +428,7 @@ public partial class Configuration
             get
             {
                 var result = Enum.TryParse(ReqModel().Appearance!.Theme, true, out FluentThemeMode theme);
-                ErrorHandler.Error(new Exception($"Couldn't parse {nameof(theme)} from config!"), nameof(Configuration.Tile) + "->" + nameof(Theme));
+                LoggingHandler.Error(new Exception($"Couldn't parse {nameof(theme)} from config!"), nameof(Configuration.Tile) + "->" + nameof(Theme));
                 return result ? theme : FluentThemeMode.Light;
             }
             set
@@ -459,7 +459,7 @@ public partial class Configuration
             get
             {
                 var result = Color.TryParse(ReqModel().Appearance!.Color, out var color);
-                ErrorHandler.Warn(nameof(Configuration.Tile) + "->" + nameof(Color), $"Couldn't parse {nameof(color)} from config!");
+                LoggingHandler.Warn($"{nameof(Configuration.Tile)} -> {nameof(Color)}", $"Couldn't parse {nameof(color)} from config! Using transparent color instead.");
                 return result ? color : Color.FromArgb(0, 0, 0, 0);
             }
             set
@@ -486,7 +486,7 @@ public partial class Configuration
                     return model;
                 } catch (Exception e)
                 {
-                    ErrorHandler.Warn(nameof(Configuration.Tile) + "->" + nameof(ReqModel), e.ToString());
+                    LoggingHandler.Warn($"{nameof(Configuration.Tile)} -> {nameof(ReqModel)}", e.ToString());
                     return new Models.TileModel();
                 }
             }
@@ -519,7 +519,7 @@ public partial class Configuration
                 return model;
             } catch (Exception e)
             {
-                ErrorHandler.Warn(nameof(Configuration) + "->" + nameof(ReqModel), e.ToString());
+                LoggingHandler.Warn($"{nameof(Configuration)} -> {nameof(ReqModel)}", e.ToString());
                 return new Models.GlobalModel();
             }
         }

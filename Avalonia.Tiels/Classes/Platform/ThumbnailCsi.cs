@@ -16,10 +16,10 @@ public abstract class ThumbnailCsi
 		}
 		catch (Exception e)
 		{
-			throw ErrorHandler.Error(e, nameof(ThumbnailCsi));
+			throw LoggingHandler.Error(e, nameof(ThumbnailCsi));
 		}
 
-		throw new PlatformNotSupportedException();
+		throw LoggingHandler.Error(new PlatformNotSupportedException(), nameof(ThumbnailCsi));
 	}
 
 	protected abstract Bitmap GetThumbnailBitmap(string path, ThumbnailSize size);

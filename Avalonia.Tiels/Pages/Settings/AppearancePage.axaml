@@ -8,7 +8,7 @@
              mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="500"
              x:Class="Avalonia.Tiels.Pages.Settings.AppearancePage">
     <Grid Margin="10">
-        <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">
+        <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -44,7 +44,7 @@
                 <TextBlock Foreground="#FF0000" IsVisible="False" x:Name="WarnOtherProgramsText" TextWrapping="Wrap" Text="{x:Static p:Resources.WarnOtherPrograms}"/>
             </StackPanel>
         </StackPanel>
-        <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="15">
+        <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="4.5"><!-- TODO: This margin works strangely. Fix that in future -->
             <TextBlock x:Name="StatusIcon" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" Padding="0,0,5,0">󿚚</TextBlock>
             <TextBlock x:Name="StatusText" Text="{x:Static p:Resources.NoChanges}"/>
         </WrapPanel>

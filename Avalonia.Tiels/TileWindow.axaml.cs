@@ -107,15 +107,16 @@ public partial class TileWindow : Window
 		int i = 0;
 		foreach (var e in entries)
 		{
+			var extension = Path.GetExtension(e.Value.Path);
 			var entry = new EntryComponent
 			{
 				Path = e.Value.Path,
-				EntryName = e.Key,
+				EntryName = Path.GetFileNameWithoutExtension(e.Value.Path) + (extension is ".url" or ".lnk" ? "" : extension),
 				Preview = e.Value.Preview,
 				Theme = App.Instance.Config.Tiles[ID].IsOverriden
 					? App.Instance.Config.Tiles[ID].Theme
 					: App.Instance.Config.GlobalTheme,
-				Attribute = Path.GetExtension(e.Value.Path) == ".url" || Path.GetExtension(e.Value.Path) == ".lnk"
+				Attribute = extension is ".url" or ".lnk"
 					? FileAttribute.Link
 					: FileAttribute.Normal
 			};
@@ -248,4 +249,11 @@ public partial class TileWindow : Window
 		);
 	}
 	#endregion
+
+	private void OpenContentDirectory()
+	{
+		// TODO: impl
+	}
+	
+	private void OpenContentDirectory(object? sender, RoutedEventArgs e) => OpenContentDirectory();
 }

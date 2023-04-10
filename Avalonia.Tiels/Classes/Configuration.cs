@@ -221,6 +221,7 @@ public partial class Configuration
     [ConfigEntry(Group = "Settings")] private bool __Experimental;
     [ConfigEntry(Group = "Settings")] private bool __ThumbnailsSettingsEnabled;
     [ConfigEntry(Group = "Settings")] private bool __HideTileButtons;
+    [ConfigEntry(Group = "Settings")] private uint __EntryLimit;
     
     #pragma warning restore CS0414
     #pragma warning restore CS0169
@@ -569,6 +570,7 @@ public partial class Configuration
             public bool HideTileButtons { get; set; } = false;
             public float Snapping { get; set; } = 5.0f; // Snap to grid
             public float HandleHeight { get; set; } = 28.0f; // Height of the handle
+            public uint EntryLimit { get; set; } = 100; // Height of the handle
             
             TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
         }

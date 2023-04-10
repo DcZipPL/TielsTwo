@@ -8,6 +8,7 @@ experimental = false
 hide_tile_buttons = true
 snapping = 5
 handle_height = 28.0
+entry_limit = 100 # 0 = no limit
 
 [appearance]
 override = false # Override global values

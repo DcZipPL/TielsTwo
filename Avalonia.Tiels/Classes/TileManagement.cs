@@ -54,13 +54,13 @@ public class TileManagement
 		foreach (var systemEntry in Directory.EnumerateFileSystemEntries(configuration.Tiles[window.ID].Path))
 		{
 			var thumbnail = ThumbnailCsi.GetThumbnailImage(systemEntry, ThumbnailSize.Jumbo);
-			window.entries.Add(Path.GetFileName(systemEntry), new TileWindow.TileEntry(systemEntry, thumbnail));
+			window.entries.Add(new TileWindow.TileEntry(systemEntry, thumbnail));
 		}
-		
+
 		// TODO: Better threading if possible
 		Dispatcher.UIThread.Post(() =>
 		{
-			window.ReorderEntries();
+			window.LoadEntries(0);
 		});
 	}
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Numerics;
 using System.Threading;
 using Avalonia.Controls;
@@ -20,7 +21,7 @@ public partial class TileWindow : Window
 	public const float CELL_HEIGHT = 80;
 	
 	public record TileEntry(string Path, IImage Preview);
-	public Dictionary<string, TileEntry> entries = new();
+	public List<TileEntry> entries = new();
 
 	private bool _editMode = false;
 	private bool _isHidden = false;
@@ -93,20 +94,21 @@ public partial class TileWindow : Window
 		}
 	}
 
-	public void ReorderEntries()
+	internal void LoadEntries(uint cursor)
 	{
-		EntryContent.Children.Clear();
 		// TODO: Add ordering modes
+		EntryContent.Children.Clear();
 
 		// Spawn entries
-		foreach (var e in entries)
+		uint limit = cursor + App.Instance.Config.EntryLimit;
+		for (int i = (int) cursor; i < this.entries.Count; i++)
 		{
-			var extension = Path.GetExtension(e.Value.Path);
+			var extension = Path.GetExtension(entries[i].Path);
 			var entry = new EntryComponent
 			{
-				Path = e.Value.Path,
-				EntryName = Path.GetFileNameWithoutExtension(e.Value.Path) + (extension is ".url" or ".lnk" ? "" : extension),
-				Preview = e.Value.Preview,
+				Path = entries[i].Path,
+				EntryName = Path.GetFileNameWithoutExtension(entries[i].Path) + (extension is ".url" or ".lnk" ? "" : extension),
+				Preview = entries[i].Preview,
 				Theme = App.Instance.Config.Tiles[ID].IsOverriden
 					? App.Instance.Config.Tiles[ID].Theme
 					: App.Instance.Config.GlobalTheme,
@@ -117,10 +119,23 @@ public partial class TileWindow : Window
 			entry.Width = CELL_WIDTH;
 			entry.Height = CELL_HEIGHT;
 			this.EntryContent.Children.Add(entry);
+
+			if (--limit == 0 && App.Instance.Config.EntryLimit != 0) break;
 		}
+		
+		this.EntryContent.Height = GetCell(this.entries.Count - 1).Item2 * CELL_HEIGHT + CELL_HEIGHT;
 	}
 
-	public Color EditBarColor() => Color.Parse(App.Instance.Config.Tiles[ID].IsOverriden
+	private (int, int) GetCellAmount() =>
+		((int)Math.Floor(this.Width / CELL_WIDTH), (int)Math.Floor(this.Height / CELL_HEIGHT));
+	
+	private (int, int) GetCell(int index)
+	{
+		var cells = GetCellAmount();
+		return (index % cells.Item1, (int)Math.Floor((double)index / (double)cells.Item1));
+	}
+
+	private Color EditBarColor() => Color.Parse(App.Instance.Config.Tiles[ID].IsOverriden
 			? App.Instance.Config.Tiles[ID].Theme == FluentThemeMode.Dark
 				? "#25000000"
 				: "#25ffffff"
@@ -143,7 +158,7 @@ public partial class TileWindow : Window
 		{
 			App.Instance.Config.Tiles[ID].Size = new Vector2((float)this.Width, (float)this.Height);
 			App.Instance.Config.Tiles[ID].Location = new Vector2((float)this.Position.X, (float)this.Position.Y);
-			ReorderEntries();
+			LoadEntries(0);
 		}
 		
 		_editMode = !_editMode;

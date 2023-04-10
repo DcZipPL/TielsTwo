@@ -44,8 +44,8 @@
                 <RowDefinition Height="28"></RowDefinition>
             </Grid.RowDefinitions>
             <ScrollViewer>
-                <Grid x:Name="EntryContent">
-                </Grid>
+                <WrapPanel x:Name="EntryContent">
+                </WrapPanel>
             </ScrollViewer>
             <Grid Grid.Row="1" x:Name="EditBar">
                 <Grid.ColumnDefinitions>

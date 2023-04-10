@@ -96,15 +96,9 @@ public partial class TileWindow : Window
 	public void ReorderEntries()
 	{
 		EntryContent.Children.Clear();
-		EntryContent.ColumnDefinitions.Clear();
-		EntryContent.RowDefinitions.Clear();
 		// TODO: Add ordering modes
 
-		for (int j = 0; j < GetCellAmount().Item1; j++)
-			EntryContent.ColumnDefinitions.Add(new ColumnDefinition(CELL_WIDTH, GridUnitType.Pixel));
-
 		// Spawn entries
-		int i = 0;
 		foreach (var e in entries)
 		{
 			var extension = Path.GetExtension(e.Value.Path);
@@ -120,24 +114,10 @@ public partial class TileWindow : Window
 					? FileAttribute.Link
 					: FileAttribute.Normal
 			};
-			Grid.SetColumn(entry, this.GetCell(i).Item1);
-			Grid.SetRow(entry, this.GetCell(i).Item2);
+			entry.Width = CELL_WIDTH;
+			entry.Height = CELL_HEIGHT;
 			this.EntryContent.Children.Add(entry);
-
-			if ((EntryContent.Children.Count - 1) % GetCellAmount().Item1 == 0)
-				EntryContent.RowDefinitions.Add(new RowDefinition(TileWindow.CELL_HEIGHT, GridUnitType.Pixel));
-			
-			i++;
 		}
-	}
-
-	public (int, int) GetCellAmount() =>
-		((int)Math.Floor(this.Width / CELL_WIDTH), (int)Math.Floor(this.Height / CELL_HEIGHT));
-
-	public (int, int) GetCell(int index)
-	{
-		var cells = GetCellAmount();
-		return (index % cells.Item1, (int)Math.Floor((double)index / (double)cells.Item1));
 	}
 
 	public Color EditBarColor() => Color.Parse(App.Instance.Config.Tiles[ID].IsOverriden
@@ -252,7 +232,15 @@ public partial class TileWindow : Window
 
 	private void OpenContentDirectory()
 	{
-		// TODO: impl
+		var path = App.Instance.Config.Tiles[ID].Path;
+		if (path is null) return;
+		if (!Directory.Exists(path)) return;
+		Process.Start(new ProcessStartInfo
+		{
+			FileName = path,
+			UseShellExecute = true,
+			Verb = "open"
+		});
 	}
 	
 	private void OpenContentDirectory(object? sender, RoutedEventArgs e) => OpenContentDirectory();

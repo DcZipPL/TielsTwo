@@ -26,20 +26,12 @@ public partial class EntryComponent : UserControl
 	
 	private void EntryClicked(object? sender, RoutedEventArgs e)
 	{
-		if (OperatingSystem.IsWindows())
+		Process.Start(new ProcessStartInfo
 		{
-			using Process fireStarter = new Process();
-			fireStarter.StartInfo.FileName = "explorer";
-			fireStarter.StartInfo.Arguments = "\"" + Path + "\"";
-			fireStarter.Start();
-		} else if (OperatingSystem.IsLinux())
-		{
-			// TODO: Perhaps there is better way to do it in other OSes
-			using Process fireStarter = new Process();
-			fireStarter.StartInfo.FileName = "xdg-open";
-			fireStarter.StartInfo.Arguments = "\"" + Path + "\"";
-			fireStarter.Start();
-		}
+			FileName = "\"" + Path + "\"",
+			UseShellExecute = true,
+			Verb = "open"
+		});
 	}
 
 	private void TextBlockInitialized(object? sender, EventArgs e)

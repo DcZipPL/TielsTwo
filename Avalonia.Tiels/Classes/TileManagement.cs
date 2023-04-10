@@ -54,9 +54,6 @@ public class TileManagement
 		foreach (var systemEntry in Directory.EnumerateFileSystemEntries(configuration.Tiles[window.ID].Path))
 		{
 			var thumbnail = ThumbnailCsi.GetThumbnailImage(systemEntry, ThumbnailSize.Jumbo);
-			//var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-			//var asset = assets.Open(new Uri("avares://Avalonia.Tiels/Assets/shell32_4.ico"));
-			//new Bitmap(asset)
 			window.entries.Add(Path.GetFileName(systemEntry), new TileWindow.TileEntry(systemEntry, thumbnail));
 		}
 		

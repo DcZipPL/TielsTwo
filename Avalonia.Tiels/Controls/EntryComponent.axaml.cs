@@ -26,13 +26,17 @@ public partial class EntryComponent : UserControl
 			Image fakeImage = new Bitmap(1, 1);
 			Graphics graphics = Graphics.FromImage(fakeImage);
 			SizeF size = graphics.MeasureString(EntryName, font);
-			
-			if (size.Width >= 240)
-			{
-				return EntryName.Substring(0, 12) + "...";
-			}
 
-			return EntryName;
+			if (size.Width < 240)
+				return EntryName;
+
+			var shortName = EntryName.Substring(0, EntryName.Length - 3);
+			while (size.Width >= 240)
+			{
+				shortName = shortName.Substring(0, shortName.Length - 1);
+				size = graphics.MeasureString(shortName, font);
+			}
+			return shortName + "...";
 		}
 	}
 

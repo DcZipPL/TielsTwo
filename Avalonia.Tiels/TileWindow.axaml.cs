@@ -19,8 +19,8 @@ public partial class TileWindow : Window
 {
 	public const float CELL_WIDTH = 120;
 	public const float CELL_HEIGHT = 80;
-	
-	public record TileEntry(string Path, IImage Preview);
+
+	public record TileEntry(string Path, IImage Preview) { public bool IsAdded; }
 	public List<TileEntry> entries = new();
 
 	private bool _editMode = false;
@@ -98,32 +98,47 @@ public partial class TileWindow : Window
 	{
 		// TODO: Add ordering modes
 		EntryContent.Children.Clear();
+		this.entries.ForEach(entry => entry.IsAdded = false);
 
-		// Spawn entries
+		AddEntries(cursor);
+
+		// Set EntryContent height for modern scroll
+		this.EntryContent.Height = GetCell(this.entries.Count - 1).Item2 * CELL_HEIGHT + CELL_HEIGHT;
+	}
+
+	internal void AddEntries(uint cursor)
+	{
+		Test__Item.Text = cursor.ToString();
 		uint limit = cursor + App.Instance.Config.EntryLimit;
 		for (int i = (int) cursor; i < this.entries.Count; i++)
 		{
-			var extension = Path.GetExtension(entries[i].Path);
-			var entry = new EntryComponent
-			{
-				Path = entries[i].Path,
-				EntryName = Path.GetFileNameWithoutExtension(entries[i].Path) + (extension is ".url" or ".lnk" ? "" : extension),
-				Preview = entries[i].Preview,
-				Theme = App.Instance.Config.Tiles[ID].IsOverriden
-					? App.Instance.Config.Tiles[ID].Theme
-					: App.Instance.Config.GlobalTheme,
-				Attribute = extension is ".url" or ".lnk"
-					? FileAttribute.Link
-					: FileAttribute.Normal
-			};
-			entry.Width = CELL_WIDTH;
-			entry.Height = CELL_HEIGHT;
-			this.EntryContent.Children.Add(entry);
+			if (this.entries[i].IsAdded) continue;
+			AddEntry(this.entries[i]);
 
 			if (--limit == 0 && App.Instance.Config.EntryLimit != 0) break;
 		}
-		
-		this.EntryContent.Height = GetCell(this.entries.Count - 1).Item2 * CELL_HEIGHT + CELL_HEIGHT;
+	}
+
+	private void AddEntry(TileEntry entryData)
+	{
+		var extension = Path.GetExtension(entryData.Path);
+		var entry = new EntryComponent
+		{
+			Path = entryData.Path,
+			EntryName = Path.GetFileNameWithoutExtension(entryData.Path) + (extension is ".url" or ".lnk" ? "" : extension),
+			Preview = entryData.Preview,
+			Theme = App.Instance.Config.Tiles[ID].IsOverriden
+				? App.Instance.Config.Tiles[ID].Theme
+				: App.Instance.Config.GlobalTheme,
+			Attribute = extension is ".url" or ".lnk"
+				? FileAttribute.Link
+				: FileAttribute.Normal
+		};
+		entry.Width = CELL_WIDTH;
+		entry.Height = CELL_HEIGHT;
+		this.EntryContent.Children.Add(entry);
+
+		entryData.IsAdded = true;
 	}
 
 	private (int, int) GetCellAmount() =>
@@ -259,4 +274,5 @@ public partial class TileWindow : Window
 	}
 	
 	private void OpenContentDirectory(object? sender, RoutedEventArgs e) => OpenContentDirectory();
+	private void ScrollEntryLoad(object? sender, ScrollChangedEventArgs e) => AddEntries((uint)(((ScrollViewer)sender!).Offset.Y / CELL_HEIGHT));
 }

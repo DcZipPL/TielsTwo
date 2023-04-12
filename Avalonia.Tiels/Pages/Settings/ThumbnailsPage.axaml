@@ -6,13 +6,19 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia.Tiels.Pages.Settings.ThumbnailsPage">
 	<Grid>
-		<StackPanel Margin="10">
-			<TextBlock>No thumbnails settings</TextBlock>
+		<StackPanel Margin="10" Spacing="10">
+			<Border BorderBrush="#FF0000" BorderThickness="1" CornerRadius="5">
+				<ScrollViewer MinHeight="120">
+					<StackPanel Margin="10" Height="120" Spacing="10" Orientation="Horizontal">
+						<controls:PreviewSelect/>
+					</StackPanel>
+				</ScrollViewer>
+			</Border>
 		</StackPanel>
 		<WrapPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="15">
 			<TextBlock x:Name="StatusIcon" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" Padding="0,0,5,0">󿚚</TextBlock>
 			<TextBlock x:Name="StatusText" Text="{x:Static p:Resources.NoChanges}"/>
 		</WrapPanel>
 	</Grid>
-    
+
 </UserControl>

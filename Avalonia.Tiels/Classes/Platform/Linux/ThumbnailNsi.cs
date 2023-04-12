@@ -9,7 +9,7 @@ public class ThumbnailNsi : ThumbnailCsi
 		throw new System.NotImplementedException();
 	}
 
-	protected override Bitmap GetDirectoryBitmap(string path, ThumbnailSize size)
+	protected override Bitmap GetDirectoryBitmap(int offest = 0)
 	{
 		throw new System.NotImplementedException();
 	}

@@ -14,7 +14,7 @@ public abstract class ThumbnailCsi
 
 			if (OperatingSystem.IsWindows())
 				if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
-					return new Windows.ThumbnailNsi().GetDirectoryBitmap(path, size);
+					return new Windows.ThumbnailNsi().GetDirectoryBitmap();
 				else
 					return new Windows.ThumbnailNsi().GetThumbnailBitmap(path, size);
 
@@ -29,6 +29,16 @@ public abstract class ThumbnailCsi
 		throw LoggingHandler.Error(new PlatformNotSupportedException(), nameof(ThumbnailCsi));
 	}
 
+	public static Bitmap GetShellIcon(int offest = 3)
+	{
+		if (OperatingSystem.IsWindows())
+			return new Windows.ThumbnailNsi().GetDirectoryBitmap(offest);
+		else if (OperatingSystem.IsLinux())
+			return new Linux.ThumbnailNsi().GetDirectoryBitmap(offest);
+
+		throw LoggingHandler.Error(new PlatformNotSupportedException(), nameof(GetShellIcon));
+	}
+
 	protected abstract Bitmap GetThumbnailBitmap(string path, ThumbnailSize size);
-	protected abstract Bitmap GetDirectoryBitmap(string path, ThumbnailSize size);
+	protected abstract Bitmap GetDirectoryBitmap(int offest = 0);
 }

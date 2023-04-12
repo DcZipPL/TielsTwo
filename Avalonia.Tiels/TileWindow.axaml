@@ -44,7 +44,7 @@
                 <RowDefinition Height="28"></RowDefinition>
             </Grid.RowDefinitions>
             <ScrollViewer x:Name="EntryScrollView" ScrollChanged="ScrollEntryLoad">
-                <WrapPanel x:Name="EntryContent" Background="#00FF00" VerticalAlignment="Top">
+                <WrapPanel x:Name="EntryContent" VerticalAlignment="Top">
                 </WrapPanel>
             </ScrollViewer>
             <Grid Grid.Row="1" x:Name="EditBar">
@@ -86,6 +86,5 @@
                 <TextBlock x:Name="MoveAreaText" Text="{x:Static p:Resources.MoveWindow}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
         </Grid>
-        <TextBlock x:Name="Test__Item"/>
     </Grid>
 </Window>

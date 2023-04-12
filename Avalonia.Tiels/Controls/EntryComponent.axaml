@@ -18,7 +18,7 @@
 			</Grid.RowDefinitions>
 			<Image Grid.Row="0" Width="48" Height="48" HorizontalAlignment="Center"
 			       Source="{Binding Preview, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>
-			<TextBlock Grid.Row="1" Initialized="TextBlockInitialized" x:Name="FileNameTextBlock" 
+			<TextBlock Grid.Row="1" Initialized="TextBlockInitialized" x:Name="FileNameTextBlock"
 			           VerticalAlignment="Bottom" HorizontalAlignment="Center" TextAlignment="Left" Text="{Binding EntryNameShort, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>
 			<TextBlock Grid.Row="0" Initialized="AttributeIconInitialized" x:Name="FileAttributeIcon"
 			           FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" Foreground="#0068FF" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="10,0" FontSize="16">󿚦</TextBlock>

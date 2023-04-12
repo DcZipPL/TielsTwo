@@ -8,4 +8,9 @@ public class ThumbnailNsi : ThumbnailCsi
 	{
 		throw new System.NotImplementedException();
 	}
+
+	protected override Bitmap GetDirectoryBitmap(string path, ThumbnailSize size)
+	{
+		throw new System.NotImplementedException();
+	}
 }

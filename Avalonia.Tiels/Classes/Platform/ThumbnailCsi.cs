@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Avalonia.Media.Imaging;
 
 namespace Avalonia.Tiels.Classes.Platform;
@@ -9,8 +10,14 @@ public abstract class ThumbnailCsi
 	{
 		try
 		{
+			FileAttributes attr = File.GetAttributes(path);
+
 			if (OperatingSystem.IsWindows())
-				return new Windows.ThumbnailNsi().GetThumbnailBitmap(path, size);
+				if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+					return new Windows.ThumbnailNsi().GetDirectoryBitmap(path, size);
+				else
+					return new Windows.ThumbnailNsi().GetThumbnailBitmap(path, size);
+
 			if (OperatingSystem.IsLinux())
 				return new Linux.ThumbnailNsi().GetThumbnailBitmap(path, size);
 		}
@@ -23,4 +30,5 @@ public abstract class ThumbnailCsi
 	}
 
 	protected abstract Bitmap GetThumbnailBitmap(string path, ThumbnailSize size);
+	protected abstract Bitmap GetDirectoryBitmap(string path, ThumbnailSize size);
 }

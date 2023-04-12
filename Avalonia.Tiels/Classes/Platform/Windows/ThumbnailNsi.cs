@@ -16,9 +16,33 @@ public class ThumbnailNsi : ThumbnailCsi
 		using System.Drawing.Icon ico = (System.Drawing.Icon)System.Drawing.Icon.FromHandle(hIcon).Clone();
 		var bitmap = ico.ToBitmap().ConvertToAvaloniaBitmap();
 		var hResult = Shell32.DestroyIcon(hIcon);
+		if (hResult == 0)
+			throw LoggingHandler.Error(new Exception("Failed to extract icon"), nameof(GetThumbnailBitmap));
+
 		return bitmap;
-		
-		throw new System.NotImplementedException();
+	}
+
+
+	protected override Bitmap GetDirectoryBitmap(string path, ThumbnailSize size)
+	{
+		string fileName = @"C:\Windows\System32\imageres.dll"; // path to imageres.dll // TODO: don't hardcode C: drive
+		IntPtr hIcon = ExtractIcon(IntPtr.Zero, fileName, 3); // get icon from imageres.dll
+
+		if (hIcon != IntPtr.Zero)
+		{
+			using System.Drawing.Icon ico = (System.Drawing.Icon)System.Drawing.Icon.FromHandle(hIcon).Clone();
+			var bitmap = ico.ToBitmap().ConvertToAvaloniaBitmap();
+			var hResult = Shell32.DestroyIcon(hIcon);
+			if (hResult == 0)
+				throw LoggingHandler.Error(new Exception("Failed to extract icon"), nameof(GetDirectoryBitmap) + "@0");
+
+			return bitmap;
+		}
+		else
+		{
+			throw LoggingHandler.Error(new Exception("Failed to extract icon"), nameof(GetDirectoryBitmap) + "@1");
+			// error handling
+		}
 	}
 
 	private static int GetIconIndex(string pszFile)
@@ -43,4 +67,7 @@ public class ThumbnailNsi : ThumbnailCsi
 
 		return hIcon;
 	}
+
+	[DllImport("Shell32.dll", EntryPoint = "ExtractIcon")]
+    static extern IntPtr ExtractIcon(IntPtr hInst, string lpszExeFileName, int nIconIndex);
 }

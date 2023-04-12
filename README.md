@@ -8,7 +8,7 @@ Tiels II
 
 <div align="center">
   <a href="https://github.com/DcZipPL/TielsTwo/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/DcZipPL/TielsTwo"> 
+    <img src="https://img.shields.io/github/license/DcZipPL/TielsTwo">
   </a>
 
 Complete Rewrite of Tiels: An alternative for Fences.

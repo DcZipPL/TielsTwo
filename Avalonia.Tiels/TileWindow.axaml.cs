@@ -108,7 +108,6 @@ public partial class TileWindow : Window
 
 	internal void AddEntries(uint cursor)
 	{
-		Test__Item.Text = cursor.ToString();
 		uint limit = cursor + App.Instance.Config.EntryLimit;
 		for (int i = (int) cursor; i < this.entries.Count; i++)
 		{
@@ -254,7 +253,7 @@ public partial class TileWindow : Window
 		_originMousePosition ??= new Vector2((float)e.GetPosition(this).X, (float)e.GetPosition(this).Y);
 		
 		this.Position = new PixelPoint(
-			this.Position.X +(int)(MathF.Ceiling(((float)e.GetPosition(this).X - (int)_originMousePosition.Value.X) / snapping) * snapping), 
+			this.Position.X +(int)(MathF.Ceiling(((float)e.GetPosition(this).X - (int)_originMousePosition.Value.X) / snapping) * snapping),
 			this.Position.Y + (int)(MathF.Ceiling(((float)e.GetPosition(this).Y - (int)_originMousePosition.Value.Y) / snapping) * snapping)
 		);
 	}

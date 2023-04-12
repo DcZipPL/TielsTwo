@@ -40,5 +40,5 @@ public abstract class ThumbnailCsi
 	}
 
 	protected abstract Bitmap GetThumbnailBitmap(string path, ThumbnailSize size);
-	protected abstract Bitmap GetDirectoryBitmap(int offest = 0);
+	protected abstract Bitmap GetDirectoryBitmap(int offest = 3);
 }

@@ -25,7 +25,7 @@ public class ThumbnailNsi : ThumbnailCsi
 
 	protected override Bitmap GetDirectoryBitmap(int offest = 3)
 	{
-		string fileName = @"C:\Windows\System32\imageres.dll"; // path to imageres.dll // TODO: don't hardcode C: drive
+		string fileName = @$"{Environment.GetFolderPath(Environment.SpecialFolder.System)}\imageres.dll"; // path to imageres.dll
 		IntPtr hIcon = ExtractIcon(IntPtr.Zero, fileName, offest); // get icon from imageres.dll
 
 		if (hIcon != IntPtr.Zero)

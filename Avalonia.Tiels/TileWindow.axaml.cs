@@ -146,6 +146,7 @@ public partial class TileWindow : Window
 	private (int, int) GetCell(int index)
 	{
 		var cells = GetCellAmount();
+		if (cells.Item1 == 0 || cells.Item2 == 0) return (0, 0);
 		return (index % cells.Item1, (int)Math.Floor((double)index / (double)cells.Item1));
 	}
 

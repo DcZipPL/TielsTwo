@@ -8,7 +8,7 @@
         xmlns:pagesSettings="clr-namespace:Avalonia.Tiels.Pages.Settings"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.Tiels.SettingsWindow"
-        Width="1000" Height="550" TransparencyLevelHint="AcrylicBlur" Background="#AEFFFFFF"
+        Width="1000" Height="550" TransparencyLevelHint="AcrylicBlur" Background="#AE000000"
         Title="Tiels" Icon="/Assets/tiels_color.ico">
         <Grid>
                 <Grid.ColumnDefinitions>
@@ -39,9 +39,9 @@
                 </Border>
                 <!-- Content -->
                 <Border Grid.Column="1"
-                        BorderThickness="0,0.6,0.6,0.6" BorderBrush="{StaticResource BaseBorderColor}"
+                        BorderThickness="0,0.6,0,0" BorderBrush="{StaticResource BaseBorderColor}"
                         IsVisible="True">
-                        <Border.Background><SolidColorBrush Color="#FFF8F8F8"></SolidColorBrush></Border.Background>
+                        <Border.Background><SolidColorBrush Color="#FF131313"></SolidColorBrush></Border.Background>
                         <Grid x:Name="Frame">
                                 <pagesSettings:GeneralPage x:Name="GeneralSettingsPage" IsVisible="False"/>
                                 <pagesSettings:AppearancePage x:Name="AppearanceSettingsPage" IsVisible="False"/>

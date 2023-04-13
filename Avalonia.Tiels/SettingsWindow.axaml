@@ -8,7 +8,7 @@
         xmlns:pagesSettings="clr-namespace:Avalonia.Tiels.Pages.Settings"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.Tiels.SettingsWindow"
-        Width="1000" Height="550" TransparencyLevelHint="AcrylicBlur" Background="#AE000000"
+        Width="1000" Height="550" TransparencyLevelHint="AcrylicBlur" Background="#AE000000" MinWidth="600"
         Title="Tiels" Icon="/Assets/tiels_color.ico">
         <Grid>
                 <Grid.ColumnDefinitions>
@@ -42,18 +42,20 @@
                         BorderThickness="0,0.6,0,0" BorderBrush="{StaticResource BaseBorderColor}"
                         IsVisible="True">
                         <Border.Background><SolidColorBrush Color="#FF131313"></SolidColorBrush></Border.Background>
-                        <Grid x:Name="Frame">
-                                <pagesSettings:GeneralPage x:Name="GeneralSettingsPage" IsVisible="False"/>
-                                <pagesSettings:AppearancePage x:Name="AppearanceSettingsPage" IsVisible="False"/>
-                                <pagesSettings:SnappingPage x:Name="SnappingSettingsPage" IsVisible="False"/>
-                                <pagesSettings:ThumbnailsPage x:Name="ThumbnailSettingsPage" IsVisible="False"/>
-                                <pagesSettings:UpdatesPage x:Name="UpdatesSettingsPage" IsVisible="False"/>
-                                <pagesSettings:ExperimentalPage x:Name="ExperimentalSettingsPage" IsVisible="False"/>
-                                <pagesCreate:TilePage x:Name="TileCreatePage" IsVisible="False"/>
-                                <pagesCreate:TilePage x:Name="DirectoryPortalPage" IsVisible="False"/>
-                                <pagesCreate:TilePage x:Name="FloatingImagePage" IsVisible="False"/>
-                                <pagesCreate:TilePage x:Name="NotesPage" IsVisible="False"/>
-                        </Grid>
+                        <ScrollViewer>
+                                <Panel x:Name="Frame">
+                                        <pagesSettings:GeneralPage x:Name="GeneralSettingsPage" IsVisible="False"/>
+                                        <pagesSettings:AppearancePage x:Name="AppearanceSettingsPage" IsVisible="False"/>
+                                        <pagesSettings:SnappingPage x:Name="SnappingSettingsPage" IsVisible="False"/>
+                                        <pagesSettings:ThumbnailsPage x:Name="ThumbnailSettingsPage" IsVisible="False"/>
+                                        <pagesSettings:UpdatesPage x:Name="UpdatesSettingsPage" IsVisible="False"/>
+                                        <pagesSettings:ExperimentalPage x:Name="ExperimentalSettingsPage" IsVisible="False"/>
+                                        <pagesCreate:TilePage x:Name="TileCreatePage" IsVisible="False"/>
+                                        <pagesCreate:TilePage x:Name="DirectoryPortalPage" IsVisible="False"/>
+                                        <pagesCreate:TilePage x:Name="FloatingImagePage" IsVisible="False"/>
+                                        <pagesCreate:TilePage x:Name="NotesPage" IsVisible="False"/>
+                                </Panel>
+                        </ScrollViewer>
                 </Border>
         </Grid>
 </Window>

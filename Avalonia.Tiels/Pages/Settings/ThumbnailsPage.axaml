@@ -9,14 +9,8 @@
 		<StackPanel Margin="10" Spacing="10">
 			<Border BorderBrush="#FF0000" BorderThickness="1" CornerRadius="5">
 				<ScrollViewer MinHeight="120">
-					<StackPanel Margin="10" Height="120" Spacing="10" Orientation="Horizontal">
-						<Grid Width="120" Background="#22000000">
-							<Grid.RowDefinitions>
-								<RowDefinition Height="*"/>
-								<RowDefinition Height="20"/>
-							</Grid.RowDefinitions>
-							<TextBlock Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Test 1"/>
-						</Grid>
+					<StackPanel x:Name="ThumbnailPreviewContent" Margin="10" Height="120" Spacing="10" Orientation="Horizontal">
+						
 					</StackPanel>
 				</ScrollViewer>
 			</Border>

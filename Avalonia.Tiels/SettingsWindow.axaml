@@ -42,20 +42,29 @@
                         BorderThickness="0,0.6,0,0" BorderBrush="{StaticResource BaseBorderColor}"
                         IsVisible="True">
                         <Border.Background><SolidColorBrush Color="#FF131313"></SolidColorBrush></Border.Background>
-                        <ScrollViewer>
-                                <Panel x:Name="Frame">
-                                        <pagesSettings:GeneralPage x:Name="GeneralSettingsPage" IsVisible="False"/>
-                                        <pagesSettings:AppearancePage x:Name="AppearanceSettingsPage" IsVisible="False"/>
-                                        <pagesSettings:SnappingPage x:Name="SnappingSettingsPage" IsVisible="False"/>
-                                        <pagesSettings:ThumbnailsPage x:Name="ThumbnailSettingsPage" IsVisible="False"/>
-                                        <pagesSettings:UpdatesPage x:Name="UpdatesSettingsPage" IsVisible="False"/>
-                                        <pagesSettings:ExperimentalPage x:Name="ExperimentalSettingsPage" IsVisible="False"/>
-                                        <pagesCreate:TilePage x:Name="TileCreatePage" IsVisible="False"/>
-                                        <pagesCreate:TilePage x:Name="DirectoryPortalPage" IsVisible="False"/>
-                                        <pagesCreate:TilePage x:Name="FloatingImagePage" IsVisible="False"/>
-                                        <pagesCreate:TilePage x:Name="NotesPage" IsVisible="False"/>
-                                </Panel>
-                        </ScrollViewer>
+                        <Grid>
+                                <Grid.RowDefinitions>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid x:Name="PageControls" Grid.Row="0">
+                                        
+                                </Grid>
+                                <ScrollViewer Grid.Row="1">
+                                        <Panel x:Name="Frame">
+                                                <pagesSettings:GeneralPage x:Name="GeneralSettingsPage" IsVisible="False"/>
+                                                <pagesSettings:AppearancePage x:Name="AppearanceSettingsPage" IsVisible="False"/>
+                                                <pagesSettings:SnappingPage x:Name="SnappingSettingsPage" IsVisible="False"/>
+                                                <pagesSettings:ThumbnailsPage x:Name="ThumbnailSettingsPage" IsVisible="False"/>
+                                                <pagesSettings:UpdatesPage x:Name="UpdatesSettingsPage" IsVisible="False"/>
+                                                <pagesSettings:ExperimentalPage x:Name="ExperimentalSettingsPage" IsVisible="False"/>
+                                                <pagesCreate:TilePage x:Name="TileCreatePage" IsVisible="False"/>
+                                                <pagesCreate:TilePage x:Name="DirectoryPortalPage" IsVisible="False"/>
+                                                <pagesCreate:TilePage x:Name="FloatingImagePage" IsVisible="False"/>
+                                                <pagesCreate:TilePage x:Name="NotesPage" IsVisible="False"/>
+                                        </Panel>
+                                </ScrollViewer>
+                        </Grid>
                 </Border>
         </Grid>
 </Window>

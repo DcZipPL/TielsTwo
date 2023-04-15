@@ -60,6 +60,15 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Application.
+        /// </summary>
+        public static string ApplicationSettingsLabel {
+            get {
+                return ResourceManager.GetString("ApplicationSettingsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply.
         /// </summary>
         public static string Apply {
@@ -488,6 +497,15 @@ namespace Avalonia.Tiels.Resources {
         public static string TilePath {
             get {
                 return ResourceManager.GetString("TilePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiles.
+        /// </summary>
+        public static string TileSettingsLabel {
+            get {
+                return ResourceManager.GetString("TileSettingsLabel", resourceCulture);
             }
         }
         

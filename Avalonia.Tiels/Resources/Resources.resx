@@ -186,4 +186,10 @@
     <data name="TileListLabel" xml:space="preserve">
         <value>Manage</value>
     </data>
+    <data name="TileSettingsLabel" xml:space="preserve">
+        <value>Tiles</value>
+    </data>
+    <data name="ApplicationSettingsLabel" xml:space="preserve">
+        <value>Application</value>
+    </data>
 </root>

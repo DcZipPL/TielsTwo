@@ -17,14 +17,14 @@
             <Button Grid.Column="0" Click="DefaultButtonClicked" x:Name="DefaultButton" Content="{x:Static p:Resources.Default}"/>
         </Grid>
         <StackPanel x:Name="CustomAppearanceGrid" Spacing="10">
-            <TextBlock FontSize="16" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.SettingsLabel}"/>
+            <TextBlock FontSize="16" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.ApplicationSettingsLabel}"/>
             <StackPanel>
                 <WrapPanel><Label Content="{x:Static p:Resources.ThemeMode}"/><Label FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" Content="󿚙" Padding="2,5,0,0"><ToolTip.Tip>
                     <TextBlock Text="{x:Static p:Resources.ThemeModeTooltip}"/>
                 </ToolTip.Tip></Label></WrapPanel>
                 <ComboBox x:Name="ApplicationThemeBox" HorizontalAlignment="Stretch"/>
             </StackPanel>
-            <TextBlock FontSize="16" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.SettingsLabel}"/>
+            <TextBlock FontSize="16" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.TileSettingsLabel}"/>
             <StackPanel>
                 <WrapPanel><Label Content="{x:Static p:Resources.ThemeMode}"/><Label FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" Content="󿚙" Padding="2,5,0,0"><ToolTip.Tip>
                     <TextBlock Text="{x:Static p:Resources.ThemeModeTooltip}"/>
@@ -51,9 +51,9 @@
                 <TextBlock Foreground="#FF0000" IsVisible="False" x:Name="WarnOtherProgramsText" TextWrapping="Wrap" Text="{x:Static p:Resources.WarnOtherPrograms}"/>
             </StackPanel>
         </StackPanel>
-        <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="4.5"><!-- TODO: This margin works strangely. Fix that in future -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="4.5">
             <TextBlock x:Name="StatusIcon" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" Padding="0,0,5,0">󿚚</TextBlock>
             <TextBlock x:Name="StatusText" Text="{x:Static p:Resources.NoChanges}"/>
-        </WrapPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

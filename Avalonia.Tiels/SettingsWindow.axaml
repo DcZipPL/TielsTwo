@@ -44,11 +44,19 @@
                         <Border.Background><SolidColorBrush Color="#FF131313"></SolidColorBrush></Border.Background>
                         <Grid>
                                 <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Grid x:Name="PageControls" Grid.Row="0">
-                                        
+                                <Grid x:Name="PageControls" Grid.Row="0" Background="#85000000">
+                                        <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Margin="10" Text="{x:Static p:Resources.SettingsLabel}" VerticalAlignment="Center" Foreground="{StaticResource BaseTitleColor}"/>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" Margin="10">
+                                                <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="{x:Static p:Resources.Default}"/>
+                                                <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="{x:Static p:Resources.Apply}"/>
+                                        </StackPanel>
                                 </Grid>
                                 <ScrollViewer Grid.Row="1">
                                         <Panel x:Name="Frame">

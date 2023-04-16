@@ -54,9 +54,4 @@ public partial class AppearancePage : SettingsPage
 	{
 		
 	}
-	
-	#region Boilerplate
-	private void ApplyButtonClicked(object? sender, RoutedEventArgs e) => ApplySettings();
-	private void DefaultButtonClicked(object? sender, RoutedEventArgs e) => RollbackSettings();
-	#endregion
 }

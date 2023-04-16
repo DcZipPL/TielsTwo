@@ -8,14 +8,6 @@
              mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="500"
              x:Class="Avalonia.Tiels.Pages.Settings.AppearancePage">
     <Grid Margin="10">
-        <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Click="ApplyButtonClicked" x:Name="ApplyButton" Margin="5,0,0,0" Content="{x:Static p:Resources.Apply}"/>
-            <Button Grid.Column="0" Click="DefaultButtonClicked" x:Name="DefaultButton" Content="{x:Static p:Resources.Default}"/>
-        </Grid>
         <StackPanel x:Name="CustomAppearanceGrid" Spacing="10">
             <TextBlock FontSize="16" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.ApplicationSettingsLabel}"/>
             <StackPanel>
@@ -50,10 +42,6 @@
                 <TextBlock Foreground="#FF0000" IsVisible="False" x:Name="NewestWinOnlyText" TextWrapping="Wrap" Text="{x:Static p:Resources.WarnNewerSysReq}"/>
                 <TextBlock Foreground="#FF0000" IsVisible="False" x:Name="WarnOtherProgramsText" TextWrapping="Wrap" Text="{x:Static p:Resources.WarnOtherPrograms}"/>
             </StackPanel>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="4.5">
-            <TextBlock x:Name="StatusIcon" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" Padding="0,0,5,0">󿚚</TextBlock>
-            <TextBlock x:Name="StatusText" Text="{x:Static p:Resources.NoChanges}"/>
         </StackPanel>
     </Grid>
 </UserControl>

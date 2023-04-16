@@ -21,9 +21,4 @@ public partial class ExperimentalPage : SettingsPage
 	{
 		throw new System.NotImplementedException();
 	}
-	
-	#region Boilerplate
-	private void ApplyButtonClicked(object? sender, RoutedEventArgs e) => ApplySettings();
-	private void DefaultButtonClicked(object? sender, RoutedEventArgs e) => RollbackSettings();
-	#endregion
 }

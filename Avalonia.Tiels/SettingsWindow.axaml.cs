@@ -10,10 +10,6 @@ namespace Avalonia.Tiels
 {
 	public partial class SettingsWindow : Window
 	{
-		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs>? applyButtonContract;
-		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs>? defaultButtonContract;
-		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs>? createButtonContract;
-
 		public SettingsWindow()
 		{
 			LoadWindow();
@@ -36,20 +32,13 @@ namespace Avalonia.Tiels
 				SB_MFI.WithPage(null),
 				SB_MN.WithPage(null)
 			};
-			
+
 			SB_SE.IsVisible = App.Instance.Config.Experimental;
 			SB_ST.IsVisible = App.Instance.Config.Experimental;
 			SB_ST.IsEnabled = App.Instance.Config.ThumbnailsSettingsEnabled;
-			
-			// Load default page
-			applyButtonContract = (_, _) => { GeneralSettingsPage.ApplySettings(); };
-			defaultButtonContract = (_, _) => { GeneralSettingsPage.RollbackSettings(); Serilog.Log.Information(GeneralSettingsPage.GetType().Name); };
 
-			IPage.ChangeVisibility(GeneralSettingsPage, true);
-			StatusPanel.IsVisible = true;
-			SettingsControl.IsVisible = true;
-			ApplyButton.Click += applyButtonContract;
-			DefaultButton.Click += defaultButtonContract;
+			// Load default page
+			LoadDefaultPage();
 
 			// Add click events for sidebar buttons
 			foreach (var sidebarButton in sidebarButtons)
@@ -66,34 +55,19 @@ namespace Avalonia.Tiels
 							{
 								// Enable page
 								IPage.ChangeVisibility(sidebarButton.Page, true);
-								
+
 								StatusPanel.IsVisible = sidebarButton.Page is SettingsPage;
 								SettingsControl.IsVisible = sidebarButton.Page is SettingsPage;
 								CreateControl.IsVisible = sidebarButton.Page is TilePage;
-								
+
+								// Reset contracts
 								if (sidebarButton.Page is SettingsPage settingsPage)
 								{
-									// Clear contracts
-									ApplyButton.Click -= applyButtonContract;
-									DefaultButton.Click -= defaultButtonContract;
-
-									// Save new contracts
-									applyButtonContract = (_, _) => { settingsPage.ApplySettings(); };
-									defaultButtonContract = (_, _) => { settingsPage.RollbackSettings(); Serilog.Log.Information(settingsPage.GetType().Name); };
-
-									// Apply new to buttons
-									ApplyButton.Click += applyButtonContract;
-									DefaultButton.Click += defaultButtonContract;
-								} else if (sidebarButton.Page is TilePage tileCreatePage) {
-									// Clear contracts
-									CreateControl.Click -= createButtonContract;
-
-									// Save new contracts
-									createButtonContract = (_, _) => { tileCreatePage.CreateTile(); };
-
-									// Apply new to buttons
-									CreateControl.Click += createButtonContract;
-								
+									ApplyButtonContract = (_, _) => { settingsPage.ApplySettings(); };
+									DefaultButtonContract = (_, _) => { settingsPage.RollbackSettings(); };
+								} else if (sidebarButton.Page is TilePage tileCreatePage)
+								{
+									CreateButtonContract = (_, _) => { tileCreatePage.CreateTile(); };
 								}
 							}
 							else
@@ -113,12 +87,60 @@ namespace Avalonia.Tiels
 			}
 		}
 
+		private void LoadDefaultPage()
+		{
+			IPage.ChangeVisibility(GeneralSettingsPage, true);
+			StatusPanel.IsVisible = true;
+			SettingsControl.IsVisible = true;
+			ApplyButtonContract = (_, _) => { GeneralSettingsPage.ApplySettings(); };
+			DefaultButtonContract = (_, _) => { GeneralSettingsPage.RollbackSettings(); };
+		}
+
 		internal void LoadWindow()
 		{
 			InitializeComponent();
 			GeneralSettingsPage.Root = this;
-			
+
 			LoadSidebar();
 		}
+
+		#region Contracts
+
+		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs> _applyButtonContract;
+		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs> _defaultButtonContract;
+		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs> _createButtonContract;
+
+		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs> ApplyButtonContract
+		{
+			get => _applyButtonContract;
+			set {
+				if (_applyButtonContract != null)
+					ApplyButton.Click -= _applyButtonContract;
+				_applyButtonContract = value;
+				ApplyButton.Click += _applyButtonContract;
+			}
+		}
+		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs> DefaultButtonContract
+		{
+			get => _defaultButtonContract;
+			set {
+				if (_defaultButtonContract != null)
+					DefaultButton.Click -= _defaultButtonContract;
+				_defaultButtonContract = value;
+				DefaultButton.Click += _defaultButtonContract;
+			}
+		}
+		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs> CreateButtonContract
+		{
+			get => _createButtonContract;
+			set {
+				if (_createButtonContract != null)
+					CreateControl.Click -= _createButtonContract;
+				_createButtonContract = value;
+				CreateControl.Click += _createButtonContract;
+			}
+		}
+
+		#endregion
 	}
 }

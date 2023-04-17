@@ -407,7 +407,6 @@ public partial class Configuration
         {
             get
             {
-                // TODO: Test this
                 return ReqModel().Appearance!.Override;
             }
             set
@@ -459,7 +458,8 @@ public partial class Configuration
             get
             {
                 var result = Color.TryParse(ReqModel().Appearance!.Color, out var color);
-                LoggingHandler.Warn($"{nameof(Configuration.Tile)} -> {nameof(Color)}", $"Couldn't parse {nameof(color)} from config! Using transparent color instead.");
+                if (!result)
+                    LoggingHandler.Warn($"{nameof(Configuration.Tile)}{{{ReqModel().Id}}} -> {nameof(Color)}", $"Couldn't parse {nameof(color)} from config! Using transparent color instead.");
                 return result ? color : Color.FromArgb(0, 0, 0, 0);
             }
             set

@@ -60,7 +60,7 @@ public partial class TilePage : UserPage
 		PathBox.Text = Configuration.GetDefaultTilesDirectory();
 	}
 
-	private void CreateTile()
+	public void CreateTile()
 	{
 		try
 		{

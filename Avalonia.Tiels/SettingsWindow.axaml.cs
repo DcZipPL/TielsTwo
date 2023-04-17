@@ -10,6 +10,10 @@ namespace Avalonia.Tiels
 {
 	public partial class SettingsWindow : Window
 	{
+		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs>? applyButtonContract;
+		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs>? defaultButtonContract;
+		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs>? createButtonContract;
+
 		public SettingsWindow()
 		{
 			LoadWindow();
@@ -38,12 +42,16 @@ namespace Avalonia.Tiels
 			SB_ST.IsEnabled = App.Instance.Config.ThumbnailsSettingsEnabled;
 			
 			// Load default page
+			applyButtonContract = (_, _) => { GeneralSettingsPage.ApplySettings(); };
+			defaultButtonContract = (_, _) => { GeneralSettingsPage.RollbackSettings(); Serilog.Log.Information(GeneralSettingsPage.GetType().Name); };
+
 			IPage.ChangeVisibility(GeneralSettingsPage, true);
 			StatusPanel.IsVisible = true;
 			SettingsControl.IsVisible = true;
-			ApplyButton.Click += (_, _) => GeneralSettingsPage.ApplySettings();
-			DefaultButton.Click += (_, _) => GeneralSettingsPage.RollbackSettings();
+			ApplyButton.Click += applyButtonContract;
+			DefaultButton.Click += defaultButtonContract;
 
+			// Add click events for sidebar buttons
 			foreach (var sidebarButton in sidebarButtons)
 			{
 				sidebarButton.Top.Click += (rawSender, args) =>
@@ -63,19 +71,36 @@ namespace Avalonia.Tiels
 								SettingsControl.IsVisible = sidebarButton.Page is SettingsPage;
 								CreateControl.IsVisible = sidebarButton.Page is TilePage;
 								
-								if (sidebarButton.Page is not SettingsPage settingsPage) continue;
-								ApplyButton.Click += (_, _) => settingsPage.ApplySettings(); // TODO: Check for duplicated events
-								DefaultButton.Click += (_, _) => settingsPage.RollbackSettings(); // TODO: Make and save delegate that will be removed
+								if (sidebarButton.Page is SettingsPage settingsPage)
+								{
+									// Clear contracts
+									ApplyButton.Click -= applyButtonContract;
+									DefaultButton.Click -= defaultButtonContract;
+
+									// Save new contracts
+									applyButtonContract = (_, _) => { settingsPage.ApplySettings(); };
+									defaultButtonContract = (_, _) => { settingsPage.RollbackSettings(); Serilog.Log.Information(settingsPage.GetType().Name); };
+
+									// Apply new to buttons
+									ApplyButton.Click += applyButtonContract;
+									DefaultButton.Click += defaultButtonContract;
+								} else if (sidebarButton.Page is TilePage tileCreatePage) {
+									// Clear contracts
+									CreateControl.Click -= createButtonContract;
+
+									// Save new contracts
+									createButtonContract = (_, _) => { tileCreatePage.CreateTile(); };
+
+									// Apply new to buttons
+									CreateControl.Click += createButtonContract;
+								
+								}
 							}
 							else
 							{
 								// Disable page
 								sidebarButton.Top.IsChecked = false;
 								IPage.ChangeVisibility(sidebarButton.Page, false);
-								
-								if (sidebarButton.Page is not SettingsPage settingsPage) continue;
-								ApplyButton.Click -= (_, _) => settingsPage.ApplySettings();
-								DefaultButton.Click -= (_, _) => settingsPage.RollbackSettings();
 							}
 						}
 					}

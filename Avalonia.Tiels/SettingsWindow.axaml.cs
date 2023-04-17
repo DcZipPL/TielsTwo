@@ -19,16 +19,16 @@ namespace Avalonia.Tiels
 		{
 			List<SidebarButton> sidebarButtons = new List<SidebarButton>
 			{
-				SB_CT.WithPage(TileCreatePage),
-				SB_CDP.WithPage(DirectoryPortalPage.SetPageAsDirectoryPortal()),
-				SB_CFI.WithPage(FloatingImagePage),
-				SB_CN.WithPage(NotesPage),
-				SB_SG.WithPage(GeneralSettingsPage),
-				SB_SA.WithPage(AppearanceSettingsPage),
-				SB_ST.WithPage(ThumbnailSettingsPage),
-				SB_SU.WithPage(UpdatesSettingsPage),
-				SB_SE.WithPage(ExperimentalSettingsPage),
-				SB_MT.WithPage(SnappingSettingsPage),
+				SB_CT.WithPage(TileCreatePage.RootOf(this)),
+				SB_CDP.WithPage(DirectoryPortalPage.SetPageAsDirectoryPortal().RootOf(this)),
+				SB_CFI.WithPage(FloatingImagePage.RootOf(this)),
+				SB_CN.WithPage(NotesPage.RootOf(this)),
+				SB_SG.WithPage(GeneralSettingsPage.RootOf(this)),
+				SB_SA.WithPage(AppearanceSettingsPage.RootOf(this)),
+				SB_ST.WithPage(ThumbnailSettingsPage.RootOf(this)),
+				SB_SU.WithPage(UpdatesSettingsPage.RootOf(this)),
+				SB_SE.WithPage(ExperimentalSettingsPage.RootOf(this)),
+				SB_MT.WithPage(SnappingSettingsPage.RootOf(this)),
 				SB_MFI.WithPage(null),
 				SB_MN.WithPage(null)
 			};
@@ -99,7 +99,6 @@ namespace Avalonia.Tiels
 		internal void LoadWindow()
 		{
 			InitializeComponent();
-			GeneralSettingsPage.Root = this;
 
 			LoadSidebar();
 		}

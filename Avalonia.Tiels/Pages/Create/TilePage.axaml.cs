@@ -83,6 +83,4 @@ public partial class TilePage : UserPage
 			LoggingHandler.Warn("CreateTile", ex.ToString());
 		}
 	}
-
-	private void CreateButton(object? sender, RoutedEventArgs e) => CreateTile();
 }

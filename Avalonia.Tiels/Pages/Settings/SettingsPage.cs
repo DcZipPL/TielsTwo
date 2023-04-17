@@ -7,8 +7,6 @@ namespace Avalonia.Tiels.Pages.Settings;
 public abstract class SettingsPage : UserPage
 {
 	protected (string, string?) status = (Icons.Check, App.I18n.GetString("NoChanges"));
-
-	internal SettingsWindow Root;
 	
 	protected void ApplyIfChanged(bool getter, Action<bool> setter, CheckBox checkBox)
 	{

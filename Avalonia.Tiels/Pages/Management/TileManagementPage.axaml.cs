@@ -38,8 +38,8 @@ public partial class SnappingPage : SettingsPage
 		LoadSettingsValues();
 		
 		// Show status
-		StatusIcon.Text = status.Item1;
-		StatusText.Text = status.Item2;
+		Root.StatusIcon.Text = status.Item1;
+		Root.StatusText.Text = status.Item2;
 	}
 
 	private void LoadSettingsValues()

@@ -44,11 +44,25 @@
                         <Border.Background><SolidColorBrush Color="#FF131313"></SolidColorBrush></Border.Background>
                         <Grid>
                                 <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Border Grid.Row="0" BorderThickness="0,0,0,0.6" BorderBrush="{StaticResource BaseBorderColor}">
-                                        <Grid x:Name="PageControls" Background="#55000000">
+                                <ScrollViewer Grid.Row="0">
+                                        <Panel x:Name="Frame">
+                                                <pagesSettings:GeneralPage x:Name="GeneralSettingsPage" IsVisible="False"/>
+                                                <pagesSettings:AppearancePage x:Name="AppearanceSettingsPage" IsVisible="False"/>
+                                                <pagesSettings:SnappingPage x:Name="SnappingSettingsPage" IsVisible="False"/>
+                                                <pagesSettings:ThumbnailsPage x:Name="ThumbnailSettingsPage" IsVisible="False"/>
+                                                <pagesSettings:UpdatesPage x:Name="UpdatesSettingsPage" IsVisible="False"/>
+                                                <pagesSettings:ExperimentalPage x:Name="ExperimentalSettingsPage" IsVisible="False"/>
+                                                <pagesCreate:TilePage x:Name="TileCreatePage" IsVisible="False"/>
+                                                <pagesCreate:TilePage x:Name="DirectoryPortalPage" IsVisible="False"/>
+                                                <pagesCreate:TilePage x:Name="FloatingImagePage" IsVisible="False"/>
+                                                <pagesCreate:TilePage x:Name="NotesPage" IsVisible="False"/>
+                                        </Panel>
+                                </ScrollViewer>
+                                <Border Grid.Row="1" BorderThickness="0,0.6,0,0" BorderBrush="{StaticResource BaseBorderColor}">
+                                        <Grid x:Name="PageControls" Background="#152ba3ff">
                                                 <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                                         <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -64,20 +78,6 @@
                                                 <Button Grid.Column="1" x:Name="CreateControl" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{x:Static p:Resources.CreateButton}" IsVisible="False"/>
                                         </Grid>
                                 </Border>
-                                <ScrollViewer Grid.Row="1">
-                                        <Panel x:Name="Frame">
-                                                <pagesSettings:GeneralPage x:Name="GeneralSettingsPage" IsVisible="False"/>
-                                                <pagesSettings:AppearancePage x:Name="AppearanceSettingsPage" IsVisible="False"/>
-                                                <pagesSettings:SnappingPage x:Name="SnappingSettingsPage" IsVisible="False"/>
-                                                <pagesSettings:ThumbnailsPage x:Name="ThumbnailSettingsPage" IsVisible="False"/>
-                                                <pagesSettings:UpdatesPage x:Name="UpdatesSettingsPage" IsVisible="False"/>
-                                                <pagesSettings:ExperimentalPage x:Name="ExperimentalSettingsPage" IsVisible="False"/>
-                                                <pagesCreate:TilePage x:Name="TileCreatePage" IsVisible="False"/>
-                                                <pagesCreate:TilePage x:Name="DirectoryPortalPage" IsVisible="False"/>
-                                                <pagesCreate:TilePage x:Name="FloatingImagePage" IsVisible="False"/>
-                                                <pagesCreate:TilePage x:Name="NotesPage" IsVisible="False"/>
-                                        </Panel>
-                                </ScrollViewer>
                         </Grid>
                 </Border>
         </Grid>

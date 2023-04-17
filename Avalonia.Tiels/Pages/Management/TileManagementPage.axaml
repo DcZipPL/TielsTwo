@@ -7,17 +7,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia.Tiels.Pages.Settings.SnappingPage">
 	<Grid>
-		<Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*"></ColumnDefinition>
-				<ColumnDefinition Width="*"></ColumnDefinition>
-			</Grid.ColumnDefinitions>
-			<Button Grid.Column="1" Click="ApplyButtonClicked" x:Name="ApplyButton" Margin="5,0,0,0" Content="{x:Static p:Resources.Apply}"/>
-			<Button Grid.Column="0" Click="DefaultButtonClicked" x:Name="DefaultButton" Content="{x:Static p:Resources.Default}"/>
-		</Grid>
 		<StackPanel Margin="10" Spacing="10">
 			<TextBlock FontSize="16" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.SnappingLabel}"/>
-			<WrapPanel>
+			<StackPanel Orientation="Horizontal" Spacing="10">
 				<StackPanel>
 					<Label Content="{x:Static p:Resources.Snapping}"/>
 					<TextBox x:Name="SnappingBox" Width="160" HorizontalAlignment="Left"/>
@@ -26,7 +18,7 @@
 					<Label Content="{x:Static p:Resources.HandleSize}"/>
 					<TextBox x:Name="HandleSizeBox" Width="240" HorizontalAlignment="Left"/>
 				</StackPanel>
-			</WrapPanel>
+			</StackPanel>
 			<CheckBox x:Name="HideTileButtonsCheckBox" Content="{x:Static p:Resources.HideTileButtons}"/>
 			<!-- Tile list -->
 			<TextBlock FontSize="16" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.TileListLabel}"/>
@@ -65,10 +57,6 @@
 				</Grid>
 			</StackPanel>
 		</StackPanel>
-		<WrapPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="15">
-			<TextBlock x:Name="StatusIcon" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" Padding="0,0,5,0">󿚚</TextBlock>
-			<TextBlock x:Name="StatusText" Text="{x:Static p:Resources.NoChanges}"/>
-		</WrapPanel>
 		<Grid x:Name="WarningGrid" IsVisible="False">
 			<controls:BlurBox VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 			<Grid>

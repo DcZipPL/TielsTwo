@@ -157,10 +157,8 @@ public partial class Configuration
             }
 
             var result = Enum.TryParse(appearanceReq.Theme, true, out FluentThemeMode theme);
-            if (result == false)
-            {
+            if (!result)
                 LoggingHandler.Warn("GlobalTheme", "Couldn't parse theme from config! Fallback to Light theme.");
-            }
             return theme;
         }
         set
@@ -429,13 +427,14 @@ public partial class Configuration
             get
             {
                 var result = Enum.TryParse(ReqModel().Appearance!.Theme, true, out FluentThemeMode theme);
-                LoggingHandler.Error(new Exception($"Couldn't parse {nameof(theme)} from config!"), nameof(Configuration.Tile) + "->" + nameof(Theme));
+                if (!result)
+                    LoggingHandler.Error(new Exception($"Couldn't parse {nameof(theme)} from config!"), nameof(Configuration.Tile) + "->" + nameof(Theme));
                 return result ? theme : FluentThemeMode.Light;
             }
             set
             {
                 var model = ReqModel();
-                model.Appearance!.Theme = Enum.GetName(value).ToLower(); // TODO: not sure if this is correct
+                model.Appearance!.Theme = Enum.GetName(value)!.ToLower();
                 SeedModel(model);
             }
         }

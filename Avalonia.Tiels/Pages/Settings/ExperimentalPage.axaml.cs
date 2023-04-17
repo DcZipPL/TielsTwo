@@ -12,12 +12,12 @@ public partial class ExperimentalPage : SettingsPage
 		InitializeComponent();
 	}
 
-	protected override void ApplySettings()
+	public override void ApplySettings()
 	{
 		throw new System.NotImplementedException();
 	}
 
-	protected override void RollbackSettings()
+	public override void RollbackSettings()
 	{
 		throw new System.NotImplementedException();
 	}

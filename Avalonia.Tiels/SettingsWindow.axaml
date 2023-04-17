@@ -47,17 +47,23 @@
                                         <RowDefinition Height="Auto"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Grid x:Name="PageControls" Grid.Row="0" Background="#85000000">
-                                        <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Margin="10" Text="{x:Static p:Resources.SettingsLabel}" VerticalAlignment="Center" Foreground="{StaticResource BaseTitleColor}"/>
-                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" Margin="10">
-                                                <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="{x:Static p:Resources.Default}"/>
-                                                <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="{x:Static p:Resources.Apply}"/>
-                                        </StackPanel>
-                                </Grid>
+                                <Border Grid.Row="0" BorderThickness="0,0,0,0.6" BorderBrush="{StaticResource BaseBorderColor}">
+                                        <Grid x:Name="PageControls" Background="#55000000">
+                                                <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel x:Name="StatusPanel" Orientation="Horizontal" VerticalAlignment="Center" Margin="10, 0" Spacing="5" IsVisible="False">
+                                                        <TextBlock x:Name="StatusIcon" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" Padding="0,1.5,0,0">󿚚</TextBlock>
+                                                        <TextBlock x:Name="StatusText" Text="{x:Static p:Resources.NoChanges}"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" x:Name="SettingsControl" Orientation="Horizontal" Spacing="10" Margin="10" IsVisible="False">
+                                                        <Button x:Name="DefaultButton" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{x:Static p:Resources.Default}"/>
+                                                        <Button x:Name="ApplyButton" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{x:Static p:Resources.Apply}"/>
+                                                </StackPanel>
+                                                <Button Grid.Column="1" x:Name="CreateControl" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{x:Static p:Resources.CreateButton}" IsVisible="False"/>
+                                        </Grid>
+                                </Border>
                                 <ScrollViewer Grid.Row="1">
                                         <Panel x:Name="Frame">
                                                 <pagesSettings:GeneralPage x:Name="GeneralSettingsPage" IsVisible="False"/>

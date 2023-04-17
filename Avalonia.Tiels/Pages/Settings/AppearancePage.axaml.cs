@@ -45,12 +45,12 @@ public partial class AppearancePage : SettingsPage
 		}
 	}
 
-	protected override void ApplySettings()
+	public override void ApplySettings()
 	{
 		
 	}
 
-	protected override void RollbackSettings()
+	public override void RollbackSettings()
 	{
 		
 	}

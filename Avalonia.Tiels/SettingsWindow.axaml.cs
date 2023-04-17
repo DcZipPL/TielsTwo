@@ -3,6 +3,8 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Tiels.Controls;
 using Avalonia.Tiels.Pages;
+using Avalonia.Tiels.Pages.Create;
+using Avalonia.Tiels.Pages.Settings;
 
 namespace Avalonia.Tiels
 {
@@ -37,7 +39,11 @@ namespace Avalonia.Tiels
 			
 			// Load default page
 			IPage.ChangeVisibility(GeneralSettingsPage, true);
-			
+			StatusPanel.IsVisible = true;
+			SettingsControl.IsVisible = true;
+			ApplyButton.Click += (_, _) => GeneralSettingsPage.ApplySettings();
+			DefaultButton.Click += (_, _) => GeneralSettingsPage.RollbackSettings();
+
 			foreach (var sidebarButton in sidebarButtons)
 			{
 				sidebarButton.Top.Click += (rawSender, args) =>
@@ -50,12 +56,26 @@ namespace Avalonia.Tiels
 						{
 							if (sidebarButton.Top.Equals(sender))
 							{
+								// Enable page
 								IPage.ChangeVisibility(sidebarButton.Page, true);
+								
+								StatusPanel.IsVisible = sidebarButton.Page is SettingsPage;
+								SettingsControl.IsVisible = sidebarButton.Page is SettingsPage;
+								CreateControl.IsVisible = sidebarButton.Page is TilePage;
+								
+								if (sidebarButton.Page is not SettingsPage settingsPage) continue;
+								ApplyButton.Click += (_, _) => settingsPage.ApplySettings(); // TODO: Check for duplicated events
+								DefaultButton.Click += (_, _) => settingsPage.RollbackSettings(); // TODO: Make and save delegate that will be removed
 							}
 							else
 							{
+								// Disable page
 								sidebarButton.Top.IsChecked = false;
 								IPage.ChangeVisibility(sidebarButton.Page, false);
+								
+								if (sidebarButton.Page is not SettingsPage settingsPage) continue;
+								ApplyButton.Click -= (_, _) => settingsPage.ApplySettings();
+								DefaultButton.Click -= (_, _) => settingsPage.RollbackSettings();
 							}
 						}
 					}

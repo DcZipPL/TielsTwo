@@ -14,12 +14,12 @@ public partial class ThumbnailsPage : SettingsPage
 		//ThumbnailCsi.GetShellIcon(3);
 	}
 
-	protected override void ApplySettings()
+	public override void ApplySettings()
 	{
 		throw new System.NotImplementedException();
 	}
 
-	protected override void RollbackSettings()
+	public override void RollbackSettings()
 	{
 		throw new System.NotImplementedException();
 	}

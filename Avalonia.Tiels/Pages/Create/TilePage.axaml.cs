@@ -32,31 +32,6 @@ public partial class TilePage : UserPage
 		SizeXBox.Watermark = DEFAULT_WIDTH.ToString();
 		SizeYBox.Watermark = DEFAULT_HEIGHT.ToString();
 
-		TransparencyModeBox.Items = Enum.GetNames(typeof(WindowTransparencyLevel)).Select(name => Regex.Replace(name, "(\\B[A-Z])", " $1"));
-		TransparencyModeBox.SelectedIndex = (int)App.Instance.Config.GlobalTransparencyLevel;
-
-		ThemeBox.Items = Enum.GetNames(typeof(FluentThemeMode));
-		ThemeBox.SelectedIndex = (int)App.Instance.Config.GlobalTheme;
-
-		UseGlobalThemeBox.Checked += (sender, args) => CustomAppearanceGrid.IsEnabled = false;
-		UseGlobalThemeBox.Unchecked += (sender, args) => CustomAppearanceGrid.IsEnabled = true;
-
-		ColorBtn.Color = App.Instance.Config.GlobalTheme == FluentThemeMode.Dark ? Util.TILE_DARK_COLOR : Util.TILE_LIGHT_COLOR;
-		ThemeBox.SelectionChanged += (_, _) =>
-		{
-			if (ColorBtn.Color == Util.TILE_DARK_COLOR || ColorBtn.Color == Util.TILE_LIGHT_COLOR)
-				ColorBtn.Color = (FluentThemeMode)ThemeBox.SelectedIndex == FluentThemeMode.Dark ? Util.TILE_DARK_COLOR: Util.TILE_LIGHT_COLOR;
-		};
-		
-		TransparencyModeBox.SelectionChanged += (_, _) =>
-		{
-			var selection = (string?)TransparencyModeBox.SelectedItem ?? WindowTransparencyLevel.None.ToString();
-			WarnUnsupportedOptionText.IsVisible = selection != WindowTransparencyLevel.None.ToString() &&
-			                                      selection != WindowTransparencyLevel.Transparent.ToString();
-			NewestWinOnlyText.IsVisible = selection == WindowTransparencyLevel.Mica.ToString();
-			WarnOtherProgramsText.IsVisible = selection == WindowTransparencyLevel.Mica.ToString();
-		};
-
 		PathBox.Text = Configuration.GetDefaultTilesDirectory();
 	}
 
@@ -64,7 +39,7 @@ public partial class TilePage : UserPage
 	{
 		try
 		{
-			if (!UseGlobalThemeBox.IsChecked.HasValue)
+			if (!Appearance.UseGlobalThemeBox.IsChecked.HasValue)
 				throw LoggingHandler.Error(new NullReferenceException("UseGlobalThemeBox.IsChecked is null!"),
 					nameof(TilePage));
 			TileManagement.CreateTile(
@@ -72,10 +47,10 @@ public partial class TilePage : UserPage
 				_type == TileType.DirectoryPortal ? PathBox.Text : Path.Combine(App.Instance.Config.TilesPath, NameBox.Text),
 				SizeXBox.Text != null ? double.Parse(SizeXBox.Text) : DEFAULT_WIDTH,
 				SizeYBox.Text != null ? double.Parse(SizeYBox.Text) : DEFAULT_HEIGHT,
-				!UseGlobalThemeBox.IsChecked.Value,
-				(FluentThemeMode)ThemeBox.SelectedIndex,
-				(WindowTransparencyLevel)TransparencyModeBox.SelectedIndex,
-				ColorBtn.Color
+				!Appearance.UseGlobalThemeBox.IsChecked.Value,
+				(FluentThemeMode)Appearance.ThemeBox.SelectedIndex,
+				(WindowTransparencyLevel)Appearance.TransparencyModeBox.SelectedIndex,
+				Appearance.ColorBtn.Color
 			);
 		}
 		catch (FormatException ex)

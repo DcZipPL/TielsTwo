@@ -118,7 +118,7 @@
         <value>Motyw</value>
     </data>
     <data name="ThemeModeTooltip" xml:space="preserve">
-        <value>Motyw aplikacji i ikonek. Jeśli naprzykład masz na kafelku czarne tło to motyw czarny i vice versa.</value>
+        <value>Motyw aplikacji i ikonek. Ciemny ⇒ Biały tekst i vice versa</value>
     </data>
     <data name="TransparencyChangedInColor" xml:space="preserve">
         <value>Przeźroczystość można zmienić w ustawieniach koloru.</value>

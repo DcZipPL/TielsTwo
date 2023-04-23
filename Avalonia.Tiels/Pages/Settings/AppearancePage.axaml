@@ -17,31 +17,7 @@
                 <ComboBox x:Name="ApplicationThemeBox" HorizontalAlignment="Stretch"/>
             </StackPanel>
             <TextBlock FontSize="16" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.TileSettingsLabel}"/>
-            <StackPanel>
-                <WrapPanel><Label Content="{x:Static p:Resources.ThemeMode}"/><Label FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" Content="󿚙" Padding="2,5,0,0"><ToolTip.Tip>
-                    <TextBlock Text="{x:Static p:Resources.ThemeModeTooltip}"/>
-                </ToolTip.Tip></Label></WrapPanel>
-                <ComboBox x:Name="ThemeBox" HorizontalAlignment="Stretch"/>
-            </StackPanel>
-            <StackPanel>
-                <Label Content="{x:Static p:Resources.TransparencyMode}"/>
-                <ComboBox x:Name="TransparencyModeBox" HorizontalAlignment="Stretch"/>
-            </StackPanel>
-            <StackPanel>
-                <Label Content="{x:Static p:Resources.Color}"/>
-                <avaloniaColorPicker:ColorPicker x:Name="ColorWheel" Color="#88000000" PropertyChanged="ColorWheelSizeChanged"
-                                                 IsPaletteVisible="False"
-                                                 IsCIELABVisible="False"
-                                                 IsColourBlindnessSelectorVisible="False"
-                                                 IsColourSpacePreviewVisible="True"
-                                                 IsColourSpaceSelectorVisible="False"
-                                                 IsHSBVisible="True" IsAlphaVisible="True" IsHexVisible="True" IsRGBVisible="True" Margin="0,3,10,0"/>
-            </StackPanel>
-            <StackPanel>
-                <TextBlock Foreground="#FF9500" IsVisible="False" x:Name="WarnUnsupportedOptionText" TextWrapping="Wrap" Text="{x:Static p:Resources.WarnPossiblyUnsupported}"/>
-                <TextBlock Foreground="#FF0000" IsVisible="False" x:Name="NewestWinOnlyText" TextWrapping="Wrap" Text="{x:Static p:Resources.WarnNewerSysReq}"/>
-                <TextBlock Foreground="#FF0000" IsVisible="False" x:Name="WarnOtherProgramsText" TextWrapping="Wrap" Text="{x:Static p:Resources.WarnOtherPrograms}"/>
-            </StackPanel>
+            <controls:AppearanceComponent/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -474,7 +474,7 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Motyw aplikacji i ikonek. Jeśli naprzykład masz na kafelku czarne tło to motyw czarny i vice versa..
+        ///   Looks up a localized string similar to Motyw aplikacji i ikonek. Ciemny ⇒ Biały tekst i vice versa.
         /// </summary>
         public static string ThemeModeTooltip {
             get {

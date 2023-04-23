@@ -474,7 +474,7 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Theme of application/icons. If you have tile with dark background then dark and vice versa..
+        ///   Looks up a localized string similar to Theme of application/icons. Dark ⇒ White text and vice versa.
         /// </summary>
         public static string ThemeModeTooltip {
             get {

@@ -30,6 +30,7 @@ public class TileManagement
 			Configuration.Tile.CreateTileConfig(App.Instance.Config, name, path, width, height, overriteTheme, theme ?? FluentThemeMode.Dark, transparencyLevel ?? WindowTransparencyLevel.Transparent, color ?? Util.TILE_DARK_COLOR)
 		);
 		window.Show();
+		App.Instance.ActiveTileWindows.Add(window);
 		Log.Debug($"Created new Tile with name {name} and path {path}.");
 	}
 
@@ -37,11 +38,12 @@ public class TileManagement
 	/// Loads Tile from config with corresponding Guid.
 	/// </summary>
 	/// <param name="id">Guid of Tile.</param>
-	public static void LoadTile(Guid id)
+	public static TileWindow LoadTile(Guid id)
 	{
 		Log.Debug($"Loading Tile with ID: {id}.");
 		var window = new TileWindow(id);
 		window.Show();
+		return window;
 	}
 	
 	/// <summary>

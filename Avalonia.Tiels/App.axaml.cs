@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Resources;
 using System.Text;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -15,6 +16,8 @@ namespace Avalonia.Tiels
 		public Configuration Config { get; set; }
 
 		public SettingsWindow? ActiveSettingsWindow;
+		
+		public List<TileWindow> ActiveTileWindows = new();
 		
 		public override void Initialize()
 		{
@@ -43,7 +46,7 @@ namespace Avalonia.Tiels
 			{
 				Config = Configuration.Load(desktop);
 				foreach (var tile in Config.Tiles)
-					TileManagement.LoadTile(tile.Key);
+					ActiveTileWindows.Add(TileManagement.LoadTile(tile.Key));
 			}
 			
 			if (!Config.AutoStartHideSettings || Configuration.IsFirstStartup())

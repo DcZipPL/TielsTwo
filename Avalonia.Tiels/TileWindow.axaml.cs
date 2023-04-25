@@ -120,7 +120,12 @@ public partial class TileWindow : Window
 
 	private void AddEntry(TileEntry entryData)
 	{
+		var isSystemFile = (File.GetAttributes(entryData.Path) & FileAttributes.System) == FileAttributes.System;
 		var extension = Path.GetExtension(entryData.Path);
+
+		entryData.IsAdded = true;
+		if (isSystemFile) return; // Ignore system files
+
 		var entry = new EntryComponent
 		{
 			Path = entryData.Path,
@@ -136,8 +141,6 @@ public partial class TileWindow : Window
 		entry.Width = CELL_WIDTH;
 		entry.Height = CELL_HEIGHT;
 		this.EntryContent.Children.Add(entry);
-
-		entryData.IsAdded = true;
 	}
 
 	private (int, int) GetCellAmount() =>

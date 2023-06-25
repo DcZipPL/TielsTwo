@@ -29,6 +29,9 @@
         <Color x:Key="BaseCategoryBorderColor">#20FFFFFF</Color>
         <Color x:Key="BaseTitleColor">#AAAAAA</Color>
         <Color x:Key="BaseCategoryColor">#FFFFFF</Color>
+        <Color x:Key="BaseControlsColor">#152ba3ff</Color>
+        <Color x:Key="BaseSettingsBackgroundColor">#AE000000</Color>
+        <Color x:Key="BaseSettingsContentBackgroundColor">#FF131313</Color>
     </Application.Resources>
     <TrayIcon.Icons>
         <TrayIcons>

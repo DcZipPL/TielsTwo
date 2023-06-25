@@ -8,7 +8,7 @@
         xmlns:pagesSettings="clr-namespace:Avalonia.Tiels.Pages.Settings"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.Tiels.SettingsWindow"
-        Width="1000" Height="550" TransparencyLevelHint="AcrylicBlur" Background="#AE000000" MinWidth="600"
+        Width="1000" Height="550" TransparencyLevelHint="AcrylicBlur" Background="{StaticResource BaseSettingsBackgroundColor}" MinWidth="600"
         Title="Tiels" Icon="/Assets/tiels_color.ico">
         <Grid>
                 <Grid.ColumnDefinitions>
@@ -41,7 +41,7 @@
                 <Border Grid.Column="1"
                         BorderThickness="0,0.6,0,0" BorderBrush="{StaticResource BaseBorderColor}"
                         IsVisible="True">
-                        <Border.Background><SolidColorBrush Color="#FF131313"></SolidColorBrush></Border.Background>
+                        <Border.Background><SolidColorBrush Color="{StaticResource BaseSettingsContentBackgroundColor}"></SolidColorBrush></Border.Background>
                         <Grid>
                                 <Grid.RowDefinitions>
                                         <RowDefinition Height="*"></RowDefinition>
@@ -62,7 +62,7 @@
                                         </Panel>
                                 </ScrollViewer>
                                 <Border Grid.Row="1" BorderThickness="0,0.6,0,0" BorderBrush="{StaticResource BaseBorderColor}">
-                                        <Grid x:Name="PageControls" Background="#152ba3ff">
+                                        <Grid x:Name="PageControls" Background="{StaticResource BaseControlsColor}">
                                                 <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                                         <ColumnDefinition Width="Auto"></ColumnDefinition>

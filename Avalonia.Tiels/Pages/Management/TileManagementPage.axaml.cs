@@ -2,6 +2,8 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Tiels.Classes;
+using Avalonia.Tiels.Controls;
 
 namespace Avalonia.Tiels.Pages.Settings;
 
@@ -11,6 +13,19 @@ public partial class SnappingPage : SettingsPage
 	{
 		InitializeComponent();
 		LoadSettingsValues();
+		LoadTileList();
+	}
+
+	private void LoadTileList()
+	{
+		foreach (var tile in App.Instance.Config.Tiles)
+		{
+			TileManagementEntries.Children.Add(new TileManageListEntry
+			{
+				Type = TileType.Tile, // TODO: Get type of tile
+				Text = tile.Value.Name
+			});
+		}
 	}
 
 	public override void RollbackSettings()

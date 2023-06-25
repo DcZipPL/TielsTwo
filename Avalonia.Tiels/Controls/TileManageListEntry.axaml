@@ -1,0 +1,41 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Avalonia.Tiels.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Avalonia.Tiels.Controls.TileManageListEntry"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+	<Grid Height="32" Background="{StaticResource BaseBorderColor}">
+		<Grid.Styles>
+			<Style Selector="Button.icon">
+				<Setter Property="VerticalContentAlignment" Value="Center"/>
+				<Setter Property="HorizontalContentAlignment" Value="Center"/>
+				<Setter Property="VerticalAlignment" Value="Stretch"/>
+				<Setter Property="HorizontalAlignment" Value="Stretch"/>
+				<Setter Property="FontFamily" Value="avares://Avalonia.Tiels/Assets#lucidelite"/>
+			</Style>
+		</Grid.Styles>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="32"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="32"/>
+			<ColumnDefinition Width="32"/>
+			<ColumnDefinition Width="32"/>
+			<ColumnDefinition Width="32"/>
+		</Grid.ColumnDefinitions>
+		<Grid Background="#1E00A5AF">
+			<TextBlock FontFamily="avares://Avalonia.Tiels/Assets#lucidelite"
+			           VerticalAlignment="Center"
+			           HorizontalAlignment="Center"
+			           Text="󿚕"/>
+		</Grid>
+		<TextBlock Grid.Column="1"
+		           Padding="10,0"
+		           VerticalAlignment="Center" Text="{Binding Text, RelativeSource={RelativeSource AncestorType={x:Type controls:TileManageListEntry}}}"/>
+		<Button Grid.Column="2" Classes="icon" Content="󿚞"/>
+		<Button Grid.Column="3" Classes="icon" Content="󿚐"/>
+		<Button Grid.Column="4" Classes="icon" Content="󿚠"/>
+		<Button Grid.Column="5" Classes="icon" Content="󿚨" Foreground="#FF0000"/>
+	</Grid>
+</UserControl>

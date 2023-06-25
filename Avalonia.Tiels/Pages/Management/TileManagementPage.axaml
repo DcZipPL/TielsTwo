@@ -22,40 +22,7 @@
 			<CheckBox x:Name="HideTileButtonsCheckBox" Content="{x:Static p:Resources.HideTileButtons}"/>
 			<!-- Tile list -->
 			<TextBlock FontSize="16" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.TileListLabel}"/>
-			<StackPanel>
-				<Grid Height="32" Background="#E0F5FF">
-					<Grid.Styles>
-						<Style Selector="Button.icon">
-							<Setter Property="VerticalContentAlignment" Value="Center"/>
-							<Setter Property="HorizontalContentAlignment" Value="Center"/>
-							<Setter Property="VerticalAlignment" Value="Stretch"/>
-							<Setter Property="HorizontalAlignment" Value="Stretch"/>
-							<Setter Property="FontFamily" Value="avares://Avalonia.Tiels/Assets#lucidelite"/>
-						</Style>
-					</Grid.Styles>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="32"/>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="32"/>
-						<ColumnDefinition Width="32"/>
-						<ColumnDefinition Width="32"/>
-						<ColumnDefinition Width="32"/>
-					</Grid.ColumnDefinitions>
-					<Grid Background="#1E00A5AF">
-						<TextBlock FontFamily="avares://Avalonia.Tiels/Assets#lucidelite"
-						           VerticalAlignment="Center"
-						           HorizontalAlignment="Center"
-						           Text="󿚕"/>
-					</Grid>
-					<TextBlock Grid.Column="1"
-					           Padding="10,0"
-					           VerticalAlignment="Center">Tile name</TextBlock>
-					<Button Grid.Column="2" Classes="icon" Content="󿚞"/>
-					<Button Grid.Column="3" Classes="icon" Content="󿚐"/>
-					<Button Grid.Column="4" Classes="icon" Content="󿚠"/>
-					<Button Grid.Column="5" Classes="icon" Content="󿚨" Foreground="#FF0000"/>
-				</Grid>
-			</StackPanel>
+			<StackPanel x:Name="TileManagementEntries"/>
 		</StackPanel>
 		<Grid x:Name="WarningGrid" IsVisible="False">
 			<controls:BlurBox VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>

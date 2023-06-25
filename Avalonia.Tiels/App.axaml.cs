@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Resources;
 using System.Text;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -46,7 +47,11 @@ namespace Avalonia.Tiels
 			{
 				Config = Configuration.Load(desktop);
 				foreach (var tile in Config.Tiles)
-					ActiveTileWindows.Add(TileManagement.LoadTile(tile.Key));
+				{
+					if (Directory.Exists(tile.Value.Path))
+						ActiveTileWindows.Add(TileManagement.LoadTile(tile.Key));
+					// TODO: Inform user that tile directory does not exist.
+				}
 			}
 			
 			if (!Config.AutoStartHideSettings || Configuration.IsFirstStartup())

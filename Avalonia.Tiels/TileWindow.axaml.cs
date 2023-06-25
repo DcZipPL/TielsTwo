@@ -38,11 +38,13 @@ public partial class TileWindow : Window
 	public TileWindow(Guid id) : this()
 	{
 		ID = id;
-
+		
+		// Load Handle Height from config.
 		float handleHeight = App.Instance.Config.HandleHeight;
 		HandleSizeDefinition.RowDefinitions[1].Height = new GridLength(handleHeight);
 		MoveArea.Margin = new Thickness(0, 0, 0, handleHeight);
 
+		// Set color of Tile.
 		MainGrid.Background = new SolidColorBrush(App.Instance.Config.Tiles[ID].IsOverriden
 			? App.Instance.Config.Tiles[ID].Color
 			: App.Instance.Config.GlobalColor);
@@ -59,20 +61,26 @@ public partial class TileWindow : Window
 			RenameBtn.Classes.Add("Dark");
 		}
 
+		// Set transparency of Tile.
 		this.TransparencyLevelHint = App.Instance.Config.Tiles[ID].IsOverriden
 			? App.Instance.Config.Tiles[ID].TransparencyLevel
 			: App.Instance.Config.GlobalTransparencyLevel;
 
+		// Set Tile position.
 		var location = App.Instance.Config.Tiles[ID].Location;
 		this.Position = new PixelPoint((int)location.X, (int)location.Y);
 
+		// Set Tile name.
 		this.TileName.Text = App.Instance.Config.Tiles[ID].Name;
 
+		// Set Tile collapse state.
 		_isHidden = App.Instance.Config.Tiles[ID].Hidden;
 
+		// Set Tile size.
 		var size = App.Instance.Config.Tiles[ID].Size;
 		this.Width = size.X;
 		
+		// Apply collapse state.
 		UpdateWindowHiddenState();
 	}
 	

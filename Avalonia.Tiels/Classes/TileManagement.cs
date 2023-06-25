@@ -54,16 +54,19 @@ public class TileManagement
 	public static void LoadTileContent(TileWindow window, Configuration configuration)
 	{
 		// TODO: If icon matches with existing icon. Reuse it.
-		foreach (var systemEntry in Directory.EnumerateFileSystemEntries(configuration.Tiles[window.ID].Path))
+		try
 		{
-			var thumbnail = ThumbnailCsi.GetThumbnailImage(systemEntry, ThumbnailSize.Jumbo);
-			window.entries.Add(new TileWindow.TileEntry(systemEntry, thumbnail));
-		}
+			foreach (var systemEntry in Directory.EnumerateFileSystemEntries(configuration.Tiles[window.ID].Path))
+			{
+				var thumbnail = ThumbnailCsi.GetThumbnailImage(systemEntry, ThumbnailSize.Jumbo);
+				window.entries.Add(new TileWindow.TileEntry(systemEntry, thumbnail));
+			}
 
-		// TODO: Better threading if possible
-		Dispatcher.UIThread.Post(() =>
+			// TODO: Better threading if possible
+			Dispatcher.UIThread.Post(() => { window.LoadEntries(0); });
+		} catch (Exception e)
 		{
-			window.LoadEntries(0);
-		});
+			LoggingHandler.Error(e, $"Failed to load Tile content for Tile with ID: {window.ID}.");
+		}
 	}
 }

@@ -1,7 +1,5 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Media;
-using Avalonia.Tiels.Classes;
 using Avalonia.Tiels.Pages;
 
 namespace Avalonia.Tiels.Controls;

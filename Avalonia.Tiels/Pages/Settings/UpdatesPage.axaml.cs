@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics;
-using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 
 namespace Avalonia.Tiels.Pages.Settings;
 

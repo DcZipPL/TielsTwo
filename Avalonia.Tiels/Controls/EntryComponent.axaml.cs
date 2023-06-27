@@ -1,10 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Themes.Fluent;
 using Avalonia.Tiels.Classes;

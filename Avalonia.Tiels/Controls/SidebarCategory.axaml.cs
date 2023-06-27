@@ -1,9 +1,4 @@
-﻿using System;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Logging;
-using Avalonia.Markup.Xaml;
-using Avalonia.Metadata;
+﻿using Avalonia.Controls;
 
 namespace Avalonia.Tiels.Controls;
 

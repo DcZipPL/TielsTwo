@@ -69,4 +69,14 @@ public class TileManagement
 			LoggingHandler.Error(e, $"Failed to load Tile content for Tile with ID: {window.ID}.");
 		}
 	}
+
+	public static void DeleteTile(Guid id)
+	{
+		Configuration.Tile.DeleteTileConfig(App.Instance.Config, id);
+		
+		// Close Tile if it's open
+		App.Instance.ActiveTileWindows.FirstOrDefault(x => x.ID == id)?.Close();
+		
+		Log.Debug($"Deleted Tile with ID: {id}.");
+	}
 }

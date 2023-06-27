@@ -319,32 +319,20 @@ public partial class Configuration
 
             return id;
         }
-
-        public void SaveThumbnail(string path, string thumbnailPath)
+        
+        public static void DeleteTileConfig(Configuration configAccess, Guid id)
         {
-            int header = System.Text.Encoding.ASCII.GetByteCount("BPT");
-            //const uint maxBufferSize = sizeof(uint);
-            //const uint bufferSize = sizeof(uint) * maxBufferSize;
-        
-            byte[] bytes = File.ReadAllBytes(path);
-        
-            //File.WriteAllBytes(path, new []{});
-        }
-    
-        public static void LoadThumbnails(string path)
-        {
-            int header = System.Text.Encoding.ASCII.GetByteCount("BPT");
-            const uint maxBufferSize = sizeof(uint);
-            const uint bufferSize = sizeof(uint) * maxBufferSize;
-        
-            byte[] bytes = File.ReadAllBytes(path);
-            for (var i = (uint)(header + maxBufferSize + bufferSize); i <= bytes.Length; i++)
-            {
+            if (!configAccess.Tiles.ContainsKey(id)) return;
             
-            }
-            //uint buffer = 2048;
+            if (File.Exists(configAccess.Tiles[id]._configPath))
+                File.Delete(configAccess.Tiles[id]._configPath);
+            
+            if (File.Exists(configAccess.Tiles[id]._thumbnailDbPath))
+                File.Delete(configAccess.Tiles[id]._thumbnailDbPath);
+            
+            configAccess.Tiles.Remove(id);
         }
-        
+
         #endregion
 
         #region Request

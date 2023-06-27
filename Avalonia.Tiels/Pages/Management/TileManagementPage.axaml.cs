@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Interactivity;
 using Avalonia.Tiels.Classes;
 using Avalonia.Tiels.Controls;
@@ -16,13 +17,21 @@ public partial class SnappingPage : SettingsPage
 
 	private void LoadTileList()
 	{
-		foreach (var tile in App.Instance.Config.Tiles)
+		try
 		{
-			TileManagementEntries.Children.Add(new TileManageListEntry
+			foreach (var tile in App.Instance.Config.Tiles)
 			{
-				Type = TileType.Tile, // TODO: Get type of tile
-				Text = tile.Value.Name
-			});
+				TileManagementEntries.Children.Add(new TileManageListEntry
+				{
+					ID = Guid.Parse(tile.Value.Id),
+					Type = TileType.Tile, // TODO: Get type of tile
+					Text = tile.Value.Name
+				});
+			}
+		} catch (Exception e)
+		{
+			// TODO: Show in app error that tile list could not be loaded.
+			LoggingHandler.Warn(nameof(LoadTileList), e.ToString());
 		}
 	}
 

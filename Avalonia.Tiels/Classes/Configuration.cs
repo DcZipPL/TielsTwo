@@ -345,6 +345,7 @@ public partial class Configuration
         [ConfigEntry] private string __Name = "";
         [ConfigEntry] private string __Path = "";
         [ConfigEntry] private bool __Hidden;
+        [ConfigEntry] private bool __EditBarOnHover;
 
         #pragma warning restore CS0414
         #pragma warning restore CS0169
@@ -352,7 +353,7 @@ public partial class Configuration
 
         public BarAlignment EditBarAlignment
         {
-            get { return (BarAlignment)ReqModel().EditBarAlignment; }
+            get => (BarAlignment)ReqModel().EditBarAlignment;
             set
             {
                 var model = ReqModel();
@@ -393,10 +394,7 @@ public partial class Configuration
 
         public bool IsOverriden
         {
-            get
-            {
-                return ReqModel().Appearance!.Override;
-            }
+            get => ReqModel().Appearance!.Override;
             set
             {
                 var model = ReqModel();
@@ -540,7 +538,7 @@ public partial class Configuration
         {
             public bool Override { get; set; } = false;
             public string? Theme { get; set; } = "dark"; // FluentThemeMode (lowercase)
-            public string? Color { get; set; } = "#55000000";
+            public string? Color { get; set; } = Util.ColorToHex(Util.TILE_DARK_COLOR); // Color (hex)
             public int Transparency { get; set; } = 1; // WindowTransparencyLevel
             
             TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
@@ -576,6 +574,7 @@ public partial class Configuration
             public string? Name { get; set; }
             public string? Path { get; set; }
             public bool Hidden { get; set; } = false;
+            public bool EditBarOnHover { get; set; } = false;
             public int EditBarAlignment { get; set; } = 0; // BarAlignment
             public Vec2? Size { get; set; } = new Vec2 { X = 200, Y = 100 };
             public Vec2? Location { get; set; } = new Vec2 { X = 100, Y = 100 };

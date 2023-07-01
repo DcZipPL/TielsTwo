@@ -7,7 +7,7 @@ namespace Avalonia.Tiels.Classes;
 /// </summary>
 public class Icons
 {
-	public static readonly FontFamily FONT = new FontFamily("avares://Avalonia.Tiels/Assets#lucidelite");
+	public static readonly FontFamily FONT = new("avares://Avalonia.Tiels/Assets#lucidelite");
 	
 	private readonly string _glyph;
 	private Icons(string glyph) => _glyph = glyph;
@@ -44,5 +44,6 @@ public class Icons
 	public static readonly Icons MoreVertical = (Icons) "󿚧";
 	public static readonly Icons Trash = (Icons) "󿚨";
 	public static readonly Icons TrashAlt = (Icons) "󿚩";
+	public static readonly Icons Move = (Icons) "󿚪";
 	//!a
 }

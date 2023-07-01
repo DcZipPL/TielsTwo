@@ -7,8 +7,8 @@ namespace Avalonia.Tiels.Classes;
 
 public static class Util
 {
-	public static readonly Color TILE_DARK_COLOR = Color.Parse("#55000000");
-	public static readonly Color TILE_LIGHT_COLOR = Color.Parse("#55ffffff");
+	public static readonly Color TILE_DARK_COLOR = Color.Parse("#50000000");
+	public static readonly Color TILE_LIGHT_COLOR = Color.Parse("#50ffffff");
 
 	public static string ColorToHex(Color c)
 	{

@@ -24,7 +24,8 @@ icons = [
     "external-link",
     "more-vertical",
     "trash",
-    "trash-2"
+    "trash-2",
+    "move"
 ]
 
 local_icons = [

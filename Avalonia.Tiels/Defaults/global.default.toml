@@ -13,7 +13,7 @@ entry_limit = 100 # 0 = no limit
 [appearance]
 override = false # Override global values
 theme = "dark" # 'light' and 'dark' options supported
-color = "#55000000" # ARGB Color
+color = "#50000000" # ARGB Color
 
 # 0: None, The window background is Solid Color.
 # 1: Transparent, The window background is Transparent.

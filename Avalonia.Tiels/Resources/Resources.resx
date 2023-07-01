@@ -192,4 +192,7 @@
     <data name="ApplicationSettingsLabel" xml:space="preserve">
         <value>Application</value>
     </data>
+    <data name="SettingsAbout" xml:space="preserve">
+        <value>About</value>
+    </data>
 </root>

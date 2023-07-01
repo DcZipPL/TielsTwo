@@ -192,4 +192,7 @@
     <data name="TileSettingsLabel" xml:space="preserve">
         <value>Kafelki</value>
     </data>
+    <data name="SettingsAbout" xml:space="preserve">
+        <value>O Programie...</value>
+    </data>
 </root>

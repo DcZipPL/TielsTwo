@@ -27,9 +27,10 @@
                                 <controls:SidebarCategory Title="{x:Static p:Resources.SettingsLabel}"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsGeneral}" x:Name="SB_SG"           Icon="󿚓" IsToggled="True"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsAppearance}" x:Name="SB_SA"        Icon="󿚐"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsThumbnail}" x:Name="SB_ST"        Icon="󿚣"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsThumbnail}" x:Name="SB_ST"         Icon="󿚣"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsUpdates}" x:Name="SB_SU"           Icon="󿚖"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsExperimental}" x:Name="SB_SE"           Icon="󿚤"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsExperimental}" x:Name="SB_SE"      Icon="󿚤"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsAbout}" x:Name="SB_AB"             Icon="󿚙"/>
                                 
                                 <controls:SidebarCategory Title="{x:Static p:Resources.ManagementLabel}"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.ManagementTiles}" x:Name="SB_MT"           Icon="󿚥"/>
@@ -55,6 +56,7 @@
                                                 <pagesSettings:ThumbnailsPage x:Name="ThumbnailSettingsPage" IsVisible="False"/>
                                                 <pagesSettings:UpdatesPage x:Name="UpdatesSettingsPage" IsVisible="False"/>
                                                 <pagesSettings:ExperimentalPage x:Name="ExperimentalSettingsPage" IsVisible="False"/>
+                                                <pagesSettings:AboutPage x:Name="AboutSettingsPage" IsVisible="False"/>
                                                 <pagesCreate:TilePage x:Name="TileCreatePage" IsVisible="False"/>
                                                 <pagesCreate:TilePage x:Name="DirectoryPortalPage" IsVisible="False"/>
                                                 <pagesCreate:TilePage x:Name="FloatingImagePage" IsVisible="False"/>

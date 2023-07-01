@@ -29,6 +29,7 @@ namespace Avalonia.Tiels
 				SB_SU.WithPage(UpdatesSettingsPage.RootOf(this)),
 				SB_SE.WithPage(ExperimentalSettingsPage.RootOf(this)),
 				SB_MT.WithPage(SnappingSettingsPage.RootOf(this)),
+				SB_AB.WithPage(AboutSettingsPage.RootOf(this)),
 				SB_MFI.WithPage(null),
 				SB_MN.WithPage(null)
 			};

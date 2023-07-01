@@ -218,7 +218,6 @@ public partial class Configuration
     [ConfigEntry(Group = "Settings")] private bool __AutoStartHideSettings;
     [ConfigEntry(Group = "Settings")] private bool __Experimental;
     [ConfigEntry(Group = "Settings")] private bool __ThumbnailsSettingsEnabled;
-    [ConfigEntry(Group = "Settings")] private bool __HideTileButtons;
     [ConfigEntry(Group = "Settings")] private uint __EntryLimit;
     
     #pragma warning restore CS0414
@@ -345,7 +344,7 @@ public partial class Configuration
         [ConfigEntry] private string __Name = "";
         [ConfigEntry] private string __Path = "";
         [ConfigEntry] private bool __Hidden;
-        [ConfigEntry] private bool __EditBarOnHover;
+        [ConfigEntry] private bool __HideTileButtons;
 
         #pragma warning restore CS0414
         #pragma warning restore CS0169
@@ -552,10 +551,9 @@ public partial class Configuration
             public bool AutoStartHideSettings { get; set; } = true;
             public bool ThumbnailsSettingsEnabled { get; set; } = false;
             public bool Experimental { get; set; } = false;
-            public bool HideTileButtons { get; set; } = false;
             public float Snapping { get; set; } = 5.0f; // Snap to grid
             public float HandleHeight { get; set; } = 28.0f; // Height of the handle
-            public uint EntryLimit { get; set; } = 100; // Height of the handle
+            public uint EntryLimit { get; set; } = 100; // Max number of entries in the history
             
             TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
         }
@@ -574,7 +572,7 @@ public partial class Configuration
             public string? Name { get; set; }
             public string? Path { get; set; }
             public bool Hidden { get; set; } = false;
-            public bool EditBarOnHover { get; set; } = false;
+            public bool HideTileButtons { get; set; } = false;
             public int EditBarAlignment { get; set; } = 0; // BarAlignment
             public Vec2? Size { get; set; } = new Vec2 { X = 200, Y = 100 };
             public Vec2? Location { get; set; } = new Vec2 { X = 100, Y = 100 };

@@ -25,7 +25,8 @@ icons = [
     "more-vertical",
     "trash",
     "trash-2",
-    "move"
+    "move",
+    "settings-2"
 ]
 
 local_icons = [

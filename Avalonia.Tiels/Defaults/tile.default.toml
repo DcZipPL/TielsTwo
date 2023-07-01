@@ -2,6 +2,7 @@ id = "00000000-0000-0000-0000-000000000000" # GUID of tile
 name = "Tile Name"
 path = ""
 hidden = false # Tile is hidden
+hide_tile_buttons = true # Hide tile buttons if not hovered
 
 # 0 = top, 1 = bottom
 edit_bar_alignment = 0

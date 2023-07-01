@@ -5,10 +5,9 @@ auto_start = true
 auto_start_hide_settings = true # Hide settings when application autostarts
 thumbnails_settings_enabled = true
 experimental = false
-hide_tile_buttons = true
 snapping = 5
-handle_height = 28.0
-entry_limit = 100 # 0 = no limit
+handle_height = 28.0 # Height of the handle in pixels
+entry_limit = 100 # 0 = no limit (longer load time if you have a lot of files)
 
 [appearance]
 override = false # Override global values

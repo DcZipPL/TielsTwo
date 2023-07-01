@@ -45,5 +45,6 @@ public class Icons
 	public static readonly Icons Trash = (Icons) "󿚨";
 	public static readonly Icons TrashAlt = (Icons) "󿚩";
 	public static readonly Icons Move = (Icons) "󿚪";
+	public static readonly Icons SettingsAlt = (Icons) "󿚫";
 	//!a
 }

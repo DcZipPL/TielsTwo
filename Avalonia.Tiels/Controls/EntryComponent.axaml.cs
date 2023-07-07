@@ -1,11 +1,14 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Themes.Fluent;
 using Avalonia.Tiels.Classes;
+using Avalonia.Tiels.Classes.Platform;
 using Image = System.Drawing.Image;
 
 namespace Avalonia.Tiels.Controls;
@@ -45,6 +48,7 @@ public partial class EntryComponent : UserControl
 	public EntryComponent()
 	{
 		InitializeComponent();
+		FileRenameBox.Text = Name;
 	}
 	
 	private void EntryClicked(object? sender, RoutedEventArgs e)
@@ -70,5 +74,44 @@ public partial class EntryComponent : UserControl
 			FileAttribute.SymbolicLink => Icons.FolderSymlink,
 			_ => ""
 		};
+	}
+
+	private void RenameEntry(object? sender, RoutedEventArgs e)
+	{
+		FileRenameBox.IsVisible = true;
+		FileRenameBox.Text = Name;
+		FileRenameBox.Focus();
+	}
+
+	private void DeleteEntry(object? sender, RoutedEventArgs e)
+	{
+		try
+		{
+			FileSystem.SendFileToTrash(Path);
+		}
+		catch (Exception exception)
+		{
+			LoggingHandler.Error(exception, "EntryComponent");
+		}
+	}
+
+	private void ShowInExplorer(object? sender, RoutedEventArgs e)
+	{
+		Process.Start("explorer.exe", $"/select, \"{Path}\"");
+	}
+
+	private void ApplyRename(object? sender, RoutedEventArgs e)
+	{
+		if (!FileRenameBox.IsVisible)
+			return;
+		
+		FileRenameBox.IsVisible = false;
+		EntryName = FileRenameBox.Text;
+		
+		// Check if directory or file.
+		if (File.GetAttributes(Path).HasFlag(FileAttributes.Directory))
+			Directory.Move(Path, Path.Remove(Path.LastIndexOf('\\')) + "\\" + EntryName);
+		else
+			File.Move(Path, Path.Remove(Path.LastIndexOf('\\')) + "\\" + EntryName);
 	}
 }

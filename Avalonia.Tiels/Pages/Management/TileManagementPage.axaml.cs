@@ -55,7 +55,7 @@ public partial class SnappingPage : SettingsPage
 			else
 				ChangeSettingsStatus(App.I18n.GetString("InvalidInput")!, true);
 		
-		ApplyIfChanged(App.Instance.Config.HideTileButtons, b => App.Instance.Config.HideTileButtons = b, HideTileButtonsCheckBox);
+		//ApplyIfChanged(App.Instance.Config.HideTileButtons, b => App.Instance.Config.HideTileButtons = b, HideTileButtonsCheckBox); // TODO: Move this to per tile settings.
 		
 		LoadSettingsValues();
 		
@@ -69,7 +69,7 @@ public partial class SnappingPage : SettingsPage
 		SnappingBox.Text = App.Instance.Config.Snapping.ToString();
 		HandleSizeBox.Text = App.Instance.Config.HandleHeight.ToString();
 		
-		HideTileButtonsCheckBox.IsChecked = App.Instance.Config.HideTileButtons;
+		//HideTileButtonsCheckBox.IsChecked = App.Instance.Config.HideTileButtons; // TODO: Move this to per tile settings.
 	}
 	
 	#region Boilerplate

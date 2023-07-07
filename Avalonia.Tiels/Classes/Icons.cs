@@ -15,6 +15,8 @@ public class Icons
 	public static implicit operator string(Icons glyph) => glyph.ToString();
 	public override string ToString() => _glyph;
 	
+	public static readonly Icons None = (Icons) "";
+	
     //Icons below are generated from build.py using include.toml. Changing anything below will be overwritten
     //!a
 	public static readonly Icons WindowPlus = (Icons) "󿞐";
@@ -46,5 +48,6 @@ public class Icons
 	public static readonly Icons TrashAlt = (Icons) "󿚩";
 	public static readonly Icons Move = (Icons) "󿚪";
 	public static readonly Icons SettingsAlt = (Icons) "󿚫";
+	public static readonly Icons MoreHorizontal = (Icons) "󿚬";
 	//!a
 }

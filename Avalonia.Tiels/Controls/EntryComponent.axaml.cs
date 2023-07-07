@@ -49,16 +49,17 @@ public partial class EntryComponent : UserControl
 	{
 		InitializeComponent();
 		FileRenameBox.Text = Name;
-	}
-	
-	private void EntryClicked(object? sender, RoutedEventArgs e)
-	{
-		Process.Start(new ProcessStartInfo
-		{
-			FileName = "\"" + Path + "\"",
-			UseShellExecute = true,
-			Verb = "open"
-		});
+		
+		// This is temporary. I don't see easy way to implement Windows Explorer context menu in Avalonia C#.
+		// If someone knows how to do it, please let me know. If you want to help, make a pull request.		
+		SelfButton.ContextMenu = new ContextMenuBuilder()
+			.AddItem("Open", Icons.None, OpenEntry)
+			.AddSeparator()
+			.AddItem("Rename", Icons.EditAlt, RenameEntry)
+			.AddItem("Delete", Icons.Trash, DeleteEntry)
+			.AddSeparator()
+			.AddItem("Show in Explorer", Icons.FolderOpen, ShowInExplorer)
+			.Build();
 	}
 
 	private void TextBlockInitialized(object? sender, EventArgs e)
@@ -76,14 +77,24 @@ public partial class EntryComponent : UserControl
 		};
 	}
 
-	private void RenameEntry(object? sender, RoutedEventArgs e)
+	private void OpenEntry()
+	{
+		Process.Start(new ProcessStartInfo
+		{
+			FileName = "\"" + Path + "\"",
+			UseShellExecute = true,
+			Verb = "open"
+		});
+	}
+
+	private void RenameEntry()
 	{
 		FileRenameBox.IsVisible = true;
 		FileRenameBox.Text = Name;
 		FileRenameBox.Focus();
 	}
 
-	private void DeleteEntry(object? sender, RoutedEventArgs e)
+	private void DeleteEntry()
 	{
 		try
 		{
@@ -95,12 +106,12 @@ public partial class EntryComponent : UserControl
 		}
 	}
 
-	private void ShowInExplorer(object? sender, RoutedEventArgs e)
+	private void ShowInExplorer()
 	{
 		Process.Start("explorer.exe", $"/select, \"{Path}\"");
 	}
 
-	private void ApplyRename(object? sender, RoutedEventArgs e)
+	private void ApplyRename()
 	{
 		if (!FileRenameBox.IsVisible)
 			return;
@@ -114,4 +125,6 @@ public partial class EntryComponent : UserControl
 		else
 			File.Move(Path, Path.Remove(Path.LastIndexOf('\\')) + "\\" + EntryName);
 	}
+	
+	private void EntryClicked(object? sender, RoutedEventArgs e) => OpenEntry();
 }

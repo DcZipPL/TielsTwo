@@ -28,7 +28,7 @@ public class TileManagement
 		if (!Directory.Exists(path))
 			Directory.CreateDirectory(path);
 		var window = new TileWindow(
-			Configuration.Tile.CreateTileConfig(App.Instance.Config, name, path, width, height, overriteTheme, theme ?? ThemeMode.Dark, transparencyLevel ?? TransparencyLevel.Transparent, color ?? Util.TILE_DARK_COLOR)
+			Configuration.Tile.CreateTileConfig(App.Instance.Config, name, path, width, height, overriteTheme, theme ?? ThemeMode.Dark, transparencyLevel ?? TransparencyLevel.Transparent, color ?? Palette.TILE_DARK_COLOR)
 		);
 		window.Show();
 		App.Instance.ActiveTileWindows.Add(window);

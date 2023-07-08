@@ -537,7 +537,7 @@ public partial class Configuration
         {
             public bool Override { get; set; } = false;
             public string? Theme { get; set; } = "dark"; // ThemeMode (lowercase)
-            public string? Color { get; set; } = Util.ColorToHex(Util.TILE_DARK_COLOR); // Color (hex)
+            public string? Color { get; set; } = Util.ColorToHex(Palette.TILE_DARK_COLOR); // Color (hex)
             public int Transparency { get; set; } = 1; // TransparencyLevel
             
             TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }

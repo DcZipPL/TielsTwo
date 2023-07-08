@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:p="clr-namespace:Avalonia.Tiels.Resources"
-             xmlns:avaloniaColorPicker="clr-namespace:AvaloniaColorPicker;assembly=AvaloniaColorPicker"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia.Tiels.Controls.AppearanceComponent">
 	<StackPanel Spacing="5">
@@ -22,7 +21,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
                     <Label Content="{x:Static p:Resources.Color}"/>
-                    <avaloniaColorPicker:ColorButton x:Name="ColorBtn" Color="#88000000" Margin="0,3,10,0"/>
+                    <ColorPicker x:Name="ColorBtn" Color="#88000000" Margin="0,3,10,0"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <Label Content="{x:Static p:Resources.TransparencyMode}"/>

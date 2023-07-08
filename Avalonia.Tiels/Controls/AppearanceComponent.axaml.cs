@@ -22,11 +22,11 @@ public partial class AppearanceComponent : UserControl
 		UseGlobalThemeBox.Checked += (sender, args) => CustomAppearanceGrid.IsEnabled = false;
 		UseGlobalThemeBox.Unchecked += (sender, args) => CustomAppearanceGrid.IsEnabled = true;
 
-		ColorBtn.Color = App.Instance.Config.GlobalTheme == ThemeMode.Dark ? Util.TILE_DARK_COLOR : Util.TILE_LIGHT_COLOR;
+		ColorBtn.Color = App.Instance.Config.GlobalTheme == ThemeMode.Dark ? Palette.TILE_DARK_COLOR : Palette.TILE_LIGHT_COLOR;
 		ThemeBox.SelectionChanged += (_, _) =>
 		{
-			if (ColorBtn.Color == Util.TILE_DARK_COLOR || ColorBtn.Color == Util.TILE_LIGHT_COLOR)
-				ColorBtn.Color = (ThemeMode)ThemeBox.SelectedIndex == ThemeMode.Dark ? Util.TILE_DARK_COLOR: Util.TILE_LIGHT_COLOR;
+			if (ColorBtn.Color == Palette.TILE_DARK_COLOR || ColorBtn.Color == Palette.TILE_LIGHT_COLOR)
+				ColorBtn.Color = (ThemeMode)ThemeBox.SelectedIndex == ThemeMode.Dark ? Palette.TILE_DARK_COLOR: Palette.TILE_LIGHT_COLOR;
 		};
 		
 		TransparencyModeBox.SelectionChanged += (_, _) =>

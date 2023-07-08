@@ -8,10 +8,11 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using Avalonia.Themes.Fluent;
 using Avalonia.Tiels.Classes;
 using Avalonia.Tiels.Classes.Platform;
-using Avalonia.Visuals.Media.Imaging;
+using Bitmap = System.Drawing.Bitmap;
 using Image = System.Drawing.Image;
 
 namespace Avalonia.Tiels.Controls;
@@ -45,7 +46,7 @@ public partial class EntryComponent : UserControl
 	}
 
 	public string Path { get; set; } = "";
-	public FluentThemeMode Theme { get; set; }
+	public ThemeMode Theme { get; set; }
 	public FileAttribute Attribute { get; set; }
 	
 	public EntryComponent()
@@ -53,7 +54,7 @@ public partial class EntryComponent : UserControl
 		InitializeComponent();
 
 		// TODO: Add per tile combo box to change between Pixel Mode and Smooth Mode
-		EntryPreview.SetValue(RenderOptions.BitmapInterpolationModeProperty, BitmapInterpolationMode.LowQuality);
+		RenderOptions.SetBitmapInterpolationMode(EntryPreview, BitmapInterpolationMode.None);
 
 		// This is temporary. I don't see easy way to implement Windows Explorer context menu in Avalonia C#.
 		// If someone knows how to do it, please let me know. If you want to help, make a pull request.
@@ -143,7 +144,7 @@ public partial class EntryComponent : UserControl
 	}
 	
 	private void FileRenameBoxInitialized(object? sender, EventArgs e) => FileRenameBox.Text = Name;
-	private void TextBlockInitialized(object? sender, EventArgs e) => FileNameTextBlock.Foreground = new SolidColorBrush(Theme == FluentThemeMode.Dark ? Colors.White : Colors.Black);
+	private void TextBlockInitialized(object? sender, EventArgs e) => FileNameTextBlock.Foreground = new SolidColorBrush(Theme == ThemeMode.Dark ? Colors.White : Colors.Black);
 	private void AttributeIconInitialized(object? sender, EventArgs e) => FileAttributeIcon.Text = Attribute switch
 	{
 		FileAttribute.Link => Icons.ExternalLink,

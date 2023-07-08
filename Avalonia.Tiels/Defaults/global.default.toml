@@ -4,10 +4,12 @@ language = "en"
 auto_start = true
 auto_start_hide_settings = true # Hide settings when application autostarts
 thumbnails_settings_enabled = true
+updates_settings_enabled = true
 experimental = false
 snapping = 5
 handle_height = 28.0 # Height of the handle in pixels
 entry_limit = 100 # 0 = no limit (longer load time if you have a lot of files)
+folder_style = 0
 
 [appearance]
 override = false # Override global values

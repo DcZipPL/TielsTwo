@@ -145,7 +145,7 @@ public partial class Configuration
     #endregion
 
     #region Request Appearance
-    public FluentThemeMode GlobalTheme
+    public ThemeMode GlobalTheme
     {
         get
         {
@@ -153,10 +153,10 @@ public partial class Configuration
             if (appearanceReq == null)
             {
                 LoggingHandler.Warn("GlobalTheme", "Couldn't load Appearance settings! Fallback to Light theme.");
-                return FluentThemeMode.Light;
+                return ThemeMode.Light;
             }
 
-            var result = Enum.TryParse(appearanceReq.Theme, true, out FluentThemeMode theme);
+            var result = Enum.TryParse(appearanceReq.Theme, true, out ThemeMode theme);
             if (!result)
                 LoggingHandler.Warn("GlobalTheme", "Couldn't parse theme from config! Fallback to Light theme.");
             return theme;
@@ -169,13 +169,13 @@ public partial class Configuration
         }
     }
 
-    public WindowTransparencyLevel GlobalTransparencyLevel
+    public TransparencyLevel GlobalTransparencyLevel
     {
         get
         {
             var appearanceReq = ReqModel().Appearance;
             if (appearanceReq == null) LoggingHandler.Warn("GlobalTransparencyLevel", "Couldn't load Appearance settings!");
-            return appearanceReq != null ? (WindowTransparencyLevel)appearanceReq.Transparency : WindowTransparencyLevel.None;
+            return appearanceReq != null ? (TransparencyLevel)appearanceReq.Transparency : TransparencyLevel.None;
         }
         set
         {
@@ -211,14 +211,16 @@ public partial class Configuration
     #pragma warning disable CS0169
     
     [ConfigEntry(Group = "Settings")] private float __Snapping;
-    [ConfigEntry(Group = "Settings")] private float __HandleHeight;
     [ConfigEntry(Group = "Settings")] private string __TilesPath = "";
     [ConfigEntry(Group = "Settings")] private string __Language = "";
     [ConfigEntry(Group = "Settings")] private bool __AutoStart;
     [ConfigEntry(Group = "Settings")] private bool __AutoStartHideSettings;
     [ConfigEntry(Group = "Settings")] private bool __Experimental;
     [ConfigEntry(Group = "Settings")] private bool __ThumbnailsSettingsEnabled;
+    [ConfigEntry(Group = "Settings")] private bool __UpdatesSettingsEnabled;
+    [ConfigEntry(Group = "Settings")] private float __HandleHeight;
     [ConfigEntry(Group = "Settings")] private uint __EntryLimit;
+    [ConfigEntry(Group = "Settings")] private uint __FolderStyle;
     
     #pragma warning restore CS0414
     #pragma warning restore CS0169
@@ -260,7 +262,7 @@ public partial class Configuration
         /// <param name="transparencyLevel">Transparency level of Tile.</param>
         /// <param name="color">Color of Tile.</param>
         /// <returns>Guid of new Tile.</returns>
-        public static Guid CreateTileConfig(Configuration configAccess, string name, string path, double sizeX, double sizeY, bool overrideTheme, FluentThemeMode theme, WindowTransparencyLevel transparencyLevel, Color color)
+        public static Guid CreateTileConfig(Configuration configAccess, string name, string path, double sizeX, double sizeY, bool overrideTheme, ThemeMode theme, TransparencyLevel transparencyLevel, Color color)
         {
             var id = Guid.NewGuid();
             
@@ -406,14 +408,14 @@ public partial class Configuration
         
         // TODO: Duplicate from above
         #region Request Appearance
-        public FluentThemeMode Theme
+        public ThemeMode Theme
         {
             get
             {
-                var result = Enum.TryParse(ReqModel().Appearance!.Theme, true, out FluentThemeMode theme);
+                var result = Enum.TryParse(ReqModel().Appearance!.Theme, true, out ThemeMode theme);
                 if (!result)
                     LoggingHandler.Error(new Exception($"Couldn't parse {nameof(theme)} from config!"), nameof(Configuration.Tile) + "->" + nameof(Theme));
-                return result ? theme : FluentThemeMode.Light;
+                return result ? theme : ThemeMode.Light;
             }
             set
             {
@@ -423,12 +425,12 @@ public partial class Configuration
             }
         }
 
-        public WindowTransparencyLevel TransparencyLevel
+        public TransparencyLevel TransparencyLevel
         {
             get
             {
                 var appearanceReq = ReqModel().Appearance;
-                return appearanceReq != null ? (WindowTransparencyLevel)appearanceReq.Transparency : WindowTransparencyLevel.None;
+                return appearanceReq != null ? (TransparencyLevel)appearanceReq.Transparency : TransparencyLevel.None;
             }
             set
             {
@@ -536,9 +538,9 @@ public partial class Configuration
         public class Appearance : ITomlMetadataProvider
         {
             public bool Override { get; set; } = false;
-            public string? Theme { get; set; } = "dark"; // FluentThemeMode (lowercase)
-            public string? Color { get; set; } = Util.ColorToHex(Util.TILE_DARK_COLOR); // Color (hex)
-            public int Transparency { get; set; } = 1; // WindowTransparencyLevel
+            public string? Theme { get; set; } = "dark"; // ThemeMode (lowercase)
+            public string? Color { get; set; } = Util.ColorToHex(Palette.TILE_DARK_COLOR); // Color (hex)
+            public int Transparency { get; set; } = 1; // TransparencyLevel
             
             TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
         }
@@ -550,10 +552,12 @@ public partial class Configuration
             public bool AutoStart { get; set; } = true;
             public bool AutoStartHideSettings { get; set; } = true;
             public bool ThumbnailsSettingsEnabled { get; set; } = false;
+            public bool UpdatesSettingsEnabled { get; set; } = false;
             public bool Experimental { get; set; } = false;
             public float Snapping { get; set; } = 5.0f; // Snap to grid
             public float HandleHeight { get; set; } = 28.0f; // Height of the handle
             public uint EntryLimit { get; set; } = 100; // Max number of entries in the history
+            public uint FolderStyle { get; set; } = 0; // Folder style
             
             TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
         }

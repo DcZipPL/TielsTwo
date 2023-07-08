@@ -1,5 +1,6 @@
 ﻿using System;
 using Avalonia.Themes.Fluent;
+using Avalonia.Tiels.Classes;
 
 namespace Avalonia.Tiels.Pages.Settings;
 
@@ -9,22 +10,22 @@ public partial class AppearancePage : SettingsPage
 	{
 		InitializeComponent();
 		
-		ApplicationThemeBox.Items = Enum.GetNames(typeof(FluentThemeMode));
+		ApplicationThemeBox.ItemsSource = Enum.GetNames(typeof(ThemeMode));
 		ApplicationThemeBox.SelectedIndex = (int)App.Instance.Config.GlobalTheme;
 	}
 
 	public override void ApplySettings()
 	{
-		if (App.Instance.Config.GlobalTheme != (FluentThemeMode)ApplicationThemeBox.SelectedIndex)
+		if (App.Instance.Config.GlobalTheme != (ThemeMode)ApplicationThemeBox.SelectedIndex)
 		{
-			App.Instance.Config.GlobalTheme = (FluentThemeMode)ApplicationThemeBox.SelectedIndex;
+			App.Instance.Config.GlobalTheme = (ThemeMode)ApplicationThemeBox.SelectedIndex;
 			foreach (var styles in App.Instance.Styles)
 			{
-				if (styles is FluentTheme fluentTheme)
+				/*if (styles is FluentTheme fluentTheme) TODO: Fix themes
 				{
-					fluentTheme.Mode = (FluentThemeMode)ApplicationThemeBox.SelectedIndex;
+					styles. = (ThemeMode)ApplicationThemeBox.SelectedIndex;
 					break;
-				}
+				}*/
 			}
 		}
 

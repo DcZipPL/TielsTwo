@@ -71,10 +71,10 @@ public partial class GeneralPage : SettingsPage
 		TilesDirectoryBox.Text = App.Instance.Config.TilesPath;
 		TilesDirectoryBox.Watermark = Configuration.GetDefaultTilesDirectory();
 
-		LanguageBox.Items = Util.ImplementedCultures();
-		LanguageBox.SelectedItem = ((IEnumerable<CultureInfo>)LanguageBox.Items).ToList()
+		LanguageBox.ItemsSource = Util.ImplementedCultures();
+		LanguageBox.SelectedItem = ((IEnumerable<CultureInfo>)LanguageBox.ItemsSource).ToList()
 			.FirstOrDefault(item => Equals(item, CultureInfo.CurrentUICulture),
-				((IEnumerable<CultureInfo>)LanguageBox.Items).ToList()[0]);
+				((IEnumerable<CultureInfo>)LanguageBox.ItemsSource).ToList()[0]);
 
 		AutostartCheckBox.IsChecked = App.Instance.Config.AutoStart;
 		HideWindowCheckBox.IsChecked = App.Instance.Config.AutoStartHideSettings;

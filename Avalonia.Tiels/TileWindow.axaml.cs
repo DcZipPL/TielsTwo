@@ -50,8 +50,8 @@ public partial class TileWindow : Window
 			: App.Instance.Config.GlobalColor);
 		EditBar.Background = new SolidColorBrush((Color)EditBarColor());
 		if (App.Instance.Config.Tiles[ID].IsOverriden
-			    ? App.Instance.Config.Tiles[ID].Theme == FluentThemeMode.Dark
-			    : App.Instance.Config.GlobalTheme == FluentThemeMode.Dark)
+			    ? App.Instance.Config.Tiles[ID].Theme == ThemeMode.Dark
+			    : App.Instance.Config.GlobalTheme == ThemeMode.Dark)
 		{
 			MoveAreaText.Classes.Add("Dark");
 			TileName.Classes.Add("Dark");
@@ -62,9 +62,11 @@ public partial class TileWindow : Window
 		}
 
 		// Set transparency of Tile.
-		this.TransparencyLevelHint = App.Instance.Config.Tiles[ID].IsOverriden
+		var hints = new List<WindowTransparencyLevel>();
+		hints.Add(TransparencyLevelConverter.From(App.Instance.Config.Tiles[ID].IsOverriden
 			? App.Instance.Config.Tiles[ID].TransparencyLevel
-			: App.Instance.Config.GlobalTransparencyLevel;
+			: App.Instance.Config.GlobalTransparencyLevel));
+		this.TransparencyLevelHint = hints;
 
 		// Set Tile position.
 		var location = App.Instance.Config.Tiles[ID].Location;
@@ -162,10 +164,10 @@ public partial class TileWindow : Window
 	}
 
 	private Color EditBarColor() => Color.Parse(App.Instance.Config.Tiles[ID].IsOverriden
-			? App.Instance.Config.Tiles[ID].Theme == FluentThemeMode.Dark
+			? App.Instance.Config.Tiles[ID].Theme == ThemeMode.Dark
 				? "#25000000"
 				: "#25ffffff"
-			: App.Instance.Config.GlobalTheme == FluentThemeMode.Dark
+			: App.Instance.Config.GlobalTheme == ThemeMode.Dark
 				? "#25000000"
 				: "#25ffffff");
 

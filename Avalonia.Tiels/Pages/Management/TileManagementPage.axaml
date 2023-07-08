@@ -24,29 +24,5 @@
 			<TextBlock FontSize="16" Foreground="{StaticResource BaseTitleColor}" Text="{x:Static p:Resources.TileListLabel}"/>
 			<StackPanel x:Name="TileManagementEntries"/>
 		</StackPanel>
-		<Grid x:Name="WarningGrid" IsVisible="False">
-			<controls:BlurBox VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*" MinWidth="500"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="2*"></RowDefinition>
-					<RowDefinition Height="*" MinHeight="200"></RowDefinition>
-					<RowDefinition Height="2*"></RowDefinition>
-				</Grid.RowDefinitions>
-				<Border Grid.Column="1" Grid.Row="1" Background="#FFFFFF" BorderThickness="1" BorderBrush="{DynamicResource BaseBorderColor}">
-					<StackPanel Margin="10, 10" Spacing="10">
-						<TextBlock Foreground="#FF0000" FontSize="24">Warning!</TextBlock>
-						<WrapPanel>
-							<TextBlock>Removing Tile won't remove any files. </TextBlock>
-							<TextBlock>If you want to remove any files, you need to do it manually!</TextBlock>
-						</WrapPanel>
-					</StackPanel>
-				</Border>
-			</Grid>
-		</Grid>
 	</Grid>
 </UserControl>

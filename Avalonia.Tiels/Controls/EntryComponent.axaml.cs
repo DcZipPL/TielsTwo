@@ -1,17 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
-using Avalonia.Themes.Fluent;
 using Avalonia.Tiels.Classes;
 using Avalonia.Tiels.Classes.Platform;
+using Avalonia.Tiels.Classes.Style;
 using Bitmap = System.Drawing.Bitmap;
 using Image = System.Drawing.Image;
 
@@ -58,19 +56,19 @@ public partial class EntryComponent : UserControl
 
 		// This is temporary. I don't see easy way to implement Windows Explorer context menu in Avalonia C#.
 		// If someone knows how to do it, please let me know. If you want to help, make a pull request.
-		var appChooser = ContextMenuBuilder.CreateItem("Choose another app", Icons.None);
+		var appChooser = ContextMenuBuilder.CreateItem(App.I18n.GetString("ContextMenuChooseAnotherApp")!, Icons.None);
 		appChooser.Click += (sender, args) => FileSystem.SpawnOpenWithDialog(Path);
 		
 		var openWithItems = new[] { appChooser };
 		
 		SelfButton.ContextMenu = new ContextMenuBuilder()
-			.AddItem("Open", Icons.None, OpenEntry)
-			.AddItemWithSubmenu("Open with...", Icons.MoreHorizontal, openWithItems)
+			.AddItem(App.I18n.GetString("ContextMenuOpen")!, Icons.None, OpenEntry)
+			.AddItemWithSubmenu(App.I18n.GetString("ContextMenuOpenWith")!, Icons.MoreHorizontal, openWithItems)
 			.AddSeparator()
-			.AddItem("Rename", Icons.EditAlt, RenameEntry)
-			.AddItem("Delete", Icons.Trash, DeleteEntry)
+			.AddItem(App.I18n.GetString("ContextMenuRename")!, Icons.EditAlt, RenameEntry)
+			.AddItem(App.I18n.GetString("ContextMenuDelete")!, Icons.Trash, DeleteEntry)
 			.AddSeparator()
-			.AddItem("Show in Explorer", Icons.FolderOpen, ShowInExplorer)
+			.AddItem(App.I18n.GetString("ContextMenuShowInExplorer")!, Icons.FolderOpen, ShowInExplorer)
 			.Build();
 	}
 

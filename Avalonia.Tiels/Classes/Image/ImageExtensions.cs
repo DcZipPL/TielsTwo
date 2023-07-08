@@ -2,7 +2,7 @@
 
 using System.Drawing;
 using System.Drawing.Imaging;
-using Bitmap = Avalonia.Media.Imaging.Bitmap;
+using Bitmap = Media.Imaging.Bitmap;
 
 public static class ImageExtensions
 {
@@ -12,8 +12,8 @@ public static class ImageExtensions
 		var bitmapdata = bitmapTmp.LockBits(new Rectangle(0, 0, bitmapTmp.Width, bitmapTmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 		Bitmap bitmap1 = new Bitmap(Avalonia.Platform.PixelFormat.Bgra8888, Avalonia.Platform.AlphaFormat.Premul,
 			bitmapdata.Scan0,
-			new Avalonia.PixelSize(bitmapdata.Width, bitmapdata.Height),
-			new Avalonia.Vector(96, 96),
+			new PixelSize(bitmapdata.Width, bitmapdata.Height),
+			new Vector(96, 96),
 			bitmapdata.Stride);
 		bitmapTmp.UnlockBits(bitmapdata);
 		bitmapTmp.Dispose();

@@ -13,8 +13,16 @@
 			</StackPanel>
 			<StackPanel>
 				<CheckBox x:Name="ExEnableThumbnailsCategoryCheckBox" Content="{x:Static p:Resources.ExEnableThumbnailsCategory}"/>
+				<CheckBox x:Name="ExEnableUpdatesCategoryCheckBox" Content="{x:Static p:Resources.ExEnableUpdatesCategory}"/>
 				<CheckBox x:Name="ExEnableWin32HooksCheckBox" Content="{x:Static p:Resources.ExEnableWin32Hooks}"/>
 				<CheckBox Margin="28,0,0,0" x:Name="ExDisableWin32MinimumHeightCheckBox" Content="{x:Static p:Resources.ExDisableWin32MinimumHeight}"/>
+				<CheckBox Margin="28,0,0,0" x:Name="ExNativeContextMenuCheckBox" Content="Use native context menu on tile entries"/>
+				<CheckBox x:Name="ExEnableFloatingImagesCategoryCheckBox" Content="Enable Floating Images" IsCheckedChanged="ExEnableFloatingImagesCategoryCheckBox_OnIsCheckedChanged"/>
+				<CheckBox x:Name="ExEnableNotesCategoryCheckBox" Content="Enable Notes" IsCheckedChanged="ExEnableNotesCategoryCheckBox_OnIsCheckedChanged"/>
+				
+				<CheckBox x:Name="ExEnableSimpleModeCheckBox" Content="Use Simple mode for the UI" IsCheckedChanged="ExEnableSimpleModeCheckBox_OnIsCheckedChanged"/>
+				<CheckBox x:Name="ExEnableDragAndDropCheckBox" Content="Drag and Drop functionality test" IsCheckedChanged="ExEnableDragAndDropCheckBox_OnIsCheckedChanged"/>
+				<CheckBox x:Name="ExEnableOsBypassCheckBox" Content="Run with OS Bypass" IsCheckedChanged="ExEnableOsBypassCheckBox_OnIsCheckedChanged"/>
 			</StackPanel>
 		</StackPanel>
 	</Grid>

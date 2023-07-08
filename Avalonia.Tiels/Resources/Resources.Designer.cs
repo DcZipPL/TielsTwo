@@ -105,6 +105,60 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose another app.
+        /// </summary>
+        public static string ContextMenuChooseAnotherApp {
+            get {
+                return ResourceManager.GetString("ContextMenuChooseAnotherApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string ContextMenuDelete {
+            get {
+                return ResourceManager.GetString("ContextMenuDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string ContextMenuOpen {
+            get {
+                return ResourceManager.GetString("ContextMenuOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open with....
+        /// </summary>
+        public static string ContextMenuOpenWith {
+            get {
+                return ResourceManager.GetString("ContextMenuOpenWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        public static string ContextMenuRename {
+            get {
+                return ResourceManager.GetString("ContextMenuRename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show in Explorer.
+        /// </summary>
+        public static string ContextMenuShowInExplorer {
+            get {
+                return ResourceManager.GetString("ContextMenuShowInExplorer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create.
         /// </summary>
         public static string CreateButton {
@@ -204,11 +258,20 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable Thumbnails Category.
+        ///   Looks up a localized string similar to Show Thumbnails Category.
         /// </summary>
         public static string ExEnableThumbnailsCategory {
             get {
                 return ResourceManager.GetString("ExEnableThumbnailsCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Update Category.
+        /// </summary>
+        public static string ExEnableUpdatesCategory {
+            get {
+                return ResourceManager.GetString("ExEnableUpdatesCategory", resourceCulture);
             }
         }
         

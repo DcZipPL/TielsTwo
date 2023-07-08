@@ -109,11 +109,11 @@ namespace Avalonia.Tiels
 
 		#region Contracts
 
-		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs> _applyButtonContract;
-		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs> _defaultButtonContract;
-		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs> _createButtonContract;
+		private System.EventHandler<Interactivity.RoutedEventArgs> _applyButtonContract;
+		private System.EventHandler<Interactivity.RoutedEventArgs> _defaultButtonContract;
+		private System.EventHandler<Interactivity.RoutedEventArgs> _createButtonContract;
 
-		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs> ApplyButtonContract
+		private System.EventHandler<Interactivity.RoutedEventArgs> ApplyButtonContract
 		{
 			get => _applyButtonContract;
 			set {
@@ -123,7 +123,7 @@ namespace Avalonia.Tiels
 				ApplyButton.Click += _applyButtonContract;
 			}
 		}
-		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs> DefaultButtonContract
+		private System.EventHandler<Interactivity.RoutedEventArgs> DefaultButtonContract
 		{
 			get => _defaultButtonContract;
 			set {
@@ -133,7 +133,7 @@ namespace Avalonia.Tiels
 				DefaultButton.Click += _defaultButtonContract;
 			}
 		}
-		private System.EventHandler<Avalonia.Interactivity.RoutedEventArgs> CreateButtonContract
+		private System.EventHandler<Interactivity.RoutedEventArgs> CreateButtonContract
 		{
 			get => _createButtonContract;
 			set {

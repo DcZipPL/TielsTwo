@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using System.Numerics;
 using System.Threading;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
-using Avalonia.Themes.Fluent;
 using Avalonia.Tiels.Classes;
+using Avalonia.Tiels.Classes.Style;
 using Avalonia.Tiels.Controls;
 
 namespace Avalonia.Tiels;
@@ -23,8 +23,8 @@ public partial class TileWindow : Window
 	public record TileEntry(string Path, IImage Preview) { public bool IsAdded; }
 	public List<TileEntry> entries = new();
 
-	private bool _editMode = false;
-	private bool _isHidden = false;
+	private bool _editMode;
+	private bool _isHidden;
 	public Guid ID { get; }
 	
 	public TileWindow()
@@ -171,7 +171,7 @@ public partial class TileWindow : Window
 				? "#25000000"
 				: "#25ffffff");
 
-	private void OnLoad(object? sender, EventArgs e)
+	private void LoadTileContent()
 	{
 		// Handle Tile content
 		var loadContentThread = new Thread(() => TileManagement.LoadTileContent(this, App.Instance.Config));
@@ -286,6 +286,12 @@ public partial class TileWindow : Window
 		});
 	}
 	
+	[SuppressMessage("ReSharper", "UnusedParameter.Local")]
+	private void OnLoad(object? sender, EventArgs e) => LoadTileContent();
+	
+	[SuppressMessage("ReSharper", "UnusedParameter.Local")]
 	private void OpenContentDirectory(object? sender, RoutedEventArgs e) => OpenContentDirectory();
+	
+	[SuppressMessage("ReSharper", "UnusedParameter.Local")]
 	private void ScrollEntryLoad(object? sender, ScrollChangedEventArgs e) => AddEntries((uint)(((ScrollViewer)sender!).Offset.Y / CELL_HEIGHT));
 }

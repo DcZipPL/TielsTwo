@@ -1,9 +1,4 @@
-﻿using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
-using Avalonia.Tiels.Classes.Platform;
-
-namespace Avalonia.Tiels.Pages.Settings;
+﻿namespace Avalonia.Tiels.Pages.Settings;
 
 public partial class ThumbnailsPage : SettingsPage
 {

@@ -105,6 +105,60 @@ namespace Avalonia.Tiels.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wybierz inną aplikacje.
+        /// </summary>
+        public static string ContextMenuChooseAnotherApp {
+            get {
+                return ResourceManager.GetString("ContextMenuChooseAnotherApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuń.
+        /// </summary>
+        public static string ContextMenuDelete {
+            get {
+                return ResourceManager.GetString("ContextMenuDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Otwórz.
+        /// </summary>
+        public static string ContextMenuOpen {
+            get {
+                return ResourceManager.GetString("ContextMenuOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Otwórz za pomocą....
+        /// </summary>
+        public static string ContextMenuOpenWith {
+            get {
+                return ResourceManager.GetString("ContextMenuOpenWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zmień nazwę.
+        /// </summary>
+        public static string ContextMenuRename {
+            get {
+                return ResourceManager.GetString("ContextMenuRename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pokaż w Eksporatorze Plików.
+        /// </summary>
+        public static string ContextMenuShowInExplorer {
+            get {
+                return ResourceManager.GetString("ContextMenuShowInExplorer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Utwórz.
         /// </summary>
         public static string CreateButton {
@@ -209,6 +263,15 @@ namespace Avalonia.Tiels.Resources {
         public static string ExEnableThumbnailsCategory {
             get {
                 return ResourceManager.GetString("ExEnableThumbnailsCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Włącz Kategorie Aktualizacji.
+        /// </summary>
+        public static string ExEnableUpdatesCategory {
+            get {
+                return ResourceManager.GetString("ExEnableUpdatesCategory", resourceCulture);
             }
         }
         

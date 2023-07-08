@@ -1,4 +1,4 @@
-﻿namespace Avalonia.Tiels.Classes.Platform;
+﻿namespace Avalonia.Tiels.Classes.Platform.Helpers;
 
 public enum ThumbnailSize
 {

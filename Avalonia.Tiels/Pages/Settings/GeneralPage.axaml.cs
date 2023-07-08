@@ -58,8 +58,8 @@ public partial class GeneralPage : SettingsPage
 		TilesDirectoryBox.Text = draftTilesPath;
 
 		// Show status
-		Root.StatusIcon.Text = status.Item1;
-		Root.StatusText.Text = status.Item2;
+		Root.StatusIcon.Text = Status.Item1;
+		Root.StatusText.Text = Status.Item2;
 	}
 
 	public override void RollbackSettings()

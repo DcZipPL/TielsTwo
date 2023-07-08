@@ -11,12 +11,10 @@ public class ContextMenuBuilder
 {
 	private List<Control> _items = new();
 
-	public ContextMenuBuilder() {}
-	
 	public ContextMenuBuilder AddItem(string name, Icons icon, Action action)
 	{
 		var item = CreateItem(name, icon); 
-		item.Click += (sender, args) => action();
+		item.Click += (_, _) => action();
 		_items.Add(item);
 		
 		return this;

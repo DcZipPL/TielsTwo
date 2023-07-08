@@ -36,6 +36,9 @@ namespace Avalonia.Tiels
 
 			SB_SE.IsVisible = App.Instance.Config.Experimental;
 			SB_ST.IsVisible = App.Instance.Config.Experimental;
+			SB_SU.IsVisible = App.Instance.Config.Experimental;
+			
+			SB_SU.IsEnabled = App.Instance.Config.UpdatesSettingsEnabled;
 			SB_ST.IsEnabled = App.Instance.Config.ThumbnailsSettingsEnabled;
 
 			// Load default page

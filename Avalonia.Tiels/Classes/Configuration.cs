@@ -211,14 +211,16 @@ public partial class Configuration
     #pragma warning disable CS0169
     
     [ConfigEntry(Group = "Settings")] private float __Snapping;
-    [ConfigEntry(Group = "Settings")] private float __HandleHeight;
     [ConfigEntry(Group = "Settings")] private string __TilesPath = "";
     [ConfigEntry(Group = "Settings")] private string __Language = "";
     [ConfigEntry(Group = "Settings")] private bool __AutoStart;
     [ConfigEntry(Group = "Settings")] private bool __AutoStartHideSettings;
     [ConfigEntry(Group = "Settings")] private bool __Experimental;
     [ConfigEntry(Group = "Settings")] private bool __ThumbnailsSettingsEnabled;
+    [ConfigEntry(Group = "Settings")] private bool __UpdatesSettingsEnabled;
+    [ConfigEntry(Group = "Settings")] private float __HandleHeight;
     [ConfigEntry(Group = "Settings")] private uint __EntryLimit;
+    [ConfigEntry(Group = "Settings")] private uint __FolderStyle;
     
     #pragma warning restore CS0414
     #pragma warning restore CS0169
@@ -550,10 +552,12 @@ public partial class Configuration
             public bool AutoStart { get; set; } = true;
             public bool AutoStartHideSettings { get; set; } = true;
             public bool ThumbnailsSettingsEnabled { get; set; } = false;
+            public bool UpdatesSettingsEnabled { get; set; } = false;
             public bool Experimental { get; set; } = false;
             public float Snapping { get; set; } = 5.0f; // Snap to grid
             public float HandleHeight { get; set; } = 28.0f; // Height of the handle
             public uint EntryLimit { get; set; } = 100; // Max number of entries in the history
+            public uint FolderStyle { get; set; } = 0; // Folder style
             
             TomlPropertiesMetadata? ITomlMetadataProvider.PropertiesMetadata { get; set; }
         }

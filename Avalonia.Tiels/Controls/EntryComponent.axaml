@@ -17,7 +17,7 @@
 				<RowDefinition Height="*"/> <!-- Preview (Thumbnail) -->
 				<RowDefinition Height="18"/> <!-- Name of entry -->
 			</Grid.RowDefinitions>
-			<Image Grid.Row="0" Width="48" Height="48" HorizontalAlignment="Center"
+			<Image Grid.Row="0" Width="48" Height="48" HorizontalAlignment="Center" x:Name="EntryPreview"
 			       Source="{Binding Preview, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>
 			<TextBlock Grid.Row="1" Initialized="TextBlockInitialized" x:Name="FileNameTextBlock"
 			           VerticalAlignment="Bottom" HorizontalAlignment="Center" TextAlignment="Left" Text="{Binding EntryNameShort, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>

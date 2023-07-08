@@ -11,6 +11,7 @@ using Avalonia.Media;
 using Avalonia.Themes.Fluent;
 using Avalonia.Tiels.Classes;
 using Avalonia.Tiels.Classes.Platform;
+using Avalonia.Visuals.Media.Imaging;
 using Image = System.Drawing.Image;
 
 namespace Avalonia.Tiels.Controls;
@@ -50,6 +51,9 @@ public partial class EntryComponent : UserControl
 	public EntryComponent()
 	{
 		InitializeComponent();
+
+		// TODO: Add per tile combo box to change between Pixel Mode and Smooth Mode
+		EntryPreview.SetValue(RenderOptions.BitmapInterpolationModeProperty, BitmapInterpolationMode.LowQuality);
 
 		// This is temporary. I don't see easy way to implement Windows Explorer context menu in Avalonia C#.
 		// If someone knows how to do it, please let me know. If you want to help, make a pull request.

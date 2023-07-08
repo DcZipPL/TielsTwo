@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
@@ -58,8 +59,50 @@ public class TileManagement
 		{
 			foreach (var systemEntry in Directory.EnumerateFileSystemEntries(configuration.Tiles[window.ID].Path))
 			{
-				var thumbnail = ThumbnailCsi.GetThumbnailImage(systemEntry, ThumbnailSize.Jumbo);
-				window.entries.Add(new TileWindow.TileEntry(systemEntry, thumbnail));
+				// if file is .qoi file, skip it
+				if (Path.GetExtension(systemEntry) == ".qoi")
+				{
+					var decoder = new QOIDecoder();
+					var bytes = File.ReadAllBytes(systemEntry);
+					var success = decoder.Decode(encoded: bytes, encodedSize: bytes.Length);
+					if (success)
+					{
+						int width = decoder.GetWidth();
+						int height = decoder.GetHeight();
+						WriteableBitmap bitmap = new WriteableBitmap(new PixelSize(width, height), new Vector(96, 96), PixelFormat.Bgra8888);
+						
+						using (var bitmapLock = bitmap.Lock())
+						{
+							IntPtr buffer = bitmapLock.Address;
+							int stride = bitmapLock.RowBytes;
+							
+							int[] pixels = decoder.GetPixels();
+							int pixelCount = width * height;
+							for (int i = 0; i < pixelCount; i++)
+							{
+								// Extract ARGB components from the integer value
+								int pixel = pixels[i];
+								byte alpha = (byte)((pixel >> 24) & 0xFF);
+								byte red = (byte)((pixel >> 16) & 0xFF);
+								byte green = (byte)((pixel >> 8) & 0xFF);
+								byte blue = (byte)(pixel & 0xFF);
+
+								// Write the pixel values to the bitmap buffer
+								Marshal.WriteByte(buffer, i * 4 + 0, blue);
+								Marshal.WriteByte(buffer, i * 4 + 1, green);
+								Marshal.WriteByte(buffer, i * 4 + 2, red);
+								Marshal.WriteByte(buffer, i * 4 + 3, alpha);
+							}
+						}
+
+						window.entries.Add(new TileWindow.TileEntry(systemEntry, bitmap));
+					}
+				}
+				else
+				{
+					var thumbnail = ThumbnailCsi.GetThumbnailImage(systemEntry, ThumbnailSize.Jumbo);
+					window.entries.Add(new TileWindow.TileEntry(systemEntry, thumbnail));
+				}
 			}
 
 			// TODO: Better threading if possible

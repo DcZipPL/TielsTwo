@@ -175,7 +175,7 @@
         <value>Experimental</value>
     </data>
     <data name="ExEnableThumbnailsCategory" xml:space="preserve">
-        <value>Enable Thumbnails Category</value>
+        <value>Show Thumbnails Category</value>
     </data>
     <data name="ExEnableWin32Hooks" xml:space="preserve">
         <value>Enable Win32 Hooks</value>
@@ -194,5 +194,26 @@
     </data>
     <data name="SettingsAbout" xml:space="preserve">
         <value>About</value>
+    </data>
+    <data name="ExEnableUpdatesCategory" xml:space="preserve">
+        <value>Show Update Category</value>
+    </data>
+    <data name="ContextMenuOpen" xml:space="preserve">
+        <value>Open</value>
+    </data>
+    <data name="ContextMenuOpenWith" xml:space="preserve">
+        <value>Open with...</value>
+    </data>
+    <data name="ContextMenuRename" xml:space="preserve">
+        <value>Rename</value>
+    </data>
+    <data name="ContextMenuDelete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="ContextMenuShowInExplorer" xml:space="preserve">
+        <value>Show in Explorer</value>
+    </data>
+    <data name="ContextMenuChooseAnotherApp" xml:space="preserve">
+        <value>Choose another app</value>
     </data>
 </root>

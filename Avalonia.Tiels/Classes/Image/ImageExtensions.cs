@@ -1,6 +1,4 @@
-﻿using System.Runtime.Versioning;
-
-namespace Avalonia.Tiels.Classes;
+﻿namespace Avalonia.Tiels.Classes;
 
 using System.Drawing;
 using System.Drawing.Imaging;

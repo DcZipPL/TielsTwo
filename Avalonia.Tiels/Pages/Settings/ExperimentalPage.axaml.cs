@@ -21,4 +21,10 @@ public partial class ExperimentalPage : SettingsPage
 	{
 		throw new System.NotImplementedException();
 	}
+
+	private void ExEnableOsBypassCheckBox_OnIsCheckedChanged(object? sender, RoutedEventArgs e) => ((CheckBox)sender!).IsChecked = false;
+	private void ExEnableDragAndDropCheckBox_OnIsCheckedChanged(object? sender, RoutedEventArgs e) => ((CheckBox)sender!).IsChecked = false;
+	private void ExEnableSimpleModeCheckBox_OnIsCheckedChanged(object? sender, RoutedEventArgs e) => ((CheckBox)sender!).IsChecked = false;
+	private void ExEnableNotesCategoryCheckBox_OnIsCheckedChanged(object? sender, RoutedEventArgs e) => ((CheckBox)sender!).IsChecked = false;
+	private void ExEnableFloatingImagesCategoryCheckBox_OnIsCheckedChanged(object? sender, RoutedEventArgs e) => ((CheckBox)sender!).IsChecked = false;
 }

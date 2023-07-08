@@ -27,8 +27,8 @@
                                 <controls:SidebarCategory Title="{x:Static p:Resources.SettingsLabel}"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsGeneral}" x:Name="SB_SG"           Icon="󿚓" IsToggled="True"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsAppearance}" x:Name="SB_SA"        Icon="󿚐"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsThumbnail}" x:Name="SB_ST"         Icon="󿚣"/>
-                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsUpdates}" x:Name="SB_SU"           Icon="󿚖"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsThumbnail}" x:Name="SB_ST"         Icon="󿚣" IsEnabled="False"/>
+                                <controls:SidebarButton Text="{x:Static p:Resources.SettingsUpdates}" x:Name="SB_SU"           Icon="󿚖" IsEnabled="False"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsExperimental}" x:Name="SB_SE"      Icon="󿚤"/>
                                 <controls:SidebarButton Text="{x:Static p:Resources.SettingsAbout}" x:Name="SB_AB"             Icon="󿚙"/>
                                 

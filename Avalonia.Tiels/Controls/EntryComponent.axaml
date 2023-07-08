@@ -23,7 +23,8 @@
 			           VerticalAlignment="Bottom" HorizontalAlignment="Center" TextAlignment="Left" Text="{Binding EntryNameShort, RelativeSource={RelativeSource AncestorType={x:Type controls:EntryComponent}}}"/>
 			<TextBlock Grid.Row="0" Initialized="AttributeIconInitialized" x:Name="FileAttributeIcon"
 			           FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" Foreground="#0068FF" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="10,0" FontSize="16">󿚦</TextBlock>
-			<TextBox Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="FileRenameBox" IsVisible="False"/>
+			<TextBox Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="FileRenameBox" IsVisible="False"
+			         LostFocus="EntryRenameLostFocus" Initialized="FileRenameBoxInitialized" KeyDown="FileRenameBoxKeyDown"/>
 		</Grid>
 	</Button>
 </UserControl>

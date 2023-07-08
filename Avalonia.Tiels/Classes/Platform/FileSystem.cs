@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
 namespace Avalonia.Tiels.Classes.Platform;
 
@@ -12,10 +14,35 @@ public class FileSystem
 		{
 			Windows.SendFileToRecycleBin(path);
 		}
+		else
+		{
+			throw new PlatformNotSupportedException("This feature is only supported on Windows.");
+		}
+	}
+	
+	public static void SpawnOpenWithDialog(string path)
+	{
+		if (OperatingSystem.IsWindows())
+		{
+			Windows.SpawnOpenWithDialog(path);
+		}
+		else
+		{
+			throw new PlatformNotSupportedException("This feature is only supported on Windows.");
+		}
 	}
 	
 	private static class Windows
 	{
+		public static void SpawnOpenWithDialog(string path)
+		{
+			Process proc = new Process();
+			proc.EnableRaisingEvents = false;
+			proc.StartInfo.FileName = "rundll32.exe";
+			proc.StartInfo.Arguments = "shell32,OpenAs_RunDLL " + path;
+			proc.Start();
+		}
+
 		public static void SendFileToRecycleBin(string filePath)
 		{
 			if (!File.Exists(filePath) && !Directory.Exists(filePath))

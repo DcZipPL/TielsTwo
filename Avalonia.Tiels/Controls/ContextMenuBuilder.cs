@@ -25,7 +25,7 @@ public class ContextMenuBuilder
 	public ContextMenuBuilder AddItemWithSubmenu(string name, Icons icon, IEnumerable<Control> submenu)
 	{
 		var item = CreateItem(name, icon);
-		item.Items = submenu;
+		item.ItemsSource = submenu;
 		_items.Add(item);
 		
 		return this;
@@ -40,7 +40,7 @@ public class ContextMenuBuilder
 	
 	public ContextMenu Build()
 	{
-		return new ContextMenu { Items = _items };
+		return new ContextMenu { ItemsSource = _items };
 	}
 
 	public static MenuItem CreateItem(string name, Icons icon)

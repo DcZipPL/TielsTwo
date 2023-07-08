@@ -43,8 +43,8 @@ public partial class TilePage : UserPage
 				SizeXBox.Text != null ? double.Parse(SizeXBox.Text) : DEFAULT_WIDTH,
 				SizeYBox.Text != null ? double.Parse(SizeYBox.Text) : DEFAULT_HEIGHT,
 				!Appearance.UseGlobalThemeBox.IsChecked.Value,
-				(FluentThemeMode)Appearance.ThemeBox.SelectedIndex,
-				(WindowTransparencyLevel)Appearance.TransparencyModeBox.SelectedIndex,
+				(ThemeMode)Appearance.ThemeBox.SelectedIndex,
+				(TransparencyLevel)Appearance.TransparencyModeBox.SelectedIndex,
 				Appearance.ColorBtn.Color
 			);
 		}

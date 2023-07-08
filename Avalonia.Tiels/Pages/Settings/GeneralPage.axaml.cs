@@ -71,7 +71,7 @@ public partial class GeneralPage : SettingsPage
 		TilesDirectoryBox.Text = App.Instance.Config.TilesPath;
 		TilesDirectoryBox.Watermark = Configuration.GetDefaultTilesDirectory();
 
-		LanguageBox.Items = Util.ImplementedCultures();
+		LanguageBox.ItemsSource = Util.ImplementedCultures();
 		LanguageBox.SelectedItem = ((IEnumerable<CultureInfo>)LanguageBox.Items).ToList()
 			.FirstOrDefault(item => Equals(item, CultureInfo.CurrentUICulture),
 				((IEnumerable<CultureInfo>)LanguageBox.Items).ToList()[0]);

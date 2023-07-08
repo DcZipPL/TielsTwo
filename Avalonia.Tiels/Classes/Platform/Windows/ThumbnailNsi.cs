@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Avalonia.Media.Imaging;
-
+using Avalonia.Tiels.Classes.Platform.Helpers;
 using static Avalonia.Tiels.Classes.Platform.Windows.ThumbnailShellNsi;
 
 namespace Avalonia.Tiels.Classes.Platform.Windows;
@@ -51,7 +50,7 @@ public class ThumbnailNsi : ThumbnailCsi
 		Shell32.SHGetFileInfo(pszFile,
 			0,
 			ref sfi,
-			(uint)System.Runtime.InteropServices.Marshal.SizeOf(sfi),
+			(uint)Marshal.SizeOf(sfi),
 			(uint)(SHGFI.SysIconIndex | SHGFI.LargeIcon | SHGFI.UseFileAttributes));
 		return sfi.iIcon;
 	}

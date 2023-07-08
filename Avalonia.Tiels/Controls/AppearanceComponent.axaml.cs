@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Avalonia.Controls;
-using Avalonia.Tiels.Classes;
+using Avalonia.Tiels.Classes.Style;
 
 namespace Avalonia.Tiels.Controls;
 
@@ -18,8 +18,8 @@ public partial class AppearanceComponent : UserControl
 		ThemeBox.ItemsSource = Enum.GetNames(typeof(ThemeMode));
 		ThemeBox.SelectedIndex = (int)App.Instance.Config.GlobalTheme;
 
-		UseGlobalThemeBox.Checked += (sender, args) => CustomAppearanceGrid.IsEnabled = false;
-		UseGlobalThemeBox.Unchecked += (sender, args) => CustomAppearanceGrid.IsEnabled = true;
+		UseGlobalThemeBox.Checked += (_, _) => CustomAppearanceGrid.IsEnabled = false;
+		UseGlobalThemeBox.Unchecked += (_, _) => CustomAppearanceGrid.IsEnabled = true;
 
 		ColorBtn.Color = App.Instance.Config.GlobalTheme == ThemeMode.Dark ? Palette.TILE_DARK_COLOR : Palette.TILE_LIGHT_COLOR;
 		ThemeBox.SelectionChanged += (_, _) =>

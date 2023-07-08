@@ -1,7 +1,7 @@
 ﻿using System;
 using Avalonia.Controls;
 
-namespace Avalonia.Tiels.Classes;
+namespace Avalonia.Tiels.Classes.Style;
 
 public enum TransparencyLevel
 {

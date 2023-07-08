@@ -1,5 +1,4 @@
 ﻿using System;
-using Avalonia;
 using Avalonia.Interactivity;
 using Avalonia.Tiels.Classes;
 using Avalonia.Tiels.Controls;
@@ -60,8 +59,8 @@ public partial class SnappingPage : SettingsPage
 		LoadSettingsValues();
 		
 		// Show status
-		Root.StatusIcon.Text = status.Item1;
-		Root.StatusText.Text = status.Item2;
+		Root.StatusIcon.Text = Status.Item1;
+		Root.StatusText.Text = Status.Item2;
 	}
 
 	private void LoadSettingsValues()

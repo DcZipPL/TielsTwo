@@ -1,17 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
-using Avalonia.Themes.Fluent;
 using Avalonia.Tiels.Classes;
 using Avalonia.Tiels.Classes.Platform;
+using Avalonia.Tiels.Classes.Style;
 using Bitmap = System.Drawing.Bitmap;
 using Image = System.Drawing.Image;
 

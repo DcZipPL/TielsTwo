@@ -2,13 +2,13 @@
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
-using Avalonia.Themes.Fluent;
 using Avalonia.Threading;
 using Avalonia.Tiels.Classes.Platform;
+using Avalonia.Tiels.Classes.Platform.Helpers;
+using Avalonia.Tiels.Classes.Style;
 using Serilog;
 
 namespace Avalonia.Tiels.Classes;

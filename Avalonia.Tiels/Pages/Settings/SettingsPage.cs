@@ -6,7 +6,7 @@ namespace Avalonia.Tiels.Pages.Settings;
 
 public abstract class SettingsPage : UserPage
 {
-	protected (string, string?) status = (Icons.Check, App.I18n.GetString("NoChanges"));
+	protected (string, string?) Status = (Icons.Check, App.I18n.GetString("NoChanges"));
 	
 	protected void ApplyIfChanged(bool getter, Action<bool> setter, CheckBox checkBox)
 	{
@@ -16,7 +16,7 @@ public abstract class SettingsPage : UserPage
 	
 	protected void ChangeSettingsStatus(string message, bool invalid)
 	{
-		status = (invalid ? Icons.X : Icons.Check, message);
+		Status = (invalid ? Icons.X : Icons.Check, message);
 	}
 
 	public abstract void ApplySettings();

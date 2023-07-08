@@ -8,6 +8,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media;
 using Avalonia.Themes.Fluent;
+using Avalonia.Tiels.Classes.Style;
 using Tomlyn;
 using Tomlyn.Model;
 
@@ -15,10 +16,10 @@ namespace Avalonia.Tiels.Classes;
 
 public partial class Configuration
 {
-    private readonly object _readWriteLock = new object();
-    private readonly object _thumbnailLock = new object();
+    private readonly object _readWriteLock = new();
+    private readonly object _thumbnailLock = new();
 
-    public Dictionary<Guid, Tile> Tiles = new Dictionary<Guid, Tile>();
+    public Dictionary<Guid, Tile> Tiles = new();
 
     #region Loaders
     private Configuration(IControlledApplicationLifetime closer)
@@ -285,13 +286,13 @@ public partial class Configuration
             // Check if default config is valid
             if (model.Size == null)
             {
-                model.Size = new Configuration.Models.Vec2();
+                model.Size = new Models.Vec2();
                 LoggingHandler.Warn(nameof(CreateTileConfig), "Default Tile config don't contain Size or it is null!");
             }
 
             if (model.Appearance == null)
             {
-                model.Appearance = new Configuration.Models.Appearance();
+                model.Appearance = new Models.Appearance();
                 LoggingHandler.Warn(nameof(CreateTileConfig), "Default Tile config don't Appearance size or it is null!");
             }
 
@@ -414,7 +415,7 @@ public partial class Configuration
             {
                 var result = Enum.TryParse(ReqModel().Appearance!.Theme, true, out ThemeMode theme);
                 if (!result)
-                    LoggingHandler.Error(new Exception($"Couldn't parse {nameof(theme)} from config!"), nameof(Configuration.Tile) + "->" + nameof(Theme));
+                    LoggingHandler.Error(new Exception($"Couldn't parse {nameof(theme)} from config!"), nameof(Tile) + "->" + nameof(Theme));
                 return result ? theme : ThemeMode.Light;
             }
             set
@@ -446,7 +447,7 @@ public partial class Configuration
             {
                 var result = Color.TryParse(ReqModel().Appearance!.Color, out var color);
                 if (!result)
-                    LoggingHandler.Warn($"{nameof(Configuration.Tile)}{{{ReqModel().Id}}} -> {nameof(Color)}", $"Couldn't parse {nameof(color)} from config! Using transparent color instead.");
+                    LoggingHandler.Warn($"{nameof(Tile)}{{{ReqModel().Id}}} -> {nameof(Color)}", $"Couldn't parse {nameof(color)} from config! Using transparent color instead.");
                 return result ? color : Color.FromArgb(0, 0, 0, 0);
             }
             set
@@ -473,7 +474,7 @@ public partial class Configuration
                     return model;
                 } catch (Exception e)
                 {
-                    LoggingHandler.Warn($"{nameof(Configuration.Tile)} -> {nameof(ReqModel)}", e.ToString());
+                    LoggingHandler.Warn($"{nameof(Tile)} -> {nameof(ReqModel)}", e.ToString());
                     return new Models.TileModel();
                 }
             }

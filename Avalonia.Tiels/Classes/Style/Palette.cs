@@ -1,6 +1,6 @@
 ﻿using Avalonia.Media;
 
-namespace Avalonia.Tiels.Classes;
+namespace Avalonia.Tiels.Classes.Style;
 
 public class Palette
 {

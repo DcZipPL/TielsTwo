@@ -3,6 +3,7 @@
              x:Class="Avalonia.Tiels.App">
     <Application.Styles>
         <FluentTheme/>
+        <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml"/>
         <Style Selector="Button.link">
             <Setter Property="Foreground" Value="Blue" />
             <Setter Property="Padding" Value="0" />

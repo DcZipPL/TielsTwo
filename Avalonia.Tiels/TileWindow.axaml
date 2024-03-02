@@ -59,7 +59,7 @@
                 <Button Grid.Column="2" x:Name="RotateBtn" Classes="EditBar" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite" VerticalContentAlignment="Center">󿚟</Button>
                 <Button Grid.Column="3" x:Name="RenameBtn" Click="ToggleEditMode" Classes="EditBar" VerticalContentAlignment="Center" FontFamily="avares://Avalonia.Tiels/Assets#lucidelite">󿚪</Button>
             </Grid>
-            <TextBlock Grid.Row="1" x:Name="TileName" Classes="EditBar" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">{Name}</TextBlock>
+            <TextBlock Grid.Row="1" x:Name="TileName" Classes="EditBar" VerticalAlignment="Center" HorizontalAlignment="Center">{Name}</TextBlock>
         </Grid>
         <!-- Window hints -->
         <Grid x:Name="WindowHints" IsVisible="False">
@@ -82,7 +82,7 @@
             <Grid Grid.Row="0" Grid.Column="1" Background="Transparent" x:Name="ResizeAreaV" Cursor="SizeNorthSouth" PointerPressed="ResizeDown" PointerReleased="ResizeUp" PointerMoved="ResizeMove"/>
             <Grid Grid.Row="2" Grid.Column="1" Background="Transparent" x:Name="ResizeAreaY" Cursor="SizeNorthSouth" PointerPressed="ResizeDown" PointerReleased="ResizeUp" PointerMoved="ResizeMove"/>
             <Grid Grid.Row="1" Grid.Column="1" Background="#25000000" x:Name="MoveArea" Margin="0,0,0,28" Cursor="SizeAll" PointerPressed="MoveDown" PointerReleased="MoveUp" PointerMoved="Move">
-                <TextBlock x:Name="MoveAreaText" Text="{x:Static p:Resources.MoveWindow}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="MoveAreaText" Text="{x:Static p:Resources.MoveWindow}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
         </Grid>
     </Grid>

@@ -1,22 +1,17 @@
-﻿namespace Avalonia.Tiels.Classes;
+﻿using System.IO;
+using SkiaSharp;
 
-using System.Drawing;
-using System.Drawing.Imaging;
-using Bitmap = Media.Imaging.Bitmap;
+namespace Avalonia.Tiels.Classes.Image;
 
 public static class ImageExtensions
 {
-	public static Bitmap ConvertToAvaloniaBitmap(this Image bitmap)
+	public static Media.Imaging.Bitmap ConvertToAvaloniaBitmap(this SKBitmap skiaBitmap)
 	{
-		System.Drawing.Bitmap bitmapTmp = new System.Drawing.Bitmap(bitmap);
-		var bitmapdata = bitmapTmp.LockBits(new Rectangle(0, 0, bitmapTmp.Width, bitmapTmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
-		Bitmap bitmap1 = new Bitmap(Avalonia.Platform.PixelFormat.Bgra8888, Avalonia.Platform.AlphaFormat.Premul,
-			bitmapdata.Scan0,
-			new PixelSize(bitmapdata.Width, bitmapdata.Height),
-			new Vector(96, 96),
-			bitmapdata.Stride);
-		bitmapTmp.UnlockBits(bitmapdata);
-		bitmapTmp.Dispose();
-		return bitmap1;
+		using var stream = new MemoryStream();
+		using var skiaImage = SKImage.FromBitmap(skiaBitmap);
+		skiaImage.Encode(SKEncodedImageFormat.Png, 100).SaveTo(stream);
+		stream.Position = 0;
+		var bitmap = new Media.Imaging.Bitmap(stream);
+		return bitmap;
 	}
 }

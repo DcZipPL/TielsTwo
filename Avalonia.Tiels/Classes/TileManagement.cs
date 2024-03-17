@@ -100,7 +100,7 @@ public class TileManagement
 				}
 				else
 				{
-					var thumbnail = ThumbnailCsi.GetThumbnailImage(systemEntry, ThumbnailSize.Jumbo);
+					var thumbnail = ThumbnailCsi.GetThumbnailImage(systemEntry, ThumbnailSize.ExtraLarge, ThumbnailSize.Large, ThumbnailSize.Small);
 					window.entries.Add(new TileWindow.TileEntry(systemEntry, thumbnail));
 				}
 			}

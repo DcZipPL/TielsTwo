@@ -275,11 +275,6 @@ internal static class ThumbnailShellNsi
     
     internal static class Shell32
     {
-        internal const int E_OUTOFMEMORY = -2147024882;
-        internal const int E_INVALIDARG = -2147024809;
-        internal const int E_NOINTERFACE = -2147467262;
-        internal const int E_FAIL = -2147467259;
-        
         internal const int SHIL_SYSSMALL = 0x3;
         internal const int SHIL_LAST = 0x4;
 
@@ -309,4 +304,11 @@ internal static class ThumbnailShellNsi
     [return: MarshalAs(UnmanagedType.Bool)]
     internal static extern bool DeleteObject([In] IntPtr hObject);
     
+    internal enum E_SHGIL
+    {
+        E_OUTOFMEMORY = -2147024882,
+        E_INVALIDARG = -2147024809,
+        E_NOINTERFACE = -2147467262,
+        E_FAIL = -2147467259
+    }
 }

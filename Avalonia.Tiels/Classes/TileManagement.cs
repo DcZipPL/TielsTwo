@@ -58,8 +58,9 @@ public class TileManagement
 		{
 			foreach (var systemEntry in Directory.EnumerateFileSystemEntries(configuration.Tiles[window.ID].Path))
 			{
-				// if file is .qoi file, skip it
-				if (Path.GetExtension(systemEntry) == ".qoi")
+				string extension = Path.GetExtension(systemEntry);
+				// if file is .qoi file then decode it
+				if (extension == ".qoi")
 				{
 					var bytes = File.ReadAllBytes(systemEntry);
 					var result = QoiImage.DecodeFromBytes(bytes);
@@ -69,6 +70,10 @@ public class TileManagement
 						{ IsSuccessful: false } => new SKBitmap(new SKImageInfo(1, 1)).ConvertToAvaloniaBitmap() // TODO: Use default icon
 					};
 					window.entries.Add(new TileWindow.TileEntry(systemEntry, thumbnail));
+				}
+				else if (extension == ".png")
+				{
+					// TODO: Use png header instead of .png extension
 				}
 				else
 				{

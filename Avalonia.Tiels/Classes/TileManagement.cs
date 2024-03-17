@@ -58,33 +58,27 @@ public class TileManagement
 		{
 			foreach (var systemEntry in Directory.EnumerateFileSystemEntries(configuration.Tiles[window.ID].Path))
 			{
-				string extension = Path.GetExtension(systemEntry);
-				// if file is .qoi file then decode it
-				if (extension == ".qoi")
+				FileAttributes attr = File.GetAttributes(systemEntry);
+				if ((attr & FileAttributes.Directory) != FileAttributes.Directory)
 				{
-					var bytes = File.ReadAllBytes(systemEntry);
-					var result = QoiImage.DecodeFromBytes(bytes);
-					var thumbnail = result switch
-					{
-						{ IsSuccessful: true } => result.Value,
-						{ IsSuccessful: false } => new SKBitmap(new SKImageInfo(1, 1)).ConvertToAvaloniaBitmap() // TODO: Use default icon
-					};
-					window.entries.Add(new TileWindow.TileEntry(systemEntry, thumbnail));
-				}
-				else if (extension == ".png")
-				{
-					// TODO: Use png header instead of .png extension
+					// Icons by header
+					byte[] head = new byte[8];
+					using (BinaryReader reader = new BinaryReader(new FileStream(systemEntry, FileMode.Open)))
+						reader.Read(head, 0, 8);
+
+					string extension = Path.GetExtension(systemEntry);
+					if (FileHeaders.IsPngImage(head)
+					    || (FileHeaders.IsJpegImage(head) && (extension == ".jpg" || extension == ".jpeg" || extension == ".jpe")))
+						CreateWithImage(window, systemEntry); // TODO: Support JXL
+					else if (FileHeaders.IsQoiImage(head))
+						CreateWithQoi(window, systemEntry);
+					else
+						CreateWithThumbnail(window, systemEntry);
 				}
 				else
 				{
-					var result = ThumbnailCsi.GetThumbnailImage(systemEntry, ThumbnailSize.ExtraLarge,
-						ThumbnailSize.Large, ThumbnailSize.Small);
-					var thumbnail = result switch
-					{
-						{ IsSuccessful: true } => result.Value,
-						{ IsSuccessful: false } => new SKBitmap(new SKImageInfo(1, 1)).ConvertToAvaloniaBitmap() // TODO: Use default icon
-					};
-					window.entries.Add(new TileWindow.TileEntry(systemEntry, thumbnail));
+					// TODO: Custom directory icons
+					CreateWithThumbnail(window, systemEntry);
 				}
 			}
 
@@ -94,6 +88,39 @@ public class TileManagement
 		{
 			LoggingHandler.Error(e, $"Failed to load Tile content for Tile with ID: {window.ID}.");
 		}
+	}
+
+	private static void CreateWithImage(TileWindow window, string systemEntry)
+	{
+		byte[] imageBytes = File.ReadAllBytes(systemEntry);
+		using var stream = new MemoryStream(imageBytes);
+		var skiaBitmap = SKBitmap.Decode(stream);
+							
+		window.entries.Add(new TileWindow.TileEntry(systemEntry, skiaBitmap.ConvertToAvaloniaBitmap()));
+	}
+
+	private static void CreateWithQoi(TileWindow window, string systemEntry)
+	{
+		var bytes = File.ReadAllBytes(systemEntry);
+		var result = QoiImage.DecodeFromBytes(bytes);
+		var thumbnail = result switch
+		{
+			{ IsSuccessful: true } => result.Value,
+			{ IsSuccessful: false } => new SKBitmap(new SKImageInfo(1, 1)).ConvertToAvaloniaBitmap() // TODO: Use default icon
+		};
+		window.entries.Add(new TileWindow.TileEntry(systemEntry, thumbnail));
+	}
+
+	private static void CreateWithThumbnail(TileWindow window, string systemEntry)
+	{
+		var result = ThumbnailCsi.GetThumbnailImage(systemEntry, ThumbnailSize.ExtraLarge,
+			ThumbnailSize.Large, ThumbnailSize.Small);
+		var thumbnail = result switch
+		{
+			{ IsSuccessful: true } => result.Value,
+			{ IsSuccessful: false } => ThumbnailCsi.GetShellIcon()
+		};
+		window.entries.Add(new TileWindow.TileEntry(systemEntry, thumbnail));
 	}
 
 	public static void DeleteTile(Guid id)

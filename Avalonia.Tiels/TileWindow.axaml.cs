@@ -74,6 +74,9 @@ public partial class TileWindow : Window
 
 		// Set Tile name.
 		this.TileName.Text = App.Instance.Config.Tiles[ID].Name;
+		
+		// Set Window name.
+		this.Title = "Tile: " + App.Instance.Config.Tiles[ID].Name;
 
 		// Set Tile collapse state.
 		_isHidden = App.Instance.Config.Tiles[ID].Hidden;

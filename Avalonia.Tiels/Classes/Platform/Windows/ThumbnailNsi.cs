@@ -105,7 +105,7 @@ public class ThumbnailNsi : ThumbnailCsi
 			if (hResult == 0)
 				break;
 			// Warn if failed and go to next size
-			if (i <= sizes.Length - 1)
+			if (i < sizes.Length - 1)
 				LoggingHandler.Warn(nameof(GetIconPointer), "Couldn't get image for size: " + sizes[i] + " with hResult: " + hResult + "Scaling down to: "+ sizes[i - 1]);
 		}
 		

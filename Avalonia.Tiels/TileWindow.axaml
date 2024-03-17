@@ -6,7 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.Tiels.TileWindow"
         TransparencyLevelHint="Transparent"
-        Title="TileWindow" Opened="OnLoad" Background="{x:Null}" ShowInTaskbar="False" MinHeight="20" MinWidth="120"
+        Title="Tile: Unnamed" Icon="/Assets/tiels_color.ico" Opened="OnLoad" Background="{x:Null}" ShowInTaskbar="False" MinHeight="20" MinWidth="120"
         SystemDecorations="None">
     <Window.Styles>
         <Style Selector="TextBlock.Dark">

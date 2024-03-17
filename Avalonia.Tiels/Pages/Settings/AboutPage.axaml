@@ -5,7 +5,15 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia.Tiels.Pages.Settings.AboutPage">
 	<StackPanel Spacing="5" Margin="10">
-		<TextBlock>Donate: https://ko-fi.com/prefexdev</TextBlock>
-		<TextBlock>Website: https://prefex.dev</TextBlock>
+		<StackPanel Spacing="5" Margin="10">
+			<StackPanel Orientation="Horizontal" Spacing="5">
+				<TextBlock>Donate: </TextBlock>
+				<TextBlock Foreground="Blue" TextDecorations="Underline">https://ko-fi.com/prefexdev</TextBlock>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal" Spacing="5">
+				<TextBlock>Website: </TextBlock>
+				<TextBlock Foreground="Blue" TextDecorations="Underline">https://prefex.dev</TextBlock>
+			</StackPanel>
+		</StackPanel>
 	</StackPanel>
 </UserControl>

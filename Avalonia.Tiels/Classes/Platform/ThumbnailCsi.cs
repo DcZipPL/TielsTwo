@@ -2,12 +2,13 @@
 using System.IO;
 using Avalonia.Media.Imaging;
 using Avalonia.Tiels.Classes.Platform.Helpers;
+using DotNext;
 
 namespace Avalonia.Tiels.Classes.Platform;
 
 public abstract class ThumbnailCsi
 {
-	public static Bitmap GetThumbnailImage(string path, ThumbnailSize size)
+	public static Result<Bitmap> GetThumbnailImage(string path, params ThumbnailSize[] sizes)
 	{
 		try
 		{
@@ -17,10 +18,10 @@ public abstract class ThumbnailCsi
 				if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
 					return new Windows.ThumbnailNsi().GetDirectoryBitmap();
 				else
-					return new Windows.ThumbnailNsi().GetThumbnailBitmap(path, size);
+					return new Windows.ThumbnailNsi().GetThumbnailBitmap(path, sizes);
 
 			if (OperatingSystem.IsLinux())
-				return new Linux.ThumbnailNsi().GetThumbnailBitmap(path, size);
+				return new Linux.ThumbnailNsi().GetThumbnailBitmap(path, sizes);
 		}
 		catch (Exception e)
 		{
@@ -40,6 +41,6 @@ public abstract class ThumbnailCsi
 		throw LoggingHandler.Error(new PlatformNotSupportedException(), nameof(GetShellIcon));
 	}
 
-	protected abstract Bitmap GetThumbnailBitmap(string path, ThumbnailSize size);
+	protected abstract Result<Bitmap> GetThumbnailBitmap(string path, params ThumbnailSize[] sizes);
 	protected abstract Bitmap GetDirectoryBitmap(int offest = 3);
 }

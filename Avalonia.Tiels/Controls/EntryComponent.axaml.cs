@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -10,8 +9,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Tiels.Classes;
 using Avalonia.Tiels.Classes.Platform;
 using Avalonia.Tiels.Classes.Style;
-using Bitmap = System.Drawing.Bitmap;
-using Image = System.Drawing.Image;
+using SkiaSharp;
 
 namespace Avalonia.Tiels.Controls;
 
@@ -25,19 +23,22 @@ public partial class EntryComponent : UserControl
 		get
 		{
 			// TODO: Use fallback font
-			Font font = new Font("Courier New", 14.0F);
-			Image fakeImage = new Bitmap(1, 1);
-			Graphics graphics = Graphics.FromImage(fakeImage);
-			SizeF size = graphics.MeasureString(EntryName, font);
+			SKPaint font = new SKPaint
+			{
+				TextSize = 14.0f,
+				Typeface = SKTypeface.FromFamilyName("Courier New")
+			};
 
-			if (size.Width < 240)
+			float width = font.MeasureText(EntryName);
+
+			if (width < 240)
 				return EntryName;
 
 			var shortName = EntryName.Substring(0, EntryName.Length - 3);
-			while (size.Width >= 240)
+			while (width >= 240)
 			{
 				shortName = shortName.Substring(0, shortName.Length - 1);
-				size = graphics.MeasureString(shortName, font);
+				width = font.MeasureText(shortName);
 			}
 			return shortName + "...";
 		}
@@ -147,7 +148,7 @@ public partial class EntryComponent : UserControl
 	{
 		FileAttribute.Link => Icons.ExternalLink,
 		FileAttribute.SymbolicLink => Icons.FolderSymlink,
-		_ => ""
+		_ => " "
 	};
 	
 	private void EntryClicked(object? sender, RoutedEventArgs e) => OpenEntry();

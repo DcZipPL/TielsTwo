@@ -303,4 +303,12 @@ internal static class ThumbnailShellNsi
     [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
     [return: MarshalAs(UnmanagedType.Bool)]
     internal static extern bool DeleteObject([In] IntPtr hObject);
+    
+    internal enum E_SHGIL
+    {
+        E_OUTOFMEMORY = -2147024882,
+        E_INVALIDARG = -2147024809,
+        E_NOINTERFACE = -2147467262,
+        E_FAIL = -2147467259
+    }
 }

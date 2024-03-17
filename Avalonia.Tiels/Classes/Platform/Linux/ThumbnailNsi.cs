@@ -1,11 +1,12 @@
 ﻿using Avalonia.Media.Imaging;
 using Avalonia.Tiels.Classes.Platform.Helpers;
+using DotNext;
 
 namespace Avalonia.Tiels.Classes.Platform.Linux;
 
 public class ThumbnailNsi : ThumbnailCsi
 {
-	protected override Bitmap GetThumbnailBitmap(string path, ThumbnailSize size)
+	protected override Result<Bitmap> GetThumbnailBitmap(string path, params ThumbnailSize[] sizes)
 	{
 		throw new System.NotImplementedException();
 	}

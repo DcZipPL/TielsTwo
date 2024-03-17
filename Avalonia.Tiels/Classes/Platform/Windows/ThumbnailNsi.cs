@@ -28,9 +28,8 @@ public class ThumbnailNsi : ThumbnailCsi
 		return converted;
 	}
 	
-	protected override Bitmap GetThumbnailBitmap(string path, params ThumbnailSize[] sizes)
+	protected override Result<Bitmap> GetThumbnailBitmap(string path, params ThumbnailSize[] sizes)
 	{
-		var bitmap = new SKBitmap(new SKImageInfo(1, 1)).ConvertToAvaloniaBitmap();
 		try
 		{
 			Result<IntPtr, E_SHGIL> hIcon = GetIconPointer(GetIconIndex(path), sizes);
@@ -42,17 +41,18 @@ public class ThumbnailNsi : ThumbnailCsi
 			};
 			
 			using System.Drawing.Icon ico = System.Drawing.Icon.FromHandle(header);
-			bitmap = ConvertToBitmap(ico.ToBitmap());
-			var hResult = Shell32.DestroyIcon(hIcon.Value);
+			var bitmap = ConvertToBitmap(ico.ToBitmap());
+			var hResult = Shell32.DestroyIcon(header);
 			if (hResult == 0)
 				throw new Exception("Failed to destroy icon");
+			
+			return new Result<Bitmap>(bitmap);
 		}
 		catch (Exception e)
 		{
 			LoggingHandler.Warn(nameof(GetThumbnailBitmap), "Failed to load thumbnail from file: " + path + "\n" + e);
+			return new Result<Bitmap>(e);
 		}
-
-		return bitmap;
 	}
 
 	// TODO: Use rust like error handling
@@ -93,21 +93,27 @@ public class ThumbnailNsi : ThumbnailCsi
 	{
 		IImageList? spiml = null;
 		Guid guil = new Guid(IID_IImageList);
-
+		
+		// Go through all sizes if fails go to next size as fallback
 		int hResult = -1;
 		for (int i = 0; i < sizes.Length; i++)
 		{
+			// Failable call
 			hResult = Shell32.SHGetImageList((int)sizes[i], ref guil, ref spiml);
 		
+			// If successful break
 			if (hResult == 0)
 				break;
+			// Warn if failed and go to next size
 			if (i <= sizes.Length - 1)
 				LoggingHandler.Warn(nameof(GetIconPointer), "Couldn't get image for size: " + sizes[i] + " with hResult: " + hResult + "Scaling down to: "+ sizes[i - 1]);
 		}
 		
+		// If failed fully return error
 		if (hResult != 0)
 			return new Result<IntPtr, E_SHGIL>(hResult);
 		
+		// If successful get icon
 		IntPtr hIcon = IntPtr.Zero;
 		spiml!.GetIcon(imagePtr, Shell32.ILD_TRANSPARENT | Shell32.ILD_IMAGE, ref hIcon);
 

@@ -6,10 +6,12 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Threading;
+using Avalonia.Tiels.Classes.Image;
 using Avalonia.Tiels.Classes.Platform;
 using Avalonia.Tiels.Classes.Platform.Helpers;
 using Avalonia.Tiels.Classes.Style;
 using Serilog;
+using SkiaSharp;
 
 namespace Avalonia.Tiels.Classes;
 
@@ -100,7 +102,13 @@ public class TileManagement
 				}
 				else
 				{
-					var thumbnail = ThumbnailCsi.GetThumbnailImage(systemEntry, ThumbnailSize.ExtraLarge, ThumbnailSize.Large, ThumbnailSize.Small);
+					var result = ThumbnailCsi.GetThumbnailImage(systemEntry, ThumbnailSize.ExtraLarge,
+						ThumbnailSize.Large, ThumbnailSize.Small);
+					var thumbnail = result switch
+					{
+						{ IsSuccessful: true } => result.Value,
+						{ IsSuccessful: false } => new SKBitmap(new SKImageInfo(1, 1)).ConvertToAvaloniaBitmap()
+					};
 					window.entries.Add(new TileWindow.TileEntry(systemEntry, thumbnail));
 				}
 			}

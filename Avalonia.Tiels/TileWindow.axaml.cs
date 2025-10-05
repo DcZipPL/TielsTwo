@@ -29,6 +29,7 @@ public partial class TileWindow : Window
 	
 	public TileWindow()
 	{
+		//Popup
 		InitializeComponent();
 		#if DEBUG
 			this.AttachDevTools();

@@ -17,11 +17,17 @@ With Tiels you can organize your desktop icons with tiles.
 This rewrite focuses in Stability and making this program cross-platform.
 </div>
 
+## Important
+The project was in stagnation for two years due my lack of time.
+After sometime I decided to set this repo to public so other people can use this software is early fase.
+
+There is no setup wizard or other fancy stuff. Just program that works if build correctly. Other stuff will be implemented soon.
+
 ## Building instructions
 ### Pre-requirements
 Operating System:
-- Linux 4.x.x+ or Windows 10+
-- other systems ware not tested!
+- Windows 10-11
+- Linux and other systems not done yet
 
 Installed tooling:
 - dotnet

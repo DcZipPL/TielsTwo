@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
         <TrimMode>copyused</TrimMode>
@@ -22,20 +22,20 @@
         <TrimmableAssembly Include="Avalonia.Themes.Default" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.0.9" />
-        <PackageReference Include="Avalonia.Controls.ColorPicker" Version="11.0.9" />
-        <PackageReference Include="Avalonia.Desktop" Version="11.0.9" />
+        <PackageReference Include="Avalonia" Version="11.3.7" />
+        <PackageReference Include="Avalonia.Controls.ColorPicker" Version="11.3.7" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.3.7" />
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.9" />
-        <PackageReference Include="Avalonia.Svg" Version="11.0.0.14" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.9" />
-        <PackageReference Include="DotNext" Version="5.2.0" />
-        <PackageReference Include="Serilog" Version="4.0.0-dev-02113" />
-        <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
-        <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00972" />
-        <PackageReference Include="SkiaSharp" Version="2.88.7" />
-        <PackageReference Include="System.Drawing.Common" Version="9.0.0-preview.1.24081.2" />
-        <PackageReference Include="Tomlyn" Version="0.17.0" />
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.7" />
+        <PackageReference Include="Avalonia.Svg" Version="11.3.0" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.7" />
+        <PackageReference Include="DotNext" Version="5.25.1" />
+        <PackageReference Include="Serilog" Version="4.3.1-dev-02387" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.1-dev-00953" />
+        <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+        <PackageReference Include="SkiaSharp" Version="3.119.1" />
+        <PackageReference Include="System.Drawing.Common" Version="10.0.0-rc.1.25451.107" />
+        <PackageReference Include="Tomlyn" Version="0.19.0" />
     </ItemGroup>
     <ItemGroup>
       <AdditionalFiles Include="Defaults\global.default.toml">
@@ -93,7 +93,7 @@
       <Folder Include="Assets\Icons" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="4.9.2">
+        <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="4.14.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
